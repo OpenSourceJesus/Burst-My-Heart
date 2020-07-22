@@ -1,0 +1,269 @@
+===========================================================
+  2D ColliderGen - ChangeLog
+===========================================================
+-----------------------------------------------------------
+Version 2.12
+-----------------------------------------------------------
+New Features:
+- Added support for UGUI RawImages.
+
+Bugfixes:
+- Fixed a menu-related error message.
+  Preferences window and 2D ColliderGen TK2D window are
+  no longer part of the component menu but listed under
+  Window - 2D ColliderGen.
+
+-----------------------------------------------------------
+Version 2.11
+-----------------------------------------------------------
+
+New Features:
+- Animated Colliders: Added "Remove Frame" feature to
+  selectively remove a collider and reference another
+  frame's collider instead.
+- Animated Colliders: Added a "Sync to Parent Anim"
+  parameter under Advanced Settings to allow a child object
+  with the same sprite animations but the sprite only
+  showing the weapon (for a damage collider) or the body
+  (for a hit-collider) and sync perfectly to the main
+  animation of the parent.
+- New 'IsTrigger' and 'Force Convex' attributes can now be
+  used to set all attached collider's attributes at a
+  single click.
+
+Bugfixes:
+- Fixed initialization when adding an AlphaMeshCollider
+  to an animated sprite. Frames are immediately calculated
+  or referenced, if the same sprite is already present.
+
+-----------------------------------------------------------
+Version 2.10
+-----------------------------------------------------------
+
+New Features:
+- Added Support for UGUI Canvas Images.
+  (Note: For now 9-Slice-Sprites are not yet supported.
+   If anyone shall need them, send me a feature request.)
+   Includes a Demo file showing how to use the feature.
+- Adjustible top/bottom/left/right Borders.
+  Each border can be adjusted individually, cut and/or
+  expanded. Cut and Expand with the same distance can be
+  used to reduce jaggy outline noise such as grass
+  (Morphological Opening).
+  Includes a Demo file showing how to use the feature.
+
+Improvements:
+- Improved performance of collider recalculation after
+  Alpha Opaque Threshold changes.
+
+Bugfixes:
+- Outline generation corrected:
+  When the bottom-left-most pixel is at a one-pixel-wide
+  L-junction, the generated outline did not include the
+  upper part. Fixed now.
+
+-----------------------------------------------------------
+Version 2.9
+-----------------------------------------------------------
+
+Bugfixes:
+- Fixed a bug with colliders disappearing in
+  RuntimeAlphaMeshCollider when max point count per island
+  was larger than the actual number of outline corner
+  points of an island.
+
+-----------------------------------------------------------
+Version 2.8
+-----------------------------------------------------------
+
+New Features:
+- Added support for EdgeCollider2D.
+- RuntimeAlphaMeshCollider now uses a separate processing
+  thread for improved performance.
+- RuntimeAlphaMeshCollider now supports calculating
+  colliders of individual sprite frames or other sprite
+  atlas elements on the fly.
+  Previously only preprocessed sprites were possible.
+  
+-----------------------------------------------------------
+Version 2.7
+-----------------------------------------------------------
+
+New Features:
+- Made RuntimeAlphaMeshCollider script more powerful.
+- Added preference value "Collider is Trigger" to
+  automatically set generated colliders to be triggers.
+
+Bugfixes:
+- Fixed 'Component' menu not showing up in latest Unity
+  versions.
+- Fixed problems with Undo system.
+
+-----------------------------------------------------------
+Version 2.6
+-----------------------------------------------------------
+
+Bugfixes:
+- Fixed a bug in serialization/deserialization when
+  'development build' was enabled at the PC output target.
+
+-----------------------------------------------------------
+Version 2.5
+-----------------------------------------------------------
+
+Compatibility:
+- Fixed a severe problem with Windows Phone 8 build at the
+  latest Unity version.
+
+-----------------------------------------------------------
+Version 2.4
+-----------------------------------------------------------
+
+Compatibility:
+- Unity5 iOS Mono 2.x compatible again (as well as IL2CPP).
+
+New Features:
+- Added collider preference default values for
+  alpha threshold, force convex and flip normals.
+- Added 'Window' menu entries for Collider Preferences
+  window and ColliderGen TK2D Window.
+
+-----------------------------------------------------------
+Version 2.3
+-----------------------------------------------------------
+
+Compatibility:
+- Unity5 compatible.
+- IL2CPP and iOS-64BIT compatible.
+
+Bugfixes:
+- Removed an error console output when changing collider
+  type between MeshCollider and PolygonCollider2D.
+- Removed Warnings.
+  
+-----------------------------------------------------------
+Version 2.1 and 2.2
+-----------------------------------------------------------
+
+Changes:
+- Moved all menu items from a top-level "2D ColliderGen"
+  entry to "Component/2D ColliderGen". Motivation was to
+  comply with the official asset store guidelines.
+
+New Features:
+- Multi-Island Editing
+  Added support for enabling, disabling and changing the
+  outline vertex count of multiple collider islands or
+  holes at once.
+
+Bugfixes:
+- Custom pivot of Unity 4.3 Sprites is now supported in
+  static sprites and animations.
+
+-----------------------------------------------------------
+Version 2.0
+-----------------------------------------------------------
+
+New Features:
+- Collider Animation support for Unity 4.3 Sprites
+  PolygonCollider2D or MeshColliders can now be
+  generated for each animation frame. Automatically
+  switches to the corresponding collider at runtime.
+
+Bugfixes:
+- Windows Phone compilation issues resolved.
+- Several minor bugs removed.
+
+-----------------------------------------------------------
+Version 1.4
+-----------------------------------------------------------
+
+New Features:
+- Added support for Unity 4.3 Sprites and PolygonCollider2D
+  SpriteRenderer components are now automatically
+  recognized by AlphaMeshCollider.
+  PolygonCollider2D can now be generated instead of
+  MeshColliders as well.
+
+Compatibility:
+- Fixed an error with Windows Phone 8 deployment.
+
+Minor Changes:
+- Removed warnings of obsolete method calls in Unity4.3.
+  
+-----------------------------------------------------------
+Version 1.3
+-----------------------------------------------------------
+
+Compatibility:
+- Windows Phone 8 deployment works now.
+
+Minor Changes:
+- Removed warnings of obsolete method calls in Unity4.
+
+-----------------------------------------------------------
+Version 1.2
+-----------------------------------------------------------
+
+New Features:
+- Added support for unlimited collider-island and –hole
+  regions within a single texture image. Islands and holes
+  can be enabled and configured via a new
+  'Holes and Islands' section.
+
+- Added support for OTTilesSprite. Simply add an
+  AlphaMeshCollider to a GameObject with an OTTilesSprite
+  component to generate colliders for it.
+
+- Added a "Custom Texture Region" section to the
+  AlphaMeshCollider parameters where you can specify a
+  custom region to be used for collider computations
+  (e.g. to use a custom frame from a texture atlas or
+   spritesheet).
+
+Bugfixes:
+- SmoothMoves related:
+  Collider scale was wrong when setting a custom image at a
+  generic object (e.g. a plain quad) which had no
+  SmoothMoves or Orthello sprite attached.
+
+  Colliders attached to SmoothMoves BoneAnimation
+  sprites can now scale along with it. Added an
+  AlphaMeshCollider toggle parameter
+  "SmoothMoves Scale Anim" to enable this behaviour.
+
+- 2D Toolkit related:
+  Changed the location of the ColliderGenTK2DParameterStore
+  code file from Editor to Scripts directory. This prevents
+  a problem that occurred with later versions of the Mono
+  Compiler. Unfortunately, all ColliderGenParameters.prefab
+  files that stored parameters for convenience of each
+  sprite in a collection are no longer compatible and will
+  be treated as non-existent.
+
+-----------------------------------------------------------
+Version 1.1
+-----------------------------------------------------------
+
+Compatibility:
+-  This version is compatible with SmoothMoves V2.2.0 again.
+   (Fixed BoneAnimation problems introduced with this
+    SmoothMoves version - member variables have changed.)
+
+New Features:
+-  Added support for OTTileMap. There is now a menu entry
+   "2D ColliderGen/Orthello Specific/Add AlphaMesh Colliders To OTTileMap".
+
+Bugfixes:
+-  Previously the bottom-left pixel was not included in the
+   outline of objects. This lead to an incorrectly bevelled
+   bottom-left corner at a square box (and the outline had
+   5 vertices instead of 4).
+   
+-  Fixed a bug with Alpha Opaque Threshold not being
+   synchronized across all instances of a collider-group.
+
+-----------------------------------------------------------
+Version 1.0
+-----------------------------------------------------------
+-  Initial Release on the Asset Store

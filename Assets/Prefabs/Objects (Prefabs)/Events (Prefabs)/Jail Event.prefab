@@ -1,0 +1,137 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1766064088474698176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9034556810785095234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d11fd83ca6977549822286a514541b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handleMultipleInstances: 0
+  setInstance: 1
+  persistant: 0
+  trs: {fileID: 9034556810785095233}
+  beginTimer:
+    duration: 30
+    timeRemaining: 0
+    loop: 0
+    pauseIfCan: 0
+    realtime: 1
+    canBePaused: 0
+    autoStopIfNotLooping: 1
+  participators: []
+  hasStarted: 0
+  spriteRenderer: {fileID: 1550218215943398003}
+  startedColor: {r: 1, g: 0, b: 0, a: 1}
+  timerVisualizerTrs: {fileID: 1714415290059676619}
+  collider: {fileID: 5041270067429087967}
+--- !u!1001 &8845472486580890641
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 549544506207982163, guid: 1d669843db12fad7e861245913e7b992,
+        type: 3}
+      propertyPath: m_Name
+      value: Jail Event
+      objectReference: {fileID: 0}
+    - target: {fileID: 549544506207982160, guid: 1d669843db12fad7e861245913e7b992,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 549544506207982160, guid: 1d669843db12fad7e861245913e7b992,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 549544506207982160, guid: 1d669843db12fad7e861245913e7b992,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 549544506207982160, guid: 1d669843db12fad7e861245913e7b992,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 549544506207982160, guid: 1d669843db12fad7e861245913e7b992,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 549544506207982160, guid: 1d669843db12fad7e861245913e7b992,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 549544506207982160, guid: 1d669843db12fad7e861245913e7b992,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 549544506207982160, guid: 1d669843db12fad7e861245913e7b992,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 549544506207982160, guid: 1d669843db12fad7e861245913e7b992,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 549544506207982160, guid: 1d669843db12fad7e861245913e7b992,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 549544506207982160, guid: 1d669843db12fad7e861245913e7b992,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 253941505358974817, guid: 1d669843db12fad7e861245913e7b992,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5268918061366086416, guid: 1d669843db12fad7e861245913e7b992, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 1d669843db12fad7e861245913e7b992, type: 3}
+--- !u!1 &9034556810785095234 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 549544506207982163, guid: 1d669843db12fad7e861245913e7b992,
+    type: 3}
+  m_PrefabInstance: {fileID: 8845472486580890641}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &9034556810785095233 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 549544506207982160, guid: 1d669843db12fad7e861245913e7b992,
+    type: 3}
+  m_PrefabInstance: {fileID: 8845472486580890641}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1550218215943398003 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 8016993503059922530, guid: 1d669843db12fad7e861245913e7b992,
+    type: 3}
+  m_PrefabInstance: {fileID: 8845472486580890641}
+  m_PrefabAsset: {fileID: 0}
+--- !u!58 &5041270067429087967 stripped
+CircleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 4555213137767216846, guid: 1d669843db12fad7e861245913e7b992,
+    type: 3}
+  m_PrefabInstance: {fileID: 8845472486580890641}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1714415290059676619 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7857582620105013210, guid: 1d669843db12fad7e861245913e7b992,
+    type: 3}
+  m_PrefabInstance: {fileID: 8845472486580890641}
+  m_PrefabAsset: {fileID: 0}

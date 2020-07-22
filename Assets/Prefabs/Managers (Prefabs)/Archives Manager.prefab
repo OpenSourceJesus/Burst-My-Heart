@@ -1,0 +1,1451 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2986264895327231434
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 588853831209018630}
+  - component: {fileID: 3081963756138004906}
+  - component: {fileID: 7291061655061094418}
+  m_Layer: 0
+  m_Name: Account 2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &588853831209018630
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2986264895327231434}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3437111313120824809}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3081963756138004906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2986264895327231434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1615c939064a42decbed8ddc61203583, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: -979924602
+  username: 
+  password: 
+  offlineData:
+    battleMode:
+      versusHuman:
+        data:
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        noSwitchingVariant:
+          data:
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchPositionsVariant:
+          data:
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchControlVariant:
+          data:
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+      versusAI:
+        data:
+          opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        noSwitchingVariant:
+          data:
+            opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchPositionsVariant:
+          data:
+            opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchControlVariant:
+          data:
+            opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+  onlineData:
+    accountName: 
+    kills: 0
+    deaths: 0
+    killDeathRatio: 0
+    highscore: 0
+--- !u!114 &7291061655061094418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2986264895327231434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1232418d16bf97147a2a832580bd70e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: -366426
+  saveableChildren:
+  - {fileID: 588853831209018630}
+  typeId: Account Data
+--- !u!1 &3054137984960617901
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 709619818115271237}
+  - component: {fileID: 2096136259986309518}
+  m_Layer: 0
+  m_Name: New Account
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &709619818115271237
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3054137984960617901}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3437111313120824809}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2096136259986309518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3054137984960617901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1615c939064a42decbed8ddc61203583, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: 1137345965
+  username: 
+  password: 
+  offlineData:
+    battleMode:
+      versusHuman:
+        data:
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        noSwitchingVariant:
+          data:
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchPositionsVariant:
+          data:
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchControlVariant:
+          data:
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+      versusAI:
+        data:
+          opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        noSwitchingVariant:
+          data:
+            opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchPositionsVariant:
+          data:
+            opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchControlVariant:
+          data:
+            opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+  onlineData:
+    accountName: 
+    kills: 0
+    deaths: 0
+    killDeathRatio: 0
+    highscore: 0
+--- !u!1 &3627072013681146228
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3162134253598497210}
+  - component: {fileID: 615658398795606129}
+  - component: {fileID: 6086460379438298920}
+  m_Layer: 0
+  m_Name: Account 3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3162134253598497210
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3627072013681146228}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3437111313120824809}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &615658398795606129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3627072013681146228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1615c939064a42decbed8ddc61203583, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: 495198475
+  username: 
+  password: 
+  offlineData:
+    battleMode:
+      versusHuman:
+        data:
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        noSwitchingVariant:
+          data:
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchPositionsVariant:
+          data:
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchControlVariant:
+          data:
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+      versusAI:
+        data:
+          opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        noSwitchingVariant:
+          data:
+            opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchPositionsVariant:
+          data:
+            opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchControlVariant:
+          data:
+            opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+  onlineData:
+    accountName: 
+    kills: 0
+    deaths: 0
+    killDeathRatio: 0
+    highscore: 0
+--- !u!114 &6086460379438298920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3627072013681146228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1232418d16bf97147a2a832580bd70e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: 114820454
+  saveableChildren:
+  - {fileID: 3162134253598497210}
+  typeId: Account Data
+--- !u!1 &4054694364449232820
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3437111313120824809}
+  - component: {fileID: 7177395396682726876}
+  m_Layer: 0
+  m_Name: Archives Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3437111313120824809
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4054694364449232820}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 709619818115271237}
+  - {fileID: 1873211631219535678}
+  - {fileID: 588853831209018630}
+  - {fileID: 3162134253598497210}
+  - {fileID: 7894505326372546599}
+  - {fileID: 3231482332439582504}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7177395396682726876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4054694364449232820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7890c3cb2b74c80b68e7ac2f4d92b2d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handleMultipleInstances: 0
+  setInstance: 1
+  persistant: 0
+  localAccountsData:
+  - {fileID: 3293935961306354483}
+  - {fileID: 3081963756138004906}
+  - {fileID: 615658398795606129}
+  - {fileID: 629664980019926816}
+  - {fileID: 901969710763366268}
+  localAccountsInfos:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  newAccountData: {fileID: 2096136259986309518}
+  addAccountOption: {fileID: 0}
+  accountOptions:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  viewInfoMenuOptions:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  deleteAccountScreen: {fileID: 0}
+  deleteAccountText: {fileID: 0}
+--- !u!1 &5554477348648289893
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1873211631219535678}
+  - component: {fileID: 3293935961306354483}
+  - component: {fileID: 5553228652926184035}
+  m_Layer: 0
+  m_Name: Account 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1873211631219535678
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5554477348648289893}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3437111313120824809}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3293935961306354483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5554477348648289893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1615c939064a42decbed8ddc61203583, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: 783886098
+  username: 
+  password: 
+  offlineData:
+    battleMode:
+      versusHuman:
+        data:
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        noSwitchingVariant:
+          data:
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchPositionsVariant:
+          data:
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchControlVariant:
+          data:
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+      versusAI:
+        data:
+          opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        noSwitchingVariant:
+          data:
+            opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchPositionsVariant:
+          data:
+            opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchControlVariant:
+          data:
+            opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+  onlineData:
+    accountName: 
+    kills: 0
+    deaths: 0
+    killDeathRatio: 0
+    highscore: 0
+--- !u!114 &5553228652926184035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5554477348648289893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1232418d16bf97147a2a832580bd70e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: 484966736
+  saveableChildren:
+  - {fileID: 1873211631219535678}
+  typeId: Account Data
+--- !u!1 &6680943737678239768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3231482332439582504}
+  - component: {fileID: 901969710763366268}
+  - component: {fileID: 5755540579668485773}
+  m_Layer: 0
+  m_Name: Account 5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3231482332439582504
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6680943737678239768}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3437111313120824809}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &901969710763366268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6680943737678239768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1615c939064a42decbed8ddc61203583, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: -1851831483
+  username: 
+  password: 
+  offlineData:
+    battleMode:
+      versusHuman:
+        data:
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        noSwitchingVariant:
+          data:
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchPositionsVariant:
+          data:
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchControlVariant:
+          data:
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+      versusAI:
+        data:
+          opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        noSwitchingVariant:
+          data:
+            opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchPositionsVariant:
+          data:
+            opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchControlVariant:
+          data:
+            opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+  onlineData:
+    accountName: 
+    kills: 0
+    deaths: 0
+    killDeathRatio: 0
+    highscore: 0
+--- !u!114 &5755540579668485773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6680943737678239768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1232418d16bf97147a2a832580bd70e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: 1516100680
+  saveableChildren:
+  - {fileID: 3231482332439582504}
+  typeId: Account Data
+--- !u!1 &8480636366451561908
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7894505326372546599}
+  - component: {fileID: 629664980019926816}
+  - component: {fileID: 3077503061382199822}
+  m_Layer: 0
+  m_Name: Account 4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7894505326372546599
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8480636366451561908}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3437111313120824809}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &629664980019926816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8480636366451561908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1615c939064a42decbed8ddc61203583, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: 1745920449
+  username: 
+  password: 
+  offlineData:
+    battleMode:
+      versusHuman:
+        data:
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        - opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        noSwitchingVariant:
+          data:
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchPositionsVariant:
+          data:
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchControlVariant:
+          data:
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+          - opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+      versusAI:
+        data:
+          opponentNameString: 
+          accountName: 
+          totalFairKills: 0
+          totalFairDeaths: 0
+          fairKillDeathRatio: 0
+          maxSpeedDisadvantage: 0
+        noSwitchingVariant:
+          data:
+            opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchPositionsVariant:
+          data:
+            opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+        switchControlVariant:
+          data:
+            opponentNameString: 
+            accountName: 
+            totalFairKills: 0
+            totalFairDeaths: 0
+            fairKillDeathRatio: 0
+            maxSpeedDisadvantage: 0
+  onlineData:
+    accountName: 
+    kills: 0
+    deaths: 0
+    killDeathRatio: 0
+    highscore: 0
+--- !u!114 &3077503061382199822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8480636366451561908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1232418d16bf97147a2a832580bd70e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: 1631462168
+  saveableChildren:
+  - {fileID: 7894505326372546599}
+  typeId: Account Data

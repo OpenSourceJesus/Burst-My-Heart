@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: 1fa459b73e5712a4a95e3e71655b8767
+labels:
+- Control
+- Controller
+- Controllers
+- DirectInput
+- RawInput
+- Gamepad
+- Hotplugging
+- Input
+- InputManager
+- Joystick
+- Joysticks
+- Keyboard
+- Mouse
+- Rewired
+- Touch
+- XInput
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: prefabs 2
+  assetBundleVariant: 

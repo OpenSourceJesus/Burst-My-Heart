@@ -1,0 +1,132 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Extensions;
+
+namespace BMH
+{
+	[ExecuteAlways]
+	[DisallowMultipleComponent]
+	public class EnemyGroup : MonoBehaviour, ISavableAndLoadable
+	{
+		public Transform trs;
+		public Enemy_Follow[] enemies;
+		[HideInInspector]
+		public Transform duplicate;
+		public CompositeCollider2D compositeCollider2D;
+		[HideInInspector]
+		public int difficulty;
+		[HideInInspector]
+		[SaveAndLoadValue]
+		public bool defeated;
+		public Color defeatedColor;
+		[HideInInspector]
+		public SpriteRenderer[] visionVisualizers = new SpriteRenderer[0];
+		public string Name
+		{
+			get
+			{
+				return name;
+			}
+			set
+			{
+				name = value;
+			}
+		}
+		public int uniqueId;
+		public int UniqueId
+		{
+			get
+			{
+				return uniqueId;
+			}
+			set
+			{
+				uniqueId = value;
+			}
+		}
+
+		public virtual void Awake ()
+		{
+			enemies = GetComponentsInChildren<Enemy_Follow>();
+			EnemyGroup enemyGroup;
+			for (int i = 0; i < enemies.Length; i ++)
+			{
+				enemyGroup = enemies[i].GetComponent<EnemyGroup>();
+				if (enemyGroup != null && enemyGroup != this)
+				{
+					enemies = enemies.RemoveAt_class(i);
+					i --;
+				}
+			}
+
+#if UNITY_EDITOR
+			if (!Application.isPlaying)
+			{
+				if (uniqueId == 0)
+				{
+					do
+					{
+						uniqueId = Random.Range(int.MinValue, int.MaxValue);
+					}
+					while (GameManager.UniqueIds.Contains(uniqueId));
+					GameManager.UniqueIds = GameManager.UniqueIds.Add(uniqueId);
+				}
+				return;
+			}
+#endif
+			difficulty = enemies.Length;
+			foreach (Enemy_Follow enemy in enemies)
+			{
+				enemy.enemyGroup = this;
+				enemy.enabled = false;
+				enemy.UpdateGraphics ();
+			}
+		}
+
+#if UNITY_EDITOR
+		public virtual void Reset ()
+		{
+			Awake ();
+		}
+#endif
+
+		public virtual void OnDisable ()
+		{
+		}
+
+		public virtual void OnDefeat ()
+		{
+			if (defeated)
+				return;
+			defeated = true;
+			RPG.instance.AddScore (difficulty);
+			foreach (Enemy_Follow enemy in enemies)
+				enemy.visionVisualizer.color = defeatedColor;
+			GameManager.GetSingleton<HumanPlayer>().nameOfEnemyGroupImInside = null;
+			GameManager.GetSingleton<SaveAndLoadManager>().Save ();
+		}
+
+		public virtual void OnTriggerEnter2D (Collider2D other)
+		{
+			if (other.gameObject != GameManager.GetSingleton<HumanPlayer>().body.gameObject || !enabled)
+				return;
+			duplicate = Instantiate(trs, trs.parent);
+			duplicate.gameObject.SetActive(false);
+			compositeCollider2D.generationType = CompositeCollider2D.GenerationType.Manual;
+			foreach (Enemy_Follow enemy in enemies)
+				enemy.enabled = true;
+			GameManager.GetSingleton<HumanPlayer>().nameOfEnemyGroupImInside = name.Replace("(Clone)", "");
+			// if (GameManager.GetSingleton<SaveAndLoadManager>() != null)
+				GameManager.GetSingleton<SaveAndLoadManager>().Save ();
+		}
+
+		public virtual void OnTriggerExit2D (Collider2D other)
+		{
+			if (other.gameObject != GameManager.GetSingleton<HumanPlayer>().body.gameObject || !enabled)
+				return;
+			Destroy(trs.gameObject);
+			duplicate.gameObject.SetActive(true);
+		}
+	}
+}

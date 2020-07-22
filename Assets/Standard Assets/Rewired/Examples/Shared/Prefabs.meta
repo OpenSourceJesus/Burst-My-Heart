@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 260a6243538b4e148b6b860ca0eeb1d7
+labels:
+- Input
+- Joysticks
+- Controllers
+- Rewired
+- Hotplugging
+- Keyboard
+- Mouse
+- Touch
+folderAsset: yes
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
