@@ -75,5 +75,28 @@ namespace Extensions
 				angle += Mathf.Sign(360 - angle) * 360;
 			return angle;
 		}
+
+		public static float ClampAngle (float ang, float min, float max)
+		{
+			ang = WrapAngle(ang);
+			min = WrapAngle(min);
+			max = WrapAngle(max);
+			float minDist = Mathf.Min(Mathf.DeltaAngle(ang, min), Mathf.DeltaAngle(ang, max));
+			if (WrapAngle(ang + Mathf.DeltaAngle(ang, minDist)) == min)
+				return min;
+			else if (WrapAngle(ang + Mathf.DeltaAngle(ang, minDist)) == max)
+				return max;
+			else
+				return ang;
+		}
+
+		public static float WrapAngle (float ang)
+		{
+			if (ang < 0)
+				ang += 360;
+			else if (ang > 360)
+				ang = 360 - ang;
+			return ang;
+		}
 	}
 }

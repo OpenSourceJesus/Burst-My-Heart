@@ -41,10 +41,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2986264895327231434}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1615c939064a42decbed8ddc61203583, type: 3}
+  m_Script: {fileID: 11500000, guid: bb65a5bcfff428b41961e175693fd846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: -979924602
+  uniqueId: 0
   username: 
   password: 
   offlineData:
@@ -271,10 +271,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3054137984960617901}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1615c939064a42decbed8ddc61203583, type: 3}
+  m_Script: {fileID: 11500000, guid: bb65a5bcfff428b41961e175693fd846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 1137345965
+  uniqueId: 0
   username: 
   password: 
   offlineData:
@@ -486,10 +486,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3627072013681146228}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1615c939064a42decbed8ddc61203583, type: 3}
+  m_Script: {fileID: 11500000, guid: bb65a5bcfff428b41961e175693fd846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 495198475
+  uniqueId: 0
   username: 
   password: 
   offlineData:
@@ -726,7 +726,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handleMultipleInstances: 0
-  setInstance: 1
   persistant: 0
   localAccountsData:
   - {fileID: 3293935961306354483}
@@ -734,12 +733,6 @@ MonoBehaviour:
   - {fileID: 615658398795606129}
   - {fileID: 629664980019926816}
   - {fileID: 901969710763366268}
-  localAccountsInfos:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   newAccountData: {fileID: 2096136259986309518}
   addAccountOption: {fileID: 0}
   accountOptions:
@@ -756,6 +749,11 @@ MonoBehaviour:
   - {fileID: 0}
   deleteAccountScreen: {fileID: 0}
   deleteAccountText: {fileID: 0}
+  accountInfoScreen: {fileID: 0}
+  accountInfoTitleText: {fileID: 0}
+  accountInfoContentText: {fileID: 0}
+  accountInfoScrollbar: {fileID: 0}
+  trs: {fileID: 3437111313120824809}
 --- !u!1 &5554477348648289893
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,10 +795,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5554477348648289893}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1615c939064a42decbed8ddc61203583, type: 3}
+  m_Script: {fileID: 11500000, guid: bb65a5bcfff428b41961e175693fd846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 783886098
+  uniqueId: 0
   username: 
   password: 
   offlineData:
@@ -1028,10 +1026,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6680943737678239768}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1615c939064a42decbed8ddc61203583, type: 3}
+  m_Script: {fileID: 11500000, guid: bb65a5bcfff428b41961e175693fd846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: -1851831483
+  uniqueId: 0
   username: 
   password: 
   offlineData:
@@ -1259,10 +1257,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8480636366451561908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1615c939064a42decbed8ddc61203583, type: 3}
+  m_Script: {fileID: 11500000, guid: bb65a5bcfff428b41961e175693fd846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 1745920449
+  uniqueId: 0
   username: 
   password: 
   offlineData:

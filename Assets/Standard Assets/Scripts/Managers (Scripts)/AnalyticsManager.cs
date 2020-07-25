@@ -7,6 +7,7 @@ using System.Reflection;
 using UnityEngine.SceneManagement;
 using Extensions;
 using System.IO;
+using PlayerIOClient;
 
 namespace BMH.Analytics
 {
@@ -54,17 +55,6 @@ namespace BMH.Analytics
 				SaveAndLoadManager.SetValue("Session Number", value);
 			}
 		}
-		public int PreviousTotalGameplayDuration
-		{
-			get
-			{
-				return SaveAndLoadManager.GetValue<int>("Total Gameplay Duration", 0);
-			}
-			set
-			{
-				SaveAndLoadManager.SetValue("Total Gameplay Duration", value);
-			}
-		}
 		public static Dictionary<string, AnalyticsManager> analyticsManagers = new Dictionary<string, AnalyticsManager>();
 		public Timer sessionTimer;
 		public Timer timerSinceLastLog;
@@ -94,7 +84,6 @@ namespace BMH.Analytics
 
 		public virtual void OnApplicationQuit ()
 		{
-			PreviousTotalGameplayDuration += Mathf.RoundToInt(sessionTimer.TimeElapsed);
 			SessionNumber ++;
 		}
 		
@@ -123,12 +112,12 @@ namespace BMH.Analytics
 				yield break;
 			_event.LogData (this);
 			if (LogAnalyticsLocally)
-				LogEventLocally (_event);
-			yield return StartCoroutine(LogEventOnline(_event));
+				LogNextEventLocally ();
+			yield return StartCoroutine(LogNextEventOnline());
 			yield break;
 		}
 
-		public virtual IEnumerator LogEventOnline (AnalyticsEvent _event)
+		public virtual IEnumerator LogNextEventOnline ()
 		{
 			if (!CollectAnalytics)
 				yield break;
@@ -144,7 +133,7 @@ namespace BMH.Analytics
 			yield break;
 		}
 
-		public virtual void LogEventLocally (AnalyticsEvent _event)
+		public virtual void LogNextEventLocally ()
 		{
 			if (!CollectAnalytics || !LogAnalyticsLocally)
 				return;
@@ -173,7 +162,7 @@ namespace BMH.Analytics
 						currentLogFileLine += FILLER_CHARACTER;
 					currentLogFileLine += VALUE_SEPERATOR;
 				}
-				currentLogFileLines = currentLogFileLines.Add_class(currentLogFileLine);
+				currentLogFileLines = currentLogFileLines.Add(currentLogFileLine);
 				foreach (string line in currentLogFileLines)
 					writer.Write("\n" + line);
 			}
@@ -366,7 +355,7 @@ namespace BMH.Analytics
 		{
 			public override string GetValue (AnalyticsManager analyticsManager)
 			{
-				return "" + (analyticsManager.PreviousTotalGameplayDuration + analyticsManager.sessionTimer.TimeElapsed);
+				return "" + (TimeManager.TotalGameplayDuration + analyticsManager.sessionTimer.TimeElapsed);
 			}
 		}
 

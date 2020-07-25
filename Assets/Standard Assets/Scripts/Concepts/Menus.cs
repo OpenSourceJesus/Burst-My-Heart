@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace BMH
 {
-	[ExecuteAlways]
+	//[ExecuteAlways]
 	public class Menus : SingletonMonoBehaviour<Menus>, IUpdatable
 	{
 		float repeatTimer;
@@ -40,6 +40,7 @@ namespace BMH
 		public TextMesh[] toggleAllEventsTextMeshes = new TextMesh[0];
 		public TextMesh[] toggleWindEventTextMeshes = new TextMesh[0];
 		public TextMesh[] toggleScoreMultiplierEventTextMeshes = new TextMesh[0];
+		// public GameObject goFullscreenIndicator;
 		public bool PauseWhileUnfocused
 		{
 			get
@@ -51,57 +52,43 @@ namespace BMH
 		public override void Awake ()
 		{
 #if UNITY_EDITOR
-	    	if (!Application.isPlaying)
-	    	{
-		    	if (descriptionTextMesh == null)
-		    		descriptionTextMesh = GameObject.Find("Fade Text").GetComponent<TextMesh>();
-	    		// if (menus.Length == 0)
-		    	// 	menus = FindObjectsOfType<Menu>();
-	    		return;
-	    	}
-#endif
-			if (!enabled)
+			if (!Application.isPlaying)
+			{
+				if (descriptionTextMesh == null)
+					descriptionTextMesh = GameObject.Find("Fade Text").GetComponent<TextMesh>();
+				// if (menus.Length == 0)
+				// 	menus = FindObjectsOfType<Menu>();
 				return;
+			}
+#endif
 			menus = FindObjectsOfType<Menu>();
-			for (int i = 0; i < menus.Length; i ++)
-			{
-				if (!menus[i].trs.root.GetComponent<Menus>().enabled)
-				{
-					menus = menus.RemoveAt(i);
-					i --;
-				}
-			}
 			UpdateToggleEventTextMeshes ();
-	    	base.Awake ();
-			if (Player.players.Length == 0)
+			base.Awake ();
+			Player.players = FindObjectsOfType<Player>();
+			foreach (Player player in Player.players)
 			{
-				Player.players = FindObjectsOfType<Player>();
-				foreach (Player player in Player.players)
-				{
-					player.body.Hp = player.body.maxHp;
-					player.trs.position = Random.insideUnitCircle * randomizePlayerPositionsRange;
-					player.trs.eulerAngles = Vector3.forward * Random.value * 360;
-				}
+				player.body.Hp = player.body.maxHp;
+				player.trs.position = Random.insideUnitCircle * randomizePlayerPositionsRange;
+				player.trs.eulerAngles = Vector3.forward * Random.value * 360;
 			}
-			GameManager.singletons.Remove(GetType());
-			GameManager.singletons.Add(GetType(), this);
 		}
 
 		public virtual void OnEnable ()
+		// public virtual void Start ()
 		{
 #if UNITY_EDITOR
-	    	if (!Application.isPlaying)
-	    		return;
+			if (!Application.isPlaying)
+				return;
 #endif
-			if (enabled)
-				GameManager.updatables = GameManager.updatables.Add(this);
+			GameManager.updatables = GameManager.updatables.Add(this);
 		}
 
 		public virtual void OnDisable ()
+		// public virtual void OnDestroy ()
 		{
 #if UNITY_EDITOR
-	    	if (!Application.isPlaying)
-	    		return;
+			if (!Application.isPlaying)
+				return;
 #endif
 			GameManager.updatables = GameManager.updatables.Remove(this);
 		}
@@ -146,7 +133,7 @@ namespace BMH
 
 		public virtual void DoUpdate ()
 		{
-	    	foreach (Menu menu in menus)
+			foreach (Menu menu in menus)
 			{
 				if (menu != null)
 					menu.trs.rotation = Quaternion.Slerp(menu.trs.rotation, Quaternion.Euler(Vector3.forward * 360f / menu.trs.childCount * menu.currentSelection), slerpRate * Time.deltaTime);
@@ -162,16 +149,16 @@ namespace BMH
 				else
 				{
 					repeatTimer += Time.deltaTime;
-					if (repeatTimer >= repeatRate)
+					while (repeatTimer >= repeatRate)
 					{
 						ChangeSelectionVertical ((int) Mathf.Sign(input.y));
-						repeatTimer = 0;
+						repeatTimer -= repeatRate;
 					}
 				}
 			}
 			GameManager.GetSingleton<CameraScript>().trs.position = Vector3.Lerp(GameManager.GetSingleton<CameraScript>().trs.position, currentMenu.trs.position + cameraOffset, cameraLerpRate * Time.deltaTime);
 			GameManager.GetSingleton<CameraScript>().trs.eulerAngles = cameraRota;
-	        GameManager.GetSingleton<CameraScript>().trs.GetChild(0).gameObject.SetActive(true);
+			GameManager.GetSingleton<CameraScript>().trs.GetChild(0).gameObject.SetActive(true);
 			float descriptionTextMeshColorAlpha = descriptionTextMesh.color.a;
 			if (descriptionTextMeshColorAlpha <= minDescriptionTextMeshColorAlpha)
 			{
@@ -184,6 +171,7 @@ namespace BMH
 				ChangeSelectionHorizonal ((int) Mathf.Sign(input.x));
 			prevHorizontalAxis = input.x;
 			prevVerticalAxis = input.y;
+			// goFullscreenIndicator.SetActive(Screen.width > GameManager.windowSize.x);
 		}
 
 		public virtual void ChangeSelectionVertical (int direction)
@@ -197,29 +185,28 @@ namespace BMH
 			desiredDescriptionAlpha = 0;
 		}
 
-	    public virtual void SetCurrentMenu (Menu menu)
-	    {
-	        currentMenu = menu;
-	        currentMenu.enabled = true;
-	        currentMenu.Awake ();
-	    }
+		public virtual void SetCurrentMenu (Menu menu)
+		{
+			currentMenu = menu;
+			currentMenu.Awake ();
+		}
 
-	    public virtual void SetCurrentSelection (int selection)
-	    {
+		public virtual void SetCurrentSelection (int selection)
+		{
 			currentMenu.SetCurrentSelection (selection);
-	    }
+		}
 
-	    public virtual Vector2 GetInput ()
-	    {
-	    	Vector2 output = new Vector2();
-	    	output.x = InputManager.inputters[0].GetAxis("Menu Horizontal") + InputManager.inputters[1].GetAxis("Menu Horizontal") + horizontalKeyboardAxis.Get();
-	    	output.y = InputManager.inputters[0].GetAxis("Menu Vertical") + InputManager.inputters[1].GetAxis("Menu Vertical") + verticalKeyboardAxis.Get();
-	    	if (autoClickAfterInput != null && output != new Vector2())
-	    	{
-	    		autoClickAfterInput.onClick.Invoke();
-	    		autoClickAfterInput = null;
-	    	}
-	    	return output;
-	    }
+		public virtual Vector2 GetInput ()
+		{
+			Vector2 output = new Vector2();
+			output.x = InputManager.inputters[0].GetAxis("Menu Horizontal") + InputManager.inputters[1].GetAxis("Menu Horizontal") + horizontalKeyboardAxis.Get();
+			output.y = InputManager.inputters[0].GetAxis("Menu Vertical") + InputManager.inputters[1].GetAxis("Menu Vertical") + verticalKeyboardAxis.Get();
+			if (autoClickAfterInput != null && output != new Vector2())
+			{
+				autoClickAfterInput.onClick.Invoke();
+				autoClickAfterInput = null;
+			}
+			return output;
+		}
 	}
 }

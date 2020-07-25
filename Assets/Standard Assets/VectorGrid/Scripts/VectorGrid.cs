@@ -14,12 +14,11 @@ using Extensions;
 /// Main vector grid class. Controls a set of grid points which can be affected by movement of their
 /// neighbors (via springs connecting them) and also by external forces directly applying velocity changes
 /// </summary>
-[ExecuteAlways]
+[ExecuteInEditMode]
 [RequireComponent (typeof(MeshFilter), (typeof(MeshRenderer)))]
 [AddComponentMenu("Vector Grid/Vector Grid")]
-public class VectorGrid : SingletonMonoBehaviour<VectorGrid>, IUpdatable
+public class VectorGrid : MonoBehaviour, IUpdatable
 {
-	public Transform trs;
 	public bool PauseWhileUnfocused
 	{
 		get
@@ -27,6 +26,7 @@ public class VectorGrid : SingletonMonoBehaviour<VectorGrid>, IUpdatable
 			return GameManager.GetSingleton<OnlineBattle>() == null;
 		}
 	}
+	public Transform trs;
 	
 	// How many grid points make up the grid in each direction
 	public int m_GridWidth = 16;
@@ -114,7 +114,7 @@ public class VectorGrid : SingletonMonoBehaviour<VectorGrid>, IUpdatable
 
 	// Assign a camera to this field and the mesh will automatically scroll to match the movement
 	// of the camera
-	public Transform trackedCameraTrs;
+	public Camera m_TrackedCamera;
 
 	// When using a tracked camera, this value controls whether it will scroll faster or slower
 	// than the camera's movement, providing a parallax effect
@@ -149,19 +149,18 @@ public class VectorGrid : SingletonMonoBehaviour<VectorGrid>, IUpdatable
 	/// <summary>
 	/// Start this instance.
 	/// </summary>
-	public override void Awake () 
+	public virtual void Awake () 
 	{
 #if UNITY_EDITOR
 		if (!Application.isPlaying)
 			return;
 #endif
-		base.Awake ();
 		m_Mesh = new Mesh();
-		m_Mesh.name = name + " Mesh";
+		m_Mesh.name = this.name + " Mesh";
 		m_Mesh.MarkDynamic();
 		GetComponent<MeshFilter>().mesh = m_Mesh;
 		InitGrid();
-		GameManager.updatables = GameManager.updatables.Add_class(this);
+		GameManager.updatables = GameManager.updatables.Add(this);
 	}
 
 	public virtual void OnDestroy ()
@@ -170,7 +169,7 @@ public class VectorGrid : SingletonMonoBehaviour<VectorGrid>, IUpdatable
 		if (!Application.isPlaying)
 			return;
 #endif
-		GameManager.updatables = GameManager.updatables.Remove_class(this);
+		GameManager.updatables = GameManager.updatables.Remove(this);
 	}
 
 	/// <summary>
@@ -294,49 +293,45 @@ public class VectorGrid : SingletonMonoBehaviour<VectorGrid>, IUpdatable
 	/// <summary>
 	/// Update this instance.
 	/// </summary>
-	public virtual void DoUpdate() 
-	{	
-#if UNITY_EDITOR
-		if (!Application.isPlaying)
-			return;
-#endif
-		if(m_EnableDiagnostics)
-		{
-			m_StopWatch.Reset();
-			m_StopWatch.Start();
-		}
+	public virtual void DoUpdate () 
+	{
+		// if(m_EnableDiagnostics)
+		// {
+		// 	m_StopWatch.Reset();
+		// 	m_StopWatch.Start();
+		// }
 
-		if(m_FirstUpdate)
-		{
-			m_InitialPosition = trs.localPosition;
-		}
+		// if(m_FirstUpdate)
+		// {
+		// 	m_InitialPosition = trs.localPosition;
+		// }
 
 		// Reset the grid if the user has changed the dimensions
-		if(m_RenderMode != RenderMode.Sphere && m_VectorGridPoints != null &&
-			(m_VectorGridPoints.GetLength(0) != m_GridWidth || m_VectorGridPoints.GetLength(1) != m_GridHeight))
-		{
-			InitGrid();
-		}
+		// if(m_RenderMode != RenderMode.Sphere && m_VectorGridPoints != null &&
+		// 	(m_VectorGridPoints.GetLength(0) != m_GridWidth || m_VectorGridPoints.GetLength(1) != m_GridHeight))
+		// {
+		// 	InitGrid();
+		// }
 
 		UpdateGrid();
 		UpdateMesh();
 
-		if(m_DebugDraw)
-		{
-			DebugDrawGrid();
-		}
+		// if(m_DebugDraw)
+		// {
+		// 	DebugDrawGrid();
+		// }
 
-		if(m_EnableDiagnostics)
-		{
-			m_StopWatch.Stop();
-			m_FrameTimes[m_FrameTimeIndex] = m_StopWatch.Elapsed.TotalMilliseconds;
-			m_FrameTimeIndex++;
+		// if(m_EnableDiagnostics)
+		// {
+		// 	m_StopWatch.Stop();
+		// 	m_FrameTimes[m_FrameTimeIndex] = m_StopWatch.Elapsed.TotalMilliseconds;
+		// 	m_FrameTimeIndex++;
 
-			if(m_FrameTimeIndex >= m_FrameTimes.Length)
-			{
-				m_FrameTimeIndex = 0;
-			}
-		}
+		// 	if(m_FrameTimeIndex >= m_FrameTimes.Length)
+		// 	{
+		// 		m_FrameTimeIndex = 0;
+		// 	}
+		// }
 	}
 
 #if UNITY_EDITOR
@@ -363,35 +358,42 @@ public class VectorGrid : SingletonMonoBehaviour<VectorGrid>, IUpdatable
 	/// <summary>
 	/// Late update - scroll the grid if there is a tracked camera present
 	/// </summary>
-	void LateUpdate()
-	{ 
-		if (trackedCameraTrs != null)
-		{
-			if (!m_FirstUpdate)
-			{
-				Vector3 cameraMovement = trackedCameraTrs.position - m_PrevCameraPosition;
-				if (!m_AllowHorizontalScroll)
-					cameraMovement.x = 0;
-				if (!m_AllowVerticalScroll)
-					cameraMovement.y = 0;
-				trs.localPosition += cameraMovement;
-				Scroll(new Vector2(-cameraMovement.x * m_ParallaxScroll.x, -cameraMovement.y * m_ParallaxScroll.y));
-			}
+	// void LateUpdate()
+	// { 
+	// 	if(m_TrackedCamera)
+	// 	{
+	// 		if(!m_FirstUpdate)
+	// 		{
+	// 			Vector3 cameraMovement = m_TrackedCamera.transform.position - m_PrevCameraPosition;
 
-			m_PrevCameraPosition = trackedCameraTrs.position;
-			m_FirstUpdate = false;
-		}
-	}
+	// 			if(!m_AllowHorizontalScroll)
+	// 			{
+	// 				cameraMovement.x = 0;
+	// 			}
+				
+	// 			if(!m_AllowVerticalScroll)
+	// 			{
+	// 				cameraMovement.y = 0;
+	// 			}
+
+	// 			trs.localPosition += cameraMovement;
+	// 			Scroll(new Vector2(-cameraMovement.x * m_ParallaxScroll.x, -cameraMovement.y * m_ParallaxScroll.y));
+	// 		}
+
+	// 		m_PrevCameraPosition = m_TrackedCamera.transform.position;
+	// 		m_FirstUpdate = false;
+	// 	}
+	// }
 
 	/// <summary>
 	/// Reset the grid - undoes any vertex movement and resets the position if following a camera
 	/// </summary>
 	public void Reset()
 	{
-		if (trackedCameraTrs != null)
+		if(m_TrackedCamera)
 		{
 			trs.localPosition = m_InitialPosition;
-			m_PrevCameraPosition = trackedCameraTrs.position;
+			m_PrevCameraPosition = Camera.main.transform.position;
 		}
 
 		m_XRowStart = 0;

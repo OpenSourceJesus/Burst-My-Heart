@@ -5,7 +5,7 @@ using Extensions;
 
 namespace BMH
 {
-	[ExecuteAlways]
+	//[ExecuteAlways]
 	[DisallowMultipleComponent]
 	public class _Transform : MonoBehaviour
 	{

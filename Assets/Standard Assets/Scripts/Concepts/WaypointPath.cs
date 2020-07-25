@@ -7,7 +7,7 @@ using Extensions;
 
 namespace BMH
 {
-	[ExecuteAlways]
+	//[ExecuteAlways]
 	public class WaypointPath : MonoBehaviour
 	{
 		public Transform trs;
@@ -31,7 +31,7 @@ namespace BMH
 					foreach (Transform waypoint in GetComponentsInChildren<Transform>())
 					{
 						if (waypoint != trs)
-							waypoints.Add_class(waypoint);
+							waypoints.Add(waypoint);
 					}
 				}
 				return;
@@ -41,7 +41,7 @@ namespace BMH
 
 		public virtual IEnumerator FollowRoutine (Follower follower)
 		{
-			while (true)
+			do
 			{
 				Vector3 heading = Vector3.RotateTowards(follower.trs.position, waypoints[follower.currentWaypoint].position, rotaRates[follower.currentWaypoint] * Time.deltaTime, moveRates[follower.currentWaypoint] * Time.deltaTime);
 				follower.trs.position = heading;
@@ -56,12 +56,12 @@ namespace BMH
 						yield break;
 					}
 					if (followClosestWaypoint)
-						follower.currentWaypoint = waypoints.IndexOf_class(GameManager.FindClosestTransform(waypoints, follower.trs));
+						follower.currentWaypoint = waypoints.IndexOf(TransformExtensions.GetClosestTransform(waypoints, follower.trs));
 					else
 						follower.currentWaypoint ++;
 				}
 				yield return new WaitForEndOfFrame();
-			}
+			} while (true);
 		}
 
 		public virtual void AddFollower (Transform followerTrs)
@@ -72,8 +72,8 @@ namespace BMH
 			follower.trs = followerTrs;
 			follower.currentWaypoint = 0;
 			if (followClosestWaypoint)
-				follower.currentWaypoint = waypoints.IndexOf_class(GameManager.FindClosestTransform(waypoints, followerTrs));
-			followers.Add_class(follower);
+				follower.currentWaypoint = waypoints.IndexOf(TransformExtensions.GetClosestTransform(waypoints, followerTrs));
+			followers = followers.Add(follower);
 			StartCoroutine(FollowRoutine (follower));
 		}
 
@@ -85,7 +85,7 @@ namespace BMH
 				follower = followers[i];
 				if (follower.trs == followerTrs)
 				{
-					followers.RemoveAt_class(i);
+					followers = followers.RemoveAt(i);
 					StopCoroutine(FollowRoutine (follower));
 					return;
 				}
@@ -100,8 +100,8 @@ namespace BMH
 			{
 				if (followClosestWaypoint)
 				{
-					currentWaypoint = GameManager.FindClosestTransform (waypoints, currentWaypoint);
-					totalCost += Vector2.Distance(currentWaypoint.position, potentialFollowerTrs.position) + wayPointCosts[waypoints.IndexOf_class(currentWaypoint)];
+					currentWaypoint = TransformExtensions.GetClosestTransform(waypoints, currentWaypoint);
+					totalCost += Vector2.Distance(currentWaypoint.position, potentialFollowerTrs.position) + wayPointCosts[waypoints.IndexOf(currentWaypoint)];
 					if (currentWaypoint == waypoints[waypoints.Length - 1])
 						return totalCost;
 				}

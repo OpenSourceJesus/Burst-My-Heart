@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 
 namespace BMH
 {
-	[ExecuteAlways]
+	//[ExecuteAlways]
 	public class SaveAndLoadObject : MonoBehaviour, IIdentifiable
 	{
 		public string Name
@@ -41,28 +41,28 @@ namespace BMH
 		public string typeId;
 		public SavedObjectEntry[] saveEntries = new SavedObjectEntry[0];
 		
-#if UNITY_EDITOR
-		public virtual void Start ()
-		{
-			if (Application.isPlaying)
-				return;
-			if (uniqueId == 0)
-				uniqueId = Random.Range(int.MinValue, int.MaxValue);
-			Transform[] _saveableChildren = new Transform[0];
-			_saveableChildren.AddRange_class(saveableChildren);
-			Transform trs = GetComponent<Transform>();
-			if (!_saveableChildren.Contains_class(trs) && GetComponentsInChildren<ISavableAndLoadable>().Length > 0)
-			{
-				_saveableChildren = _saveableChildren.Add_class(trs);
-				saveableChildren = _saveableChildren;
-			}
-		}
+// #if UNITY_EDITOR
+// 		public virtual void Start ()
+// 		{
+// 			if (Application.isPlaying)
+// 				return;
+// 			if (uniqueId == 0)
+// 				uniqueId = Random.Range(int.MinValue, int.MaxValue);
+// 			Transform[] _saveableChildren = new Transform[0];
+// 			_saveableChildren.AddRange(saveableChildren);
+// 			Transform trs = GetComponent<Transform>();
+// 			if (!_saveableChildren.Contains(trs) && GetComponentsInChildren<ISavableAndLoadable>().Length > 0)
+// 			{
+// 				_saveableChildren = _saveableChildren.Add(trs);
+// 				saveableChildren = _saveableChildren;
+// 			}
+// 		}
 
-		public virtual void Reset ()
-		{
-			Start ();
-		}
-#endif
+// 		public virtual void Reset ()
+// 		{
+// 			Start ();
+// 		}
+// #endif
 
 		public virtual void Init ()
 		{
@@ -89,7 +89,7 @@ namespace BMH
 					}
 					saveEntries[i] = saveEntry;
 				}
-				// SaveAndLoadManager.saveAndLoadObjectTypeDict.Add(typeId, this);
+				SaveAndLoadManager.saveAndLoadObjectTypeDict.Add(typeId, this);
 			}
 			else
 			{

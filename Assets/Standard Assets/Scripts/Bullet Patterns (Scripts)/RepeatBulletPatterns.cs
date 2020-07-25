@@ -25,7 +25,7 @@ namespace BMH
 			for (int i = 0; i < repeatCount; i ++)
 			{
 				foreach (BulletPattern bulletPattern in bulletPatterns)
-					output = output.AddRange_class(bulletPattern.Shoot (spawner, bulletPrefab, positionOffset));
+					output = output.AddRange(bulletPattern.Shoot (spawner, bulletPrefab, positionOffset));
 			}
 			return output;
 		}
@@ -36,7 +36,7 @@ namespace BMH
 			for (int i = 0; i < repeatCount; i ++)
 			{
 				foreach (BulletPattern bulletPattern in bulletPatterns)
-					output = output.AddRange_class(bulletPattern.Shoot (spawnPos, direction, bulletPrefab, positionOffset));
+					output = output.AddRange(bulletPattern.Shoot (spawnPos, direction, bulletPrefab, positionOffset));
 			}
 			return output;
 		}

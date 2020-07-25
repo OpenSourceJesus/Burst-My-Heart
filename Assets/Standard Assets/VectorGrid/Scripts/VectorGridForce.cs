@@ -3,7 +3,7 @@ using System.Collections;
 using Extensions;
 using BMH;
 
-[ExecuteAlways]
+//[ExecuteAlways]
 [DisallowMultipleComponent]
 public class VectorGridForce : MonoBehaviour, IUpdatable
 {
@@ -34,7 +34,7 @@ public class VectorGridForce : MonoBehaviour, IUpdatable
 			return;
 		}
 #endif
-		GameManager.updatables = GameManager.updatables.Add_class(this);
+		GameManager.updatables = GameManager.updatables.Add(this);
 	}
 
 	public virtual void OnDisable ()
@@ -43,7 +43,7 @@ public class VectorGridForce : MonoBehaviour, IUpdatable
 		if (!Application.isPlaying)
 			return;
 #endif
-		GameManager.updatables = GameManager.updatables.Remove_class(this);
+		GameManager.updatables = GameManager.updatables.Remove(this);
 	}
 
 	public virtual void DoUpdate () 

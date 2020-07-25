@@ -1,23 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using System;
 using Extensions;
+using Object = UnityEngine.Object;
 
 namespace BMH
 {
-	public class ObjectPool : SingletonMonoBehaviour<ObjectPool>
+	public class ObjectPool : MonoBehaviour
 	{
 		public bool preloadOnAwake = true;
 		public Transform trs;
 		public SpawnEntry[] spawnEntries = new SpawnEntry[0];
 		public DelayedDespawn[] delayedDespawns = new DelayedDespawn[0];
 		public RangedDespawn[] rangedDespawns = new RangedDespawn[0];
-		public SpawnedEntry[] spawnedEntries = new SpawnedEntry[0];
 		
-		public override void Awake ()
+		public virtual void Awake ()
 		{
-			base.Awake ();
 			GameManager.singletons.Remove(GetType());
 			GameManager.singletons.Add(GetType(), this);
 			enabled = false;
@@ -39,26 +37,32 @@ namespace BMH
 				delayedDespawn.timeRemaining -= Time.deltaTime;
 				if (delayedDespawn.timeRemaining < 0)
 				{
-					Despawn (delayedDespawn.prefabIndex, delayedDespawn.go, delayedDespawn.trs);
-					delayedDespawns = delayedDespawns.RemoveAt_class(i);
+					// Despawn (delayedDespawn.prefabIndex, delayedDespawn.go, delayedDespawn.trs);
+					Destroy(delayedDespawn.go);
+					delayedDespawns = delayedDespawns.RemoveAt(i);
 					i --;
 					if (delayedDespawns.Length == 0 && rangedDespawns.Length == 0)
 						enabled = false;
 				}
+				else
+					delayedDespawns[i] = delayedDespawn;
 			}
 			for (int i = 0; i < rangedDespawns.Length; i ++)
 			{
 				RangedDespawn rangedDespawn = rangedDespawns[i];
-				rangedDespawn.range -= Vector2.Distance(rangedDespawn.trs.localPosition, rangedDespawn.previousPos);
-				rangedDespawn.previousPos = rangedDespawn.trs.localPosition;
+				rangedDespawn.range -= Vector3.Distance(rangedDespawn.trs.position, rangedDespawn.previousPos);
+				rangedDespawn.previousPos = rangedDespawn.trs.position;
 				if (rangedDespawn.range < 0)
 				{
-					Despawn (rangedDespawn.prefabIndex, rangedDespawn.go, rangedDespawn.trs);
-					rangedDespawns = rangedDespawns.Remove_class(rangedDespawn);
+					// Despawn (rangedDespawn.prefabIndex, rangedDespawn.go, rangedDespawn.trs);
+					Destroy(rangedDespawn.go);
+					rangedDespawns = rangedDespawns.RemoveAt(i);
 					i --;
 					if (rangedDespawns.Length == 0 && delayedDespawns.Length == 0)
 						enabled = false;
 				}
+				else
+					rangedDespawns[i] = rangedDespawn;
 			}
 		}
 		
@@ -67,44 +71,44 @@ namespace BMH
 			DelayedDespawn delayedDespawn = new DelayedDespawn(delay);
 			delayedDespawn.go = clone;
 			delayedDespawn.trs = trs;
-			delayedDespawn.prefab = spawnEntries[prefabIndex].prefab;
+			// delayedDespawn.prefab = spawnEntries[prefabIndex].prefab;
 			delayedDespawn.prefabIndex = prefabIndex;
-			delayedDespawns = delayedDespawns.Add_class(delayedDespawn);
+			delayedDespawns = delayedDespawns.Add(delayedDespawn);
 			enabled = true;
 			return delayedDespawn;
 		}
 
 		public virtual void CancelDelayedDespawn (DelayedDespawn delayedDespawn)
 		{
-			int indexOfDelayedDespawn = delayedDespawns.IndexOf_class(delayedDespawn);
+			int indexOfDelayedDespawn = delayedDespawns.IndexOf(delayedDespawn);
 			if (indexOfDelayedDespawn != -1)
 			{
-				delayedDespawns = delayedDespawns.RemoveAt_class(indexOfDelayedDespawn);
+				delayedDespawns = delayedDespawns.RemoveAt(indexOfDelayedDespawn);
 				if (delayedDespawns.Length == 0 && rangedDespawns.Length == 0)
 					enabled = false;
 			}
 		}
 		
-		public RangedDespawn RangeDespawn (int prefabIndex, GameObject clone, Transform trs, float range)
+		public virtual RangedDespawn RangeDespawn (int prefabIndex, GameObject clone, Transform trs, float range)
 		{
 			RangedDespawn rangedDespawn = new RangedDespawn(trs.position, range);
 			rangedDespawn.go = clone;
 			rangedDespawn.trs = trs;
-			rangedDespawn.prefab = spawnEntries[prefabIndex].prefab;
+			// rangedDespawn.prefab = spawnEntries[prefabIndex].prefab;
 			rangedDespawn.prefabIndex = prefabIndex;
-			rangedDespawn.previousPos = trs.localPosition;
-			rangedDespawns = rangedDespawns.Add_class(rangedDespawn);
+			rangedDespawn.previousPos = trs.position;
+			rangedDespawns = rangedDespawns.Add(rangedDespawn);
 			enabled = true;
 			return rangedDespawn;
 		}
 
 		public virtual void CancelRangedDespawn (RangedDespawn rangedDespawn)
 		{
-			int indexOfRangedDespawn = rangedDespawns.IndexOf_class(rangedDespawn);
+			int indexOfRangedDespawn = rangedDespawns.IndexOf(rangedDespawn);
 			if (indexOfRangedDespawn != -1)
 			{
-				rangedDespawns = rangedDespawns.RemoveAt_class(indexOfRangedDespawn);
-				if (rangedDespawns.Length == 0 && delayedDespawns.Length == 0)
+				rangedDespawns = rangedDespawns.RemoveAt(indexOfRangedDespawn);
+				if (rangedDespawns.Length == 0 && delayedDespawns.Length == 0 && this != null)
 					enabled = false;
 			}
 		}
@@ -112,23 +116,27 @@ namespace BMH
 		public virtual T SpawnComponent<T> (int prefabIndex, Vector3 position = new Vector3(), Quaternion rotation = new Quaternion(), Transform parent = null)
 		{
 			SpawnEntry spawnEntry = spawnEntries[prefabIndex];
-			while (spawnEntry.cache.Length <= spawnEntry.preload)
+			if (spawnEntry.cache.Count == 0)
+			// while (spawnEntry.cache.Count <= spawnEntry.preload)
 				Preload (prefabIndex);
-			KeyValuePair<GameObject, Transform> cacheEntry = spawnEntry.cache[0];
-			GameObject clone = cacheEntry.Key;
-			if (clone == null)
-				return default(T);
-			spawnEntry.cache = spawnEntry.cache.RemoveAt(0);
-			SpawnedEntry entry = new SpawnedEntry(clone, cacheEntry.Value);
-			entry.prefab = spawnEntry.prefab;
-			entry.prefabIndex = prefabIndex;
-			entry.trs.position = position;
-			entry.trs.rotation = rotation;
-			entry.trs.localScale = spawnEntry.trs.localScale;
-			entry.trs.SetParent(parent, true);
-			clone.SetActive(true);
-			spawnedEntries = spawnedEntries.Add_class(entry);
-			return entry.go.GetComponent<T>();
+			KeyValuePair<GameObject, Transform> cacheEntry;
+			do
+			{
+				cacheEntry = spawnEntry.cache[0];
+				spawnEntry.cache.RemoveAt(0);
+			} while (cacheEntry.Key == null);
+			cacheEntry.Value.position = position;
+			cacheEntry.Value.rotation = rotation;
+			cacheEntry.Value.localScale = spawnEntry.trs.localScale;
+			cacheEntry.Value.SetParent(parent, true);
+			cacheEntry.Key.SetActive(true);
+			spawnEntries[prefabIndex] = spawnEntry;
+			return cacheEntry.Key.GetComponent<T>();
+		}
+
+		public virtual T SpawnComponent<T> (T component, Vector3 position = new Vector3(), Quaternion rotation = new Quaternion(), Transform parent = null) where T : Object
+		{
+			return (T) Instantiate(component, position, rotation, parent);
 		}
 		
 		public virtual T Spawn<T> (T prefab, Vector3 position = new Vector3(), Quaternion rotation = new Quaternion(), Transform parent = null)
@@ -136,29 +144,34 @@ namespace BMH
 			return SpawnComponent<T>((prefab as ISpawnable).PrefabIndex, position, rotation, parent);
 		}
 		
-		public virtual GameObject Despawn (SpawnedEntry spawnedEntry)
+		public virtual KeyValuePair<GameObject, Transform> Despawn (SpawnedEntry spawnedEntry)
 		{
 			return Despawn (spawnedEntry.prefabIndex, spawnedEntry.go, spawnedEntry.trs);
 		}
 		
-		public virtual GameObject Despawn (int prefabIndex, GameObject go, Transform trs)
+		public virtual KeyValuePair<GameObject, Transform> Despawn (int prefabIndex, GameObject go, Transform trs)
 		{
-			if (go == null)
-				return null;
+			// if (go == null)
+			// 	return new KeyValuePair<GameObject, Transform>();
 			go.SetActive(false);
 			trs.SetParent(this.trs, true);
-			spawnEntries[prefabIndex].cache = spawnEntries[prefabIndex].cache.Add(new KeyValuePair<GameObject, Transform>(go, trs));
-			return go;
+			KeyValuePair<GameObject, Transform> output = new KeyValuePair<GameObject, Transform>(go, trs);
+			spawnEntries[prefabIndex].cache.Add(output);
+			return output;
 		}
 		
-		public virtual GameObject Preload (int prefabIndex)
+		public virtual KeyValuePair<GameObject, Transform> Preload (int prefabIndex)
 		{
-			GameObject clone = Instantiate(spawnEntries[prefabIndex].prefab, trs);
+			KeyValuePair<GameObject, Transform> output;
+			SpawnEntry spawnEntry = spawnEntries[prefabIndex];
+			GameObject clone = Instantiate(spawnEntry.prefab, trs);
 			clone.SetActive(false);
-			spawnEntries[prefabIndex].createdCount ++;
-			clone.name = clone.name.Substring(0, clone.name.Length - 1) + spawnEntries[prefabIndex].createdCount + clone.name[clone.name.Length - 1];
-			spawnEntries[prefabIndex].cache = spawnEntries[prefabIndex].cache.Add(new KeyValuePair<GameObject, Transform>(clone, clone.GetComponent<Transform>()));
-			return clone;
+			// spawnEntry.createdCount ++;
+			// clone.name = clone.name.Insert(clone.name.Length - 1, "" + spawnEntry.createdCount);
+			output = new KeyValuePair<GameObject, Transform>(clone, clone.GetComponent<Transform>());
+			spawnEntry.cache.Add(output);
+			spawnEntries[prefabIndex] = spawnEntry;
+			return output;
 		}
 
 		[Serializable]
@@ -168,8 +181,8 @@ namespace BMH
 			public Transform trs;
 			[HideInInspector]
 			public int prefabIndex;
-			[HideInInspector]
-			public int createdCount;
+			// [HideInInspector]
+			// public int createdCount;
 			
 			public ObjectPoolEntry ()
 			{
@@ -187,13 +200,13 @@ namespace BMH
 		public class SpawnEntry : ObjectPoolEntry
 		{
 			public int preload;
-			public KeyValuePair<GameObject, Transform>[] cache = new KeyValuePair<GameObject, Transform>[0];
+			public List<KeyValuePair<GameObject, Transform>> cache = new List<KeyValuePair<GameObject, Transform>>();
 			
 			public SpawnEntry ()
 			{
 			}
 			
-			public SpawnEntry (int preload, KeyValuePair<GameObject, Transform>[] cache)
+			public SpawnEntry (int preload, List<KeyValuePair<GameObject, Transform>> cache)
 			{
 				this.preload = preload;
 				this.cache = cache;
@@ -218,27 +231,29 @@ namespace BMH
 		public class DelayedDespawn : SpawnedEntry
 		{
 			public float timeRemaining;
+			public float duration;
 			
 			public DelayedDespawn ()
 			{
 			}
 			
-			public DelayedDespawn (float timeRemaining)
+			public DelayedDespawn (float duration)
 			{
-				this.timeRemaining = timeRemaining;
+				timeRemaining = duration;
+				this.duration = duration;
 			}
 		}
 		
 		public class RangedDespawn : SpawnedEntry
 		{
-			public Vector2 previousPos;
+			public Vector3 previousPos;
 			public float range;
 			
 			public RangedDespawn ()
 			{
 			}
 			
-			public RangedDespawn (Vector2 previousPos, float range)
+			public RangedDespawn (Vector3 previousPos, float range)
 			{
 				this.previousPos = previousPos;
 				this.range = range;

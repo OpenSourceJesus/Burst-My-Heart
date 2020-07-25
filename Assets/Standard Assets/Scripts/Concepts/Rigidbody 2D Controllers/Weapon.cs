@@ -19,15 +19,6 @@ namespace BMH
 		[HideInInspector]
 		public ObjectPool.DelayedDespawn delayedDespawn;
 
-		public override void Awake ()
-		{
-			base.Awake ();
-#if UNITY_EDITOR
-			if (!Application.isPlaying)
-				return;
-#endif
-		}
-
 		public virtual void OnEnable ()
 		{
 #if UNITY_EDITOR

@@ -5,11 +5,12 @@ using UnityEngine;
 using Extensions;
 using Ferr;
 using UnityEditor;
+using Unity.EditorCoroutines.Editor;
 
 namespace BMH
 {
-	[ExecuteAlways]
-	public class AreaPath : EditorHelper
+	//[ExecuteAlways]
+	public class AreaPath : EditorScript
 	{
 		public AreaPathNode rootAreaPathNode;
 		public Color nodeConnectorColor;
@@ -22,88 +23,61 @@ namespace BMH
 		public int minSeperationForPoints;
 		public int maxSeperationForPoints;
 		public int distToNodeForFirstTerrain;
+		public float normalizedTraverseRate;
 		public Terrain terrainPrefab;
 		public LineSegment2D[] borders = new LineSegment2D[0];
 		public AreaPathNode[] areaPathNodes = new AreaPathNode[0];
-		public Transform trs;
 
 		public virtual void OnDrawGizmos ()
 		{
-			Debug.Log(Contains(trs.position));
 			Gizmos.matrix = Matrix4x4.identity;
 			LineSegment2D[] _borders = new LineSegment2D[0];
 			AreaPathNode[] _areaPathNodes = new AreaPathNode[0];
-			TreeNode<AreaPathNode> rootTreeNode = new TreeNode<AreaPathNode>(rootAreaPathNode);
-			TreeNode<AreaPathNode>[] uncheckedTreeNodes = new TreeNode<AreaPathNode>[] { rootTreeNode };
-			LineSegment2D[] borderPair = new LineSegment2D[2];
-			while (uncheckedTreeNodes.Length > 0)
+			AreaPathNode[] uncheckedAreaPathNodes = new AreaPathNode[1] { rootAreaPathNode };
+			LineSegment2D[] borderPair;
+			while (uncheckedAreaPathNodes.Length > 0)
 			{
-				foreach (AreaPathNode childAreaPathNode in uncheckedTreeNodes[0].Value.children)
+				if (uncheckedAreaPathNodes[0] != null)
 				{
-					if (_areaPathNodes.Contains_class(childAreaPathNode))
+					foreach (AreaPathNode childAreaPathNode in uncheckedAreaPathNodes[0].children)
 					{
-						Debug.LogError("There is a cycle in an AreaPath");
-						return;
+						if (childAreaPathNode != null && childAreaPathNode.gameObject.activeInHierarchy)
+						{
+							if (_areaPathNodes.Contains(childAreaPathNode))
+							{
+								Debug.LogError("AreaPath " + name + " has a cycle");
+								return;
+							}
+							borderPair = GetBorders(uncheckedAreaPathNodes[0], childAreaPathNode);
+							_borders = _borders.AddRange(borderPair);
+							Gizmos.color = borderColor;
+							Gizmos.DrawLine(borderPair[0].start, borderPair[0].end);
+							Gizmos.DrawLine(borderPair[1].start, borderPair[1].end);
+							Gizmos.color = nodeConnectorColor;
+							Gizmos.DrawLine(uncheckedAreaPathNodes[0].trs.position, childAreaPathNode.trs.position);
+						}
 					}
-					borderPair = GetBorders(uncheckedTreeNodes[0].Value, childAreaPathNode);
-					_borders = _borders.AddRange_class(borderPair);
-					Gizmos.color = borderColor;
-					Gizmos.DrawLine(borderPair[0].start, borderPair[0].end);
-					Gizmos.DrawLine(borderPair[1].start, borderPair[1].end);
-					Gizmos.color = nodeConnectorColor;
-					Gizmos.DrawLine(uncheckedTreeNodes[0].Value.trs.position, childAreaPathNode.trs.position);
+					if (uncheckedAreaPathNodes[0].gameObject.activeInHierarchy)
+					{
+						uncheckedAreaPathNodes = uncheckedAreaPathNodes.AddRange(uncheckedAreaPathNodes[0].children);
+						_areaPathNodes = _areaPathNodes.Add(uncheckedAreaPathNodes[0]);
+					}
 				}
-				uncheckedTreeNodes = uncheckedTreeNodes.AddRange_class(uncheckedTreeNodes[0].AddChildren(uncheckedTreeNodes[0].Value.children));
-				_areaPathNodes = _areaPathNodes.Add_class(uncheckedTreeNodes[0].Value);
-				uncheckedTreeNodes = uncheckedTreeNodes.RemoveAt_class(0);
+				uncheckedAreaPathNodes = uncheckedAreaPathNodes.RemoveAt(0);
 			}
 			borders = _borders;
 			areaPathNodes = _areaPathNodes;
 		}
 
-		public virtual LineSegment2D[] GetBorders (AreaPathNode node, AreaPathNode node2)
+		public virtual LineSegment2D[] GetBorders (AreaPathNode node1, AreaPathNode node2)
 		{
 			LineSegment2D[] output = new LineSegment2D[2];
-			LineSegment2D line = new LineSegment2D(node.trs.position, node2.trs.position);
-			line = line.Move((Vector2) node.trs.position - line.GetMidpoint());
-			line = line.GetPerpendicular();
-			Vector2 lineDirection = line.GetDirection();
-			line.start = (Vector2) node.trs.position + (lineDirection * node.radius);
-			line.end = (Vector2) node.trs.position - (lineDirection * node.radius);
-			LineSegment2D line2 = new LineSegment2D(node.trs.position, node2.trs.position);
-			line2 = line2.Move((Vector2) node2.trs.position - line2.GetMidpoint());
-			line2 = line2.GetPerpendicular();
-			lineDirection = line2.GetDirection();
-			line2.start = (Vector2) node2.trs.position + (lineDirection * node2.radius);
-			line2.end = (Vector2) node2.trs.position - (lineDirection * node2.radius);
-			output[0] = new LineSegment2D(line.start, VectorExtensions.GetClosestPoint(line.start, line2.start, line2.end));
-			output[1] = new LineSegment2D(line.end, VectorExtensions.GetClosestPoint(line.end, line2.start, line2.end));
-			if (Mathf.Abs(output[0].GetDirectedDistanceAlongParallel(node.trs.position) - output[1].GetDirectedDistanceAlongParallel(node.trs.position)) > 0.001f)
-				output[0] = output[0].Flip();
+			Vector2 lineDirection = (node2.trs.position - node1.trs.position).normalized.Rotate(90);
+			LineSegment2D line1 = new LineSegment2D((Vector2) node1.trs.position + (lineDirection * node1.radius), (Vector2) node1.trs.position - (lineDirection * node1.radius));
+			LineSegment2D line2 = new LineSegment2D((Vector2) node2.trs.position - (lineDirection * node2.radius), (Vector2) node2.trs.position + (lineDirection * node2.radius));
+			output[0] = new LineSegment2D(line1.start, VectorExtensions.GetClosestPoint(line1.start, line2.start, line2.end));
+			output[1] = new LineSegment2D(line1.end, VectorExtensions.GetClosestPoint(line1.end, line2.start, line2.end));
 			return output;
-		}
-
-		public virtual LineSegment2D[] GetBorders (Terrain terrain)
-		{
-			LineSegment2D[] output = new LineSegment2D[terrain.terrain.pathData._points.Count];
-			for (int i = 0; i < terrain.terrain.pathData._points.Count - 1; i ++)
-				output[i] = new LineSegment2D((Vector2) terrain.trs.position + terrain.terrain.pathData._points[i], (Vector2) terrain.trs.position + terrain.terrain.pathData._points[i + 1]);
-			output[output.Length - 1] = new LineSegment2D((Vector2) terrain.trs.position + terrain.terrain.pathData._points[output.Length - 1], (Vector2) terrain.trs.position + terrain.terrain.pathData._points[0]);
-			return output;
-		}
-
-		public virtual bool IsPolygon (Terrain terrain)
-		{
-			LineSegment2D[] borders = GetBorders(terrain);
-			foreach (LineSegment2D border in borders)
-			{
-				foreach (LineSegment2D otherBorder in borders)
-				{
-					if (border != otherBorder && border.DoIIntersectWith(otherBorder, false))
-						return false;
-				}
-			}
-			return true;
 		}
 
 		public virtual IEnumerator MakeRoutine ()
@@ -116,22 +90,42 @@ namespace BMH
 			}
 			if (surroundWithTerrains)
 			{
-				Vector2 currentPoint;
-				while (true)
+				Vector2 currentPoint;				
+				do
+				{
+					currentPoint = (Vector2) rootAreaPathNode.trs.position + (Random.insideUnitCircle.normalized * (rootAreaPathNode.radius + distToNodeForFirstTerrain));
+					yield return new WaitForEndOfFrame();
+				} while (Contains(currentPoint));
+				yield return EditorCoroutineUtility.StartCoroutine(MakeTerrainRoutine (currentPoint), this);
+				AreaPathNode[] uncheckedAreaPathNodes = new AreaPathNode[1] { rootAreaPathNode };
+				AreaPathNode[] deadEndAreaPathNodes = new AreaPathNode[0];
+				while (uncheckedAreaPathNodes.Length > 0)
+				{
+					if (uncheckedAreaPathNodes[0].gameObject.activeInHierarchy)
+					{
+						uncheckedAreaPathNodes = uncheckedAreaPathNodes.AddRange(uncheckedAreaPathNodes[0].children);
+						if (uncheckedAreaPathNodes[0].children.Length == 0)
+							deadEndAreaPathNodes = deadEndAreaPathNodes.Add(uncheckedAreaPathNodes[0]);
+					}
+					uncheckedAreaPathNodes = uncheckedAreaPathNodes.RemoveAt(0);
+				}
+				float normalizedTraversedDistance = 0;
+				foreach (AreaPathNode deadEndAreaPathNode in deadEndAreaPathNodes)
 				{
 					do
 					{
-						currentPoint = (Vector2) rootAreaPathNode.trs.position + (Random.insideUnitCircle.normalized * (rootAreaPathNode.radius + distToNodeForFirstTerrain));
+						currentPoint = GetPointAlongCenterPath(deadEndAreaPathNode, normalizedTraversedDistance + normalizedTraverseRate);
+						DebugExtensions.DrawPoint(currentPoint, 10, Color.red, .1f);
+						normalizedTraversedDistance = GetNormalizedDistanceOfClosestPointAlongCenterPath(deadEndAreaPathNode, currentPoint);
 						yield return new WaitForEndOfFrame();
-					} while (Contains(currentPoint));
-					yield return StartCoroutine(MakeTerrainRoutine (currentPoint));
+					} while (normalizedTraversedDistance < 1);					
 				}
 			}
 		}
 
 		public virtual bool Contains (Terrain terrain)
 		{
-			LineSegment2D[] terrainBorders = GetBorders(terrain);
+			LineSegment2D[] terrainBorders = terrain.GetBorders();
 			foreach (LineSegment2D terrainBorder in terrainBorders)
 			{
 				if (Contains(terrainBorder))
@@ -171,29 +165,20 @@ namespace BMH
 				float lengthDifference = line1.GetLength() - line2.GetLength();
 				if (lengthDifference > 0)
 				{
-					line2.start -= line1.GetDirection() * Mathf.Abs(lengthDifference) / 2;
-					line2.end += line1.GetDirection() * Mathf.Abs(lengthDifference) / 2;
+					line2.start -= line2.GetDirection() * Mathf.Abs(lengthDifference) / 2;
+					line2.end += line2.GetDirection() * Mathf.Abs(lengthDifference) / 2;
 				}
 				else
 				{
 					line1.start -= line1.GetDirection() * Mathf.Abs(lengthDifference) / 2;
 					line1.end += line1.GetDirection() * Mathf.Abs(lengthDifference) / 2;
 				}
+				Vector2 pivotPoint = point;
 				float rotate = -line1.GetFacingAngle();
-				Vector2 pivotPoint = new LineSegment2D(line1.GetMidpoint(), line2.GetMidpoint()).GetMidpoint();
-				// Debug.DrawLine(line1.start, line1.end, Color.green.SetAlpha(0.25f * Time.deltaTime), .1f);
-				// Debug.DrawLine(line2.start, line2.end, Color.red.SetAlpha(0.25f * Time.deltaTime), .1f);
 				line1 = line1.Rotate(pivotPoint, rotate);
 				line2 = line2.Rotate(pivotPoint, rotate);
-				// Debug.DrawLine(line1.start, line1.end, Color.green, .1f);
-				// Debug.DrawLine(line2.start, line2.end, Color.red, .1f);
-				DebugExtensions.DrawPoint(pivotPoint, 10, Color.blue, .1f);
-				// DebugExtensions.DrawPoint(point, 10, Color.yellow, .1f);
 				Rect rect = Rect.MinMaxRect(Mathf.Min(line1.start.x, line2.end.x), Mathf.Min(line1.start.y, line2.end.y), Mathf.Max(line1.start.x, line2.end.x), Mathf.Max(line1.start.y, line2.end.y));
 				point = point.Rotate(pivotPoint, rotate);
-				DebugExtensions.DrawRect(rect, Color.black, .1f);
-				DebugExtensions.DrawPoint(point, 10, Color.yellow, .1f);
-				Debug.DrawLine(pivotPoint, point, Color.white, .1f);
 				if (point.x >= rect.xMin && point.x <= rect.xMax && point.y >= rect.yMin && point.y <= rect.yMax)
 				{
 					LineSegment2D rotatedBorder1 = borders[i].Rotate(pivotPoint, rotate);
@@ -201,12 +186,6 @@ namespace BMH
 					LineSegment2D line = new LineSegment2D(rotatedBorder1.start, rotatedBorder2.start);
 					if (lengthDifference > 0)
 						line = new LineSegment2D(rotatedBorder1.end, rotatedBorder2.end);
-					// DebugExtensions.DrawPoint(line1.start, 10, Color.green, .1f);
-					// DebugExtensions.DrawPoint(line2.start, 10, Color.red, .1f);
-					// DebugExtensions.DrawPoint(line.start, 10, Color.blue, .1f);
-					// DebugExtensions.DrawPoint(line1.end, 10, Color.yellow, .1f);
-					// DebugExtensions.DrawPoint(line2.end, 10, Color.magenta, .1f);
-					// DebugExtensions.DrawPoint(line.end, 10, Color.cyan, .1f);
 					if (!VectorExtensions.IsInTriangle(point, line1.start, line2.start, line.start) && !VectorExtensions.IsInTriangle(point, line1.end, line2.end, line.end))
 						return true;
 				}
@@ -231,13 +210,93 @@ namespace BMH
 					offset = Random.insideUnitCircle.normalized * Random.Range(minSeperationForPoints, maxSeperationForPoints);
 					pointIndex = output.terrain.AddAutoPoint(output.terrain.pathData._points[i - 1] + offset);
 					yield return new WaitForEndOfFrame();
-					if ((i >= 3 && !IsPolygon(output)) || Contains(output))
+					if ((i >= 3 && !output.IsPolygon()) || Contains(output))
 						output.terrain.RemovePoint(pointIndex);
 					else
 						break;
 				}
 			}
 			output.terrain.Build ();
+			output.randomTerrainColor.update = true;
+		}
+
+		public virtual Vector2 GetPointAlongCenterPath (AreaPathNode endAreaPathNode, float normalizedDistance)
+		{
+			Vector2 output = VectorExtensions.NULL2;
+			float centerPathLength = 0;
+			List<LineSegment2D> centerPathSegments = new List<LineSegment2D>();
+			List<AreaPathNode> _areaPathNodes = new List<AreaPathNode>();
+			_areaPathNodes.AddRange(areaPathNodes);
+			AreaPathNode checkAreaPathNode;
+			LineSegment2D centerPathSegment;
+			while (endAreaPathNode != rootAreaPathNode)
+			{
+				for (int i = 0; i < _areaPathNodes.Count; i ++)
+				{
+					checkAreaPathNode = _areaPathNodes[i];
+					if (checkAreaPathNode.children.Contains(endAreaPathNode))
+					{
+						centerPathSegment = new LineSegment2D(checkAreaPathNode.trs.position, endAreaPathNode.trs.position);
+						centerPathSegments.Insert(0, centerPathSegment);
+						centerPathLength += Vector2.Distance(endAreaPathNode.trs.position, checkAreaPathNode.trs.position);
+						endAreaPathNode = checkAreaPathNode;
+						normalizedDistance -= centerPathSegment.GetLength() / centerPathLength;
+						if (normalizedDistance <= 0)
+						{
+							output = centerPathSegment.GetPointWithDirectedDistance(-normalizedDistance * centerPathLength);
+							break;
+						}
+						break;
+					}
+				}
+			}
+			return output;
+		}
+
+		public virtual float GetNormalizedDistanceOfClosestPointAlongCenterPath (AreaPathNode endAreaPathNode, Vector2 point)
+		{
+			float output = MathfExtensions.NULL_FLOAT;
+			float centerPathLength = 0;
+			List<LineSegment2D> centerPathSegments = new List<LineSegment2D>();
+			List<AreaPathNode> _areaPathNodes = new List<AreaPathNode>();
+			_areaPathNodes.AddRange(areaPathNodes);
+			AreaPathNode checkAreaPathNode;
+			Vector2 closestPoint;
+			float distanceToClosestPoint = Mathf.Infinity;
+			float checkDistance;
+			LineSegment2D centerPathSegment;
+			float currentNormalizedDistance = 0;
+			Vector2 checkPoint;
+			while (endAreaPathNode != rootAreaPathNode)
+			{
+				for (int i = 0; i < _areaPathNodes.Count; i ++)
+				{
+					checkAreaPathNode = _areaPathNodes[i];
+					if (checkAreaPathNode.children.Contains(endAreaPathNode))
+					{
+						centerPathSegment = new LineSegment2D(checkAreaPathNode.trs.position, endAreaPathNode.trs.position);
+						centerPathSegments.Insert(0, centerPathSegment);
+						centerPathLength += Vector2.Distance(endAreaPathNode.trs.position, checkAreaPathNode.trs.position);
+						endAreaPathNode = checkAreaPathNode;
+						checkPoint = centerPathSegment.ClosestPoint(point);
+						checkDistance = Vector2.Distance(checkPoint, point);
+						if (checkDistance < distanceToClosestPoint)
+						{
+							distanceToClosestPoint = checkDistance;
+							closestPoint = checkPoint;
+							output = currentNormalizedDistance + centerPathSegment.GetDirectedDistanceAlongParallel(closestPoint);
+						}
+						currentNormalizedDistance += centerPathSegment.GetLength() / centerPathLength;
+						break;
+					}
+				}
+			}
+			return output;
+		}
+
+		public virtual float GetWidthAtNormalizedDistanceAlongCenterPath (AreaPathNode endAreaPathNode, float normalizedDistance)
+		{
+			return MathfExtensions.NULL_FLOAT;
 		}
 	}
 }

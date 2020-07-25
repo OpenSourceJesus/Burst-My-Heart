@@ -3,14 +3,14 @@ using Extensions;
 
 namespace BMH
 {
-	[ExecuteAlways]
+	//[ExecuteAlways]
 	[RequireComponent(typeof(Rigidbody2D))]
 	[DisallowMultipleComponent]
     public class Rigidbody2DController : SingletonMonoBehaviour<Rigidbody2DController>, IUpdatable
     {
 		public Transform trs;
 		public Rigidbody2D rigid;
-		public Collider2D collider;
+		public new Collider2D collider;
 		public SpriteRenderer spriteRenderer;
 		public float moveSpeed;
 		public DistanceJoint2D distanceJoint;
@@ -59,7 +59,9 @@ namespace BMH
 
 		public virtual void DoUpdate ()
 		{
-			if (Player.CanSwitchControl)
+			if (inputterId == -1)
+				return;
+			if (Player.CanSwitchControl && controllerToSwitchTo != null)
 				HandleControlSwitching ();
 			HandleMovement ();
 		}
@@ -72,12 +74,15 @@ namespace BMH
 				isSwitching = true;
 			}
 			else if (InputManager.inputters[inputterId].GetButtonUp(switchControlButtonName) && isSwitching)
-			{
-				isSwitching = false;
-				controllerToSwitchTo.canControl = true;
-				controllingIndicator.color = controllingIndicator.color.DivideAlpha(4);
-				controllerToSwitchTo.controllingIndicator.color = controllerToSwitchTo.controllingIndicator.color.MultiplyAlpha(4);
-			}
+				SwitchControl ();
+		}
+
+		public virtual void SwitchControl ()
+		{
+			isSwitching = false;
+			controllerToSwitchTo.canControl = true;
+			controllingIndicator.color = controllingIndicator.color.DivideAlpha(4);
+			controllerToSwitchTo.controllingIndicator.color = controllerToSwitchTo.controllingIndicator.color.MultiplyAlpha(4);
 		}
 
 		public virtual void HandleMovement ()

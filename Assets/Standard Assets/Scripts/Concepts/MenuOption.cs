@@ -4,11 +4,10 @@ using Extensions;
 using UnityEngine.UI;
 using System;
 using UnityEngine.Events;
-using Photon.Pun;
 
 namespace BMH
 {
-	[ExecuteAlways]
+	//[ExecuteAlways]
 	public class MenuOption : MonoBehaviour
 	{
 		public Transform trs;
@@ -24,9 +23,9 @@ namespace BMH
 		public float enabledTextMeshColorAlpha = 1;
 		public float disabledTextMeshColorAlpha = 0.5f;
 
+#if UNITY_EDITOR
 		public virtual void Start ()
 		{
-#if UNITY_EDITOR
 			if (!Application.isPlaying)
 			{
 				if (trs == null)
@@ -45,8 +44,8 @@ namespace BMH
 					invokeEvent = invokeButton.onClick;
 				return;
 			}
-#endif
 		}
+#endif
 
 		public virtual void PickOption ()
 		{
@@ -77,15 +76,15 @@ namespace BMH
 		{
 			string windEventEnabledPlayerPrefsKey = "Wind Event enabled";
 			string scoreMultiplierEventEnabledPlayerPrefsKey = "Bounty Multiplier Event enabled";
-			if (GameManager.GetSingleton<Menus>().toggleAllEventsTextMeshes.Contains_class(textMesh))
+			if (GameManager.GetSingleton<Menus>().toggleAllEventsTextMeshes.Contains(textMesh))
 			{
 				bool newEnabledValue = !(SaveAndLoadManager.GetValue<bool>(windEventEnabledPlayerPrefsKey, true) && SaveAndLoadManager.GetValue<bool>(scoreMultiplierEventEnabledPlayerPrefsKey, true));
 				SaveAndLoadManager.SetValue(windEventEnabledPlayerPrefsKey, newEnabledValue);
 				SaveAndLoadManager.SetValue(scoreMultiplierEventEnabledPlayerPrefsKey, newEnabledValue);
 			}
-			else if (GameManager.GetSingleton<Menus>().toggleWindEventTextMeshes.Contains_class(textMesh))
+			else if (GameManager.GetSingleton<Menus>().toggleWindEventTextMeshes.Contains(textMesh))
 				SaveAndLoadManager.SetValue(windEventEnabledPlayerPrefsKey, !SaveAndLoadManager.GetValue<bool>(windEventEnabledPlayerPrefsKey, true));
-			else if (GameManager.GetSingleton<Menus>().toggleScoreMultiplierEventTextMeshes.Contains_class(textMesh))
+			else if (GameManager.GetSingleton<Menus>().toggleScoreMultiplierEventTextMeshes.Contains(textMesh))
 				SaveAndLoadManager.SetValue(scoreMultiplierEventEnabledPlayerPrefsKey, !SaveAndLoadManager.GetValue<bool>(scoreMultiplierEventEnabledPlayerPrefsKey, true));
 			GameManager.GetSingleton<Menus>().UpdateToggleEventTextMeshes ();
 		}
@@ -94,20 +93,46 @@ namespace BMH
 		{
 			if (!NetworkManager.IsOnline)
 			{
-				NetworkManager.IsOnline = true;
-				// GameManager.GetSingleton<GameManager>().LoadScene("Online");
-				GameManager.GetSingleton<NetworkManager>().Connect ();
+				if (!OnlineBattle.isWaitingForAnotherPlayer)
+				{
+					OnlineBattle.isWaitingForAnotherPlayer = true;
+					GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = GameManager.GetSingleton<OnlineBattle>().isWaitingForAnotherPlayerText;
+					GameManager.GetSingleton<GameManager>().StopCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+					GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+					GameManager.GetSingleton<OnlineBattle>().Connect ();
+					// NetworkManager.IsOnline = true;
+					// GameManager.GetSingleton<GameManager>().LoadScene("Online");
+				}
+				else
+				{
+					GameManager.GetSingleton<OnlineBattle>().OnDestroy ();
+					GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = GameManager.GetSingleton<OnlineBattle>().isNotWaitingForAnotherPlayerText;
+					GameManager.GetSingleton<GameManager>().StopCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+					GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+				}
 			}
 			else
 			{
-				GameManager.GetSingleton<NetworkManager>().notificationText.text = "Multiple game instances playing online on the same computer is not allowed";
-				GameManager.GetSingleton<GameManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+				if (!OnlineBattle.isWaitingForAnotherPlayer)
+				{
+					GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "Multiple game instances on a single computer playing multiplayer is not allowed";
+					GameManager.GetSingleton<GameManager>().StopCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+					GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+				}
+				else
+				{
+					GameManager.GetSingleton<OnlineBattle>().OnDestroy ();
+					GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = GameManager.GetSingleton<OnlineBattle>().isNotWaitingForAnotherPlayerText;
+					GameManager.GetSingleton<GameManager>().StopCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+					GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+				}
 			}
 		}
 
 		public virtual void OpenDeleteAccountScreen ()
 		{
-			ArchivesManager.currentAccountToDelete = GameManager.GetSingleton<ArchivesManager>().localAccountsData[trs.parent.parent.parent.parent.parent.parent.parent.parent.parent.GetSiblingIndex() - 1];
+			ArchivesManager.indexOfCurrentAccountToDelete = trs.parent.parent.parent.parent.parent.parent.parent.parent.parent.GetSiblingIndex() - 1;
+			ArchivesManager.currentAccountToDelete = GameManager.GetSingleton<ArchivesManager>().localAccountsData[ArchivesManager.indexOfCurrentAccountToDelete];
 			GameManager.GetSingleton<ArchivesManager>().deleteAccountText.text = "Delete Account " + ArchivesManager.currentAccountToDelete.username;
 			GameManager.GetSingleton<ArchivesManager>().deleteAccountScreen.SetActive(true);
 			GameManager.GetSingleton<Menus>().enabled = false;

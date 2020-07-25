@@ -12,7 +12,7 @@ namespace BMH
 
 		public virtual void OnDisable ()
 		{
-			AudioManager.soundEffects = AudioManager.soundEffects.Remove_class(this);
+			AudioManager.soundEffects = AudioManager.soundEffects.Remove(this);
 		}
 
 		[Serializable]

@@ -13,35 +13,13 @@ namespace BMH
 		{
 			get
 			{
-				return SaveAndLoadManager.GetValue<float>("Total Gameplay Duration", 0);
+				return SaveAndLoadManager.GetValue<float>("Total gameplay duration", 0);
 			}
 			set
 			{
-				SaveAndLoadManager.SetValue("Total Gameplay Duration", value);
+				SaveAndLoadManager.SetValue("Total gameplay duration", value);
 			}
 		}
-		public float defaultTimeScaleMultiplier;
-		public float TimeScaleMultiplier
-		{
-			get
-			{
-				return SaveAndLoadManager.GetValue<float>("Time Scale", defaultTimeScaleMultiplier);
-			}
-			set
-			{
-				SaveAndLoadManager.SetValue("Time Scale", value);
-			}
-		}
-		public static float UnscaledDeltaTime
-		{
-			get
-			{
-				if (Time.timeScale > 0)
-					return Time.unscaledDeltaTime;
-				return 0;
-			}
-		}
-		public Text timerText;
 		
 		public override void Awake ()
 		{
@@ -49,9 +27,9 @@ namespace BMH
 			SetTimeScale (1);
 		}
 		
-		public virtual void SetTimeScale (float timeScale)
+		public static void SetTimeScale (float timeScale)
 		{
-			Time.timeScale = timeScale * TimeScaleMultiplier;
+			Time.timeScale = timeScale;
 			foreach (Rigidbody2D rigid in _Rigidbody2D.allInstances)
 				rigid.simulated = Time.timeScale > 0;
 		}
@@ -59,11 +37,6 @@ namespace BMH
 		public virtual void OnApplicationQuit ()
 		{
 			TotalGameplayDuration += Time.realtimeSinceStartup;
-		}
-		
-		public virtual void SetTimerTextActive (bool active)
-		{
-			GameManager.GetSingleton<TimeManager>().timerText.gameObject.SetActive(active);
 		}
 	}
 }

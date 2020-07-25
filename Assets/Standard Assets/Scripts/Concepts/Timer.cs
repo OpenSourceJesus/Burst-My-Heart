@@ -43,13 +43,13 @@ public class Timer
 			// if (GameManager.GetSingleton<GameManager>() != null)
 				GameManager.GetSingleton<GameManager>().StopCoroutine(timerRoutine);
 			timerRoutine = null;
-			runningInstances = runningInstances.Remove_class(this);
+			runningInstances = runningInstances.Remove(this);
 		}
 	}
 
 	public virtual IEnumerator TimerRoutine ()
 	{
-		runningInstances = runningInstances.Add_class(this);
+		runningInstances = runningInstances.Add(this);
 		bool justEnded;
 		while (true)
 		{

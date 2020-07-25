@@ -4,8 +4,8 @@ using System.Collections;
 using Extensions;
 using Ferr;
 
-[ExecuteAlways]
-public class RandomTerrainColor : EditorHelper
+//[ExecuteAlways]
+public class RandomTerrainColor : EditorScript
 {
 	public Ferr2DT_PathTerrain terrain;
     public bool update;

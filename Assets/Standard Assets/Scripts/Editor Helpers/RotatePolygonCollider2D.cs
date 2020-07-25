@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Extensions;
 
-public class RotatePolygonCollider2D : EditorHelper
+public class RotatePolygonCollider2D : EditorScript
 {
 	public PolygonCollider2D polygonCollider;
 	public float rotate;

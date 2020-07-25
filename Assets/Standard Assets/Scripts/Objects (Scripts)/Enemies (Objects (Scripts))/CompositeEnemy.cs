@@ -33,7 +33,7 @@ namespace BMH
 						newLineRenderer.widthMultiplier = lineRenderer.widthMultiplier;
 						newLineRenderer.sortingOrder = lineRenderer.sortingOrder;
 						newLineRenderer.sortingLayerName = lineRenderer.sortingLayerName;
-						lineRenderers = lineRenderers.Add_class(newLineRenderer);
+						lineRenderers = lineRenderers.Add(newLineRenderer);
 					}
 				}
 				foreach (Enemy enemy in enemies)

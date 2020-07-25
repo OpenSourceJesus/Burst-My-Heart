@@ -5,7 +5,8 @@ using Extensions;
 
 namespace BMH
 {
-	[ExecuteAlways]
+	//[ExecuteAlways]
+	// [ExecuteInEditMode]
 	[DisallowMultipleComponent]
 	public class EnemyGroup : MonoBehaviour, ISavableAndLoadable
 	{
@@ -48,21 +49,30 @@ namespace BMH
 
 		public virtual void Awake ()
 		{
-			enemies = GetComponentsInChildren<Enemy_Follow>();
-			EnemyGroup enemyGroup;
-			for (int i = 0; i < enemies.Length; i ++)
-			{
-				enemyGroup = enemies[i].GetComponent<EnemyGroup>();
-				if (enemyGroup != null && enemyGroup != this)
+			// enemies = GetComponentsInChildren<Enemy_Follow>();
+			// EnemyGroup enemyGroup;
+			// for (int i = 0; i < enemies.Length; i ++)
+			// {
+			// 	enemyGroup = enemies[i].GetComponent<EnemyGroup>();
+			// 	if (enemyGroup != null && enemyGroup != this)
+			// 	{
+			// 		enemies = enemies.RemoveAt(i);
+			// 		i --;
+			// 	}
+			// }
+			// if (!Application.isPlaying)
+			// {
+				enemies = GetComponentsInChildren<Enemy_Follow>();
+				EnemyGroup enemyGroup;
+				for (int i = 0; i < enemies.Length; i ++)
 				{
-					enemies = enemies.RemoveAt_class(i);
-					i --;
+					enemyGroup = enemies[i].GetComponent<EnemyGroup>();
+					if (enemyGroup != null && enemyGroup != this)
+					{
+						enemies = enemies.RemoveAt(i);
+						i --;
+					}
 				}
-			}
-
-#if UNITY_EDITOR
-			if (!Application.isPlaying)
-			{
 				if (uniqueId == 0)
 				{
 					do
@@ -72,16 +82,15 @@ namespace BMH
 					while (GameManager.UniqueIds.Contains(uniqueId));
 					GameManager.UniqueIds = GameManager.UniqueIds.Add(uniqueId);
 				}
+				difficulty = enemies.Length;
+				foreach (Enemy_Follow enemy in enemies)
+				{
+					enemy.enemyGroup = this;
+					enemy.enabled = false;
+					enemy.UpdateGraphics ();
+				}
 				return;
-			}
-#endif
-			difficulty = enemies.Length;
-			foreach (Enemy_Follow enemy in enemies)
-			{
-				enemy.enemyGroup = this;
-				enemy.enabled = false;
-				enemy.UpdateGraphics ();
-			}
+			// }
 		}
 
 #if UNITY_EDITOR
@@ -100,7 +109,7 @@ namespace BMH
 			if (defeated)
 				return;
 			defeated = true;
-			RPG.instance.AddScore (difficulty);
+			GameManager.GetSingleton<RPG>().AddScore (difficulty);
 			foreach (Enemy_Follow enemy in enemies)
 				enemy.visionVisualizer.color = defeatedColor;
 			GameManager.GetSingleton<HumanPlayer>().nameOfEnemyGroupImInside = null;
@@ -123,7 +132,7 @@ namespace BMH
 
 		public virtual void OnTriggerExit2D (Collider2D other)
 		{
-			if (other.gameObject != GameManager.GetSingleton<HumanPlayer>().body.gameObject || !enabled)
+			if (other != GameManager.GetSingleton<HumanPlayer>().body.collider || !enabled)
 				return;
 			Destroy(trs.gameObject);
 			duplicate.gameObject.SetActive(true);

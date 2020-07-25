@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace BMH
 {
-	[ExecuteAlways]
+	//[ExecuteAlways]
 	public class Menu : MonoBehaviour
 	{
 		[HideInInspector]

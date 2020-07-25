@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System;
-using Extensions;
 
 namespace BMH
 {
@@ -11,7 +11,7 @@ namespace BMH
 		public GameObject obj;
 		public float duration;
 		public bool realtime;
-		public static TemporaryDisplayObject[] displayedInstances = new TemporaryDisplayObject[0];
+		public static List<TemporaryDisplayObject> displayedInstances = new List<TemporaryDisplayObject>();
 		
 		public virtual IEnumerator DisplayRoutine ()
 		{
@@ -25,18 +25,18 @@ namespace BMH
 
 		public virtual void Show ()
 		{
-			if (displayedInstances.Contains_class(this))
+			if (displayedInstances.Contains(this))
 				return;
 			if (obj != null)
 				obj.SetActive(true);
-			displayedInstances = displayedInstances.Add_class(this);
+			displayedInstances.Add(this);
 		}
 
 		public virtual void Hide ()
 		{
 			if (obj != null)
 				obj.SetActive(false);
-			displayedInstances = displayedInstances.Remove_class(this);
+			displayedInstances.Remove(this);
 		}
 	}
 }

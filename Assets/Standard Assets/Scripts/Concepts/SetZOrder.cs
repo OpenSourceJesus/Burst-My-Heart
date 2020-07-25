@@ -4,10 +4,10 @@ using Extensions;
 
 namespace BMH
 {
-    [ExecuteAlways]
+    //[ExecuteAlways]
 	public class SetZOrder : MonoBehaviour
 	{
-        public Renderer renderer;
+        public new Renderer renderer;
         public short sortingOrder;
         public bool useSortingLayerId;
         public int sortingLayerId;

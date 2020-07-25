@@ -89,16 +89,21 @@ namespace BMH
 			}
 		}
 		public static bool initialized;
+		public CursorEntry[] cursorEntries = new CursorEntry[0];
+		public static Dictionary<string, CursorEntry> cursorEntriesDict = new Dictionary<string, CursorEntry>();
+		public static CursorEntry activeCursorEntry;
+		public static float cursorMoveSpeed = 0.05f;
+		public static Vector2Int windowSize;
 
 		public static T GetSingleton<T> ()
 		{
 			if (!singletons.ContainsKey(typeof(T)))
-				return GetSingleton<T>(FindObjectsOfType<UnityEngine.Object>());
+				return GetSingleton<T>(FindObjectsOfType<Object>());
 			else
 			{
-				if (singletons[typeof(T)] == null)
+				if (singletons[typeof(T)] == null || singletons[typeof(T)].Equals(default(T)))
 				{
-					T singleton = GetSingleton<T>(FindObjectsOfType<UnityEngine.Object>());
+					T singleton = GetSingleton<T>(FindObjectsOfType<Object>());
 					singletons[typeof(T)] = singleton;
 					return singleton;
 				}
@@ -107,14 +112,52 @@ namespace BMH
 			}
 		}
 
-		public static T GetSingleton<T> (UnityEngine.Object[] objects)
+		public static T GetSingleton<T> (Object[] objects)
 		{
-			if (typeof(T).IsSubclassOf(typeof(UnityEngine.Object)))
+			if (typeof(T).IsSubclassOf(typeof(Object)))
 			{
-				foreach (UnityEngine.Object obj in objects)
+				foreach (Object obj in objects)
 				{
 					if (obj is T)
 					{
+						singletons.Remove(typeof(T));
+						singletons.Add(typeof(T), obj);
+						break;
+					}
+				}
+			}
+			if (singletons.ContainsKey(typeof(T)))
+				return (T) singletons[typeof(T)];
+			else
+				return default(T);
+		}
+
+		public static T GetSingletonIncludingAssets<T> ()
+		{
+			if (!singletons.ContainsKey(typeof(T)))
+				return GetSingletonIncludingAssets<T>(Object.FindObjectsOfTypeIncludingAssets(typeof(T)));
+			else
+			{
+				if (singletons[typeof(T)] == null || singletons[typeof(T)].Equals(default(T)))
+				{
+					T singleton = GetSingleton<T>(Object.FindObjectsOfTypeIncludingAssets(typeof(T)));
+					singletons[typeof(T)] = singleton;
+					return singleton;
+				}
+				else
+					return (T) singletons[typeof(T)];
+			}
+		}
+
+		public static T GetSingletonIncludingAssets<T> (Object[] objects)
+		{
+			if (typeof(T).IsSubclassOf(typeof(Object)))
+			{
+				foreach (Object obj in objects)
+				{
+					if (obj is T)
+					{
+						singletons.Remove(typeof(T));
 						singletons.Add(typeof(T), obj);
 						break;
 					}
@@ -147,20 +190,44 @@ namespace BMH
 #endif
 			if (!initialized)
 			{
+				windowSize = new Vector2Int(Screen.width, Screen.height);
 				ClearPlayerStats ();
 				SaveAndLoadManager.RemoveData ("Has paused");
 				initialized = true;
+			}
+			if (cursorEntries.Length > 0)
+			{
+				activeCursorEntry = null;
+				cursorEntriesDict.Clear();
+				foreach (CursorEntry cursorEntry in cursorEntries)
+				{
+					cursorEntriesDict.Add(cursorEntry.name, cursorEntry);
+					cursorEntry.rectTrs.gameObject.SetActive(false);
+				}
+				Cursor.visible = false;
+				cursorEntriesDict["Default"].SetAsActive ();
 			}
 			base.Awake ();
 		}
 
 		public virtual void Update ()
 		{
-			foreach (IUpdatable updatable in updatables)
-				updatable.DoUpdate ();
-			if (GetSingleton<ObjectPool>().enabled)
-				GetSingleton<ObjectPool>().DoUpdate ();
-			framesSinceLoadedScene ++;
+			// try
+			// {
+				// if (!paused && framesSinceLoadedScene > LAG_FRAMES_AFTER_LOAD_SCENE)
+					Physics2D.Simulate(Time.deltaTime);
+				foreach (IUpdatable updatable in updatables)
+					updatable.DoUpdate ();
+				if (GetSingleton<ObjectPool>() != null && GetSingleton<ObjectPool>().enabled)
+					GetSingleton<ObjectPool>().DoUpdate ();
+				if (GetSingleton<GameCamera>() != null)
+					GetSingleton<GameCamera>().DoUpdate ();
+				framesSinceLoadedScene ++;
+			// }
+			// catch (Exception e)
+			// {
+			// 	Debug.Log(e.Message + "\n" + e.StackTrace);
+			// }
 		}
 
 		public virtual void LoadScene (string name)
@@ -201,8 +268,14 @@ namespace BMH
 		{
 			currentPauses = Mathf.Clamp(currentPauses + pauses, 0, int.MaxValue);
 			paused = currentPauses > 0;
+			if (paused)
+				GetSingleton<GameMode>().HasPaused = true;
 			Time.timeScale = timeScale * (1 - paused.GetHashCode());
-			AudioListener.pause = paused.GetHashCode() == 1;
+			AudioListener.pause = paused;
+			if (paused)
+				AudioListener.volume = 0;
+			else
+				GetSingleton<AudioManager>().UpdateAudioListener ();
 		}
 
 		public virtual void Quit ()
@@ -214,6 +287,7 @@ namespace BMH
 		{
 			ClearPlayerStats ();
 			SaveAndLoadManager.RemoveData ("Has paused");
+			SaveAndLoadManager.RemoveData ("Is online");
 			GetSingleton<SaveAndLoadManager>().Save ();
 		}
 
@@ -235,7 +309,7 @@ namespace BMH
 				for (int i = 0; i < updatables.Length; i ++)
 				{
 					updatable = updatables[i];
-					if (!updatable.PauseWhileUnfocused)
+					if (updatable.PauseWhileUnfocused)
 					{
 						pausedUpdatables = pausedUpdatables.Add(updatable);
 						updatables = updatables.RemoveAt(i);
@@ -327,25 +401,6 @@ namespace BMH
 			return ang;
 		}
 
-		public static Transform FindClosestTransform (Transform[] transforms, Transform closestTo)
-		{
-			while (transforms.Contains_class(null))
-				transforms = transforms.Remove_class(null);
-			if (transforms.Length == 0)
-				return null;
-			else if (transforms.Length == 1)
-				return transforms[0];
-			int closestOpponentIndex = 0;
-			for (int i = 1; i < transforms.Length; i ++)
-			{
-				Transform checkOpponent = transforms[i];
-				Transform currentClosestOpponent = transforms[closestOpponentIndex];
-				if (Vector2.Distance(closestTo.position, checkOpponent.position) < Vector2.Distance(closestTo.position, currentClosestOpponent.position))
-					closestOpponentIndex = i;
-			}
-			return transforms[closestOpponentIndex];
-		}
-
 		public static void SetGameObjectActive (string name)
 		{
 			GameObject.Find(name).SetActive(true);
@@ -376,6 +431,21 @@ namespace BMH
 		public static Object Clone (Object obj, Vector3 position, Quaternion rotation)
 		{
 			return Instantiate(obj, position, rotation);
+		}
+
+		[Serializable]
+		public class CursorEntry
+		{
+			public string name;
+			public RectTransform rectTrs;
+
+			public virtual void SetAsActive ()
+			{
+				if (activeCursorEntry != null)
+					activeCursorEntry.rectTrs.gameObject.SetActive(false);
+				rectTrs.gameObject.SetActive(true);
+				activeCursorEntry = this;
+			}
 		}
 	}
 }

@@ -19,7 +19,7 @@ namespace BMH
 				return;
 			Transform menuChild = trs.parent.parent.parent;
 			Menu menu = menuChild.GetComponentInParent<Menu>();
-			menu.options = menu.options.RemoveAt_class(menuChild.GetSiblingIndex());
+			menu.options = menu.options.RemoveAt(menuChild.GetSiblingIndex());
 			Destroy(gameObject);
 		}
 	}

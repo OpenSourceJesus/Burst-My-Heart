@@ -1,20 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Extensions;
 using System.Reflection;
 using UnityEngine.UI;
 using System.IO;
 using System;
-using UnityEngine.SceneManagement;
-using FullSerializer;
+using Utf8Json;
 
 namespace BMH
 {
-	[ExecuteAlways]
-	public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
+	//[ExecuteAlways]
+	public class SaveAndLoadManager : MonoBehaviour
 	{
-		public static fsSerializer serializer = new fsSerializer();
 		[HideInInspector]
 		public SaveAndLoadObject[] saveAndLoadObjects = new SaveAndLoadObject[0];
 		public static SavedObjectEntry[] savedObjectEntries = new SavedObjectEntry[0];
@@ -25,8 +22,9 @@ namespace BMH
 		public static Dictionary<string, string> data = new Dictionary<string, string>();
 		public const string saveFileName = "Saved Data.txt";
 		public const string DATA_SEPARATOR = "☒";
+		public bool usePlayerPrefs;
 		
-		public override void Awake ()
+		public virtual void Awake ()
 		{
 #if UNITY_EDITOR
 			if (!Application.isPlaying)
@@ -42,9 +40,6 @@ namespace BMH
 				}
 				return;
 			}
-#endif
-			base.Awake ();
-#if UNITY_EDITOR
 			Debug.Log(Application.persistentDataPath);
 #endif
 			if (saveFileFullPath.IndexOf(Path.DirectorySeparatorChar) == 0)
@@ -67,17 +62,12 @@ namespace BMH
 
 		public static string Serialize (object value, Type type)
 		{
-			fsData data;
-			serializer.TrySerialize(type, value, out data).AssertSuccessWithoutWarnings();
-			return fsJsonPrinter.CompressedJson(data);
+			return JsonSerializer.NonGeneric.ToJsonString(type, value);
 		}
 
 		public static object Deserialize (string serializedState, Type type)
 		{
-			fsData data = fsJsonParser.Parse(serializedState);
-			object deserialized = null;
-			serializer.TryDeserialize(data, type, ref deserialized).AssertSuccessWithoutWarnings();
-			return deserialized;
+			return JsonSerializer.NonGeneric.Deserialize(type, serializedState);
 		}
 
 		public virtual void _SetValue (string key, object value)
@@ -91,6 +81,9 @@ namespace BMH
 				data[key] = Serialize(value, value.GetType());
 			else
 				data.Add(key, Serialize(value, value.GetType()));
+#if UNITY_WEBGL
+			GameManager.GetSingleton<SaveAndLoadManager>().Save ();
+#endif
 		}
 
 		public static T GetValue<T> (string key, T defaultValue = default(T))
@@ -123,21 +116,20 @@ namespace BMH
 			string saveFileText = "";
 			foreach (KeyValuePair<string, string> keyValuePair in data)
 				saveFileText += keyValuePair.Key + DATA_SEPARATOR + keyValuePair.Value + DATA_SEPARATOR;
-#if UNITY_WEBGL
-			PlayerPrefs.SetString(saveFileFullPath, saveFileText);
-#else
-			File.WriteAllText(saveFileFullPath, saveFileText);
-#endif
-			GameManager.GetSingleton<GameManager>().StartCoroutine(displayOnSave.DisplayRoutine ());
+			if (usePlayerPrefs)
+				PlayerPrefs.SetString(saveFileFullPath, saveFileText);
+			else
+				File.WriteAllText(saveFileFullPath, saveFileText);
+			StartCoroutine(displayOnSave.DisplayRoutine ());
 		}
 		
 		public virtual void Load ()
 		{
-			StartCoroutine(LoadRoutine ());
-		}
-
-		public virtual IEnumerator LoadRoutine ()
-		{
+			if (GameManager.GetSingleton<SaveAndLoadManager>() != this)
+			{
+				GameManager.GetSingleton<SaveAndLoadManager>().Load ();
+				return;
+			}
 			saveAndLoadObjectTypeDict.Clear();
 			SaveAndLoadObject saveAndLoadObject;
 			savedObjectEntries = new SavedObjectEntry[0];
@@ -147,25 +139,20 @@ namespace BMH
 				if (saveAndLoadObject != null)
 				{
 					saveAndLoadObject.Init ();
-					savedObjectEntries = savedObjectEntries.AddRange_class(saveAndLoadObject.saveEntries);
+					savedObjectEntries = savedObjectEntries.AddRange(saveAndLoadObject.saveEntries);
 				}
 			}
 			data.Clear();
 			string saveFileText;
-#if UNITY_WEBGL
-			saveFileText = PlayerPrefs.GetString(saveFileFullPath, "");
-#else
-			saveFileText = File.ReadAllText(saveFileFullPath);
-#endif
+			if (usePlayerPrefs)
+				saveFileText = PlayerPrefs.GetString(saveFileFullPath, "");
+			else
+				saveFileText = File.ReadAllText(saveFileFullPath);
 			if (string.IsNullOrEmpty(saveFileText))
-				yield break;
+				return;
 			string[] saveFileData = saveFileText.Split(new string[] { DATA_SEPARATOR }, StringSplitOptions.RemoveEmptyEntries);
-			yield return new WaitForEndOfFrame();
-			for (int i = 1; i < saveFileData.Length; i ++)
-			{
-				if (i % 2 == 1)
-					data.Add(saveFileData[i - 1], saveFileData[i]);
-			}
+			for (int i = 1; i < saveFileData.Length; i += 2)
+				data.Add(saveFileData[i - 1], saveFileData[i]);
 			for (int i = 0; i < savedObjectEntries.Length; i ++)
 				savedObjectEntries[i].Load ();
 			GameManager.GetSingleton<GameManager>().SetGosActive ();
@@ -188,7 +175,7 @@ namespace BMH
 
 			public virtual string GetKeyForMember (MemberInfo member)
 			{
-				return "" + saveableAndLoadable.UniqueId + INFO_SEPARATOR + member.Name;
+				return "" + saveAndLoadObject.uniqueId + INFO_SEPARATOR + saveableAndLoadable.UniqueId + INFO_SEPARATOR + member.Name;
 			}
 			
 			public virtual void Save ()

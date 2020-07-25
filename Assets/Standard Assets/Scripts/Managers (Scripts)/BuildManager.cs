@@ -13,7 +13,7 @@ using UnityEngine.UI;
 
 namespace BMH
 {
-	[ExecuteAlways]
+	//[ExecuteAlways]
 	public class BuildManager : SingletonMonoBehaviour<BuildManager>
 	{
 #if UNITY_EDITOR

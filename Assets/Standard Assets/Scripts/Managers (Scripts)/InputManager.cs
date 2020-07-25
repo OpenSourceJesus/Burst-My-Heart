@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 namespace BMH
 {
-	public class InputManager : SingletonMonoBehaviour<InputManager>, IUpdatable
+	public class InputManager : MonoBehaviour, IUpdatable
 	{
 		public static Rewired.Player[] inputters = new Rewired.Player[0];
 		public InputDevice[] defaultInputDevices = new InputDevice[0];
@@ -18,6 +18,13 @@ namespace BMH
 			get
 			{
 				return inputDevices.Contains(InputDevice.Gamepad);
+			}
+		}
+		public static bool UsingTouchscreen
+		{
+			get
+			{
+				return inputDevices.Contains(InputDevice.Touchscreen);
 			}
 		}
 		public static HumanPlayer[] humanPlayers = new HumanPlayer[0];
@@ -108,7 +115,7 @@ namespace BMH
 			humanPlayers = FindObjectsOfType<HumanPlayer>();
 			if (humanPlayers.Length < 2 && inputters[1].controllers.hasKeyboard)
 				inputters[0].controllers.AddController(inputters[1].controllers.GetLastActiveController(ControllerType.Keyboard), true);
-			else if (humanPlayers.Length == 2 && inputters[0].controllers.hasKeyboard && inputters[0].controllers.joystickCount > 0)
+			else if (humanPlayers.Length == 2 && inputters[0].controllers.joystickCount > 0)
 				inputters[1].controllers.AddController(inputters[0].controllers.GetLastActiveController(ControllerType.Keyboard), true);
 		}
 		
@@ -151,6 +158,47 @@ namespace BMH
 			ReInput.ControllerConnectedEvent -= OnControllerConnected;
 			ReInput.ControllerPreDisconnectEvent -= OnControllerPreDisconnect;
 			SceneManager.sceneLoaded -= OnSceneLoaded;
+		}
+
+		public static Vector2 GetAxis2D (string xAxisName, string yAxisName, int inputterId)
+		{
+			return Vector2.ClampMagnitude(inputters[inputterId].GetAxis2D(xAxisName, yAxisName), 1);
+		}
+
+		public static Vector2 GetAxis2D (string xAxisName, string yAxisName)
+		{
+			Vector2 output = new Vector2();
+			for (int i = 0; i < inputters.Length; i ++)
+				output += GetAxis2D(xAxisName, yAxisName, i);
+			return output;
+		}
+
+		public static bool GetButtonDown (string buttonName, int inputterId)
+		{
+			return inputters[inputterId].GetButtonDown(buttonName);
+		}
+
+		public static bool GetButtonDown (string buttonName)
+		{
+			for (int i = 0; i < inputters.Length; i ++)
+			{
+				if (inputters[i].GetButtonDown(buttonName))
+					return true;
+			}
+			return false;
+		}
+
+		public static float GetAxis (string axisName, int inputterId)
+		{
+			return inputters[inputterId].GetAxis(axisName);
+		}
+
+		public static float GetAxis (string axisName)
+		{
+			float output = 0;
+			for (int i = 0; i < inputters.Length; i ++)
+				output += GetAxis(axisName, i);
+			return output;
 		}
 	}
 
@@ -211,6 +259,7 @@ namespace BMH
 	public enum InputDevice
 	{
 		Keyboard,
-		Gamepad
+		Gamepad,
+		Touchscreen
 	}
 }

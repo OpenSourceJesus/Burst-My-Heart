@@ -1,15 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BMH;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
-namespace BMH
+namespace DialogAndStory
 {
-	[ExecuteAlways]
+	// [ExecuteInEditMode]
 	public class Conversation : MonoBehaviour
 	{
 		public Transform trs;
-		public Dialog[] dialogs;
+		public Dialog[] dialogs = new Dialog[0];
 		public Coroutine updateRoutine;
+		[HideInInspector]
+		public Dialog currentDialog;
 		
 		public virtual void Awake ()
 		{
@@ -18,19 +24,12 @@ namespace BMH
 			{
 				if (trs == null)
 					trs = GetComponent<Transform>();
+				EditorApplication.update += DoEditorUpdate;
 				return;
 			}
+			else
+				EditorApplication.update -= DoEditorUpdate;
 #endif
-			if (dialogs != null)
-			{
-				foreach (Transform child in trs)
-				{
-					if (child.gameObject.activeSelf)
-						child.gameObject.SetActive(false);
-					else
-						Destroy(child.gameObject);
-				}
-			}
 		}
 		
 		public virtual IEnumerator UpdateRoutine ()
@@ -40,6 +39,7 @@ namespace BMH
 			DialogManager.currentConversation = this;
 			foreach (Dialog dialog in dialogs)
 			{
+				currentDialog = dialog;
 				GameManager.GetSingleton<DialogManager>().StartDialog (dialog);
 				yield return new WaitUntil(() => (!dialog.IsActive));
 				GameManager.GetSingleton<DialogManager>().EndDialog (dialog);
@@ -50,20 +50,21 @@ namespace BMH
 		public virtual void OnDisable ()
 		{
 #if UNITY_EDITOR
+			EditorApplication.update -= DoEditorUpdate;
 			if (!Application.isPlaying)
 				return;
 #endif
-			StopAllCoroutines ();
+			if (updateRoutine != null)
+				StopCoroutine (updateRoutine);
 			foreach (Dialog dialog in dialogs)
-				dialog.gameObject.SetActive(true);
+				dialog.gameObject.SetActive(false);
 		}
 		
 #if UNITY_EDITOR
-		public virtual void Update ()
+		public virtual void DoEditorUpdate ()
 		{
-			if (Application.isPlaying)
-				return;
-			dialogs = GetComponentsInChildren<Dialog>();
+			if (dialogs.Length == 0)
+				dialogs = GetComponentsInChildren<Dialog>();
 			foreach (Dialog dialog in dialogs)
 				dialog.conversation = this;
 		}

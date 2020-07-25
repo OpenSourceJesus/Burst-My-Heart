@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BMH
 {
-	[ExecuteAlways]
+	//[ExecuteAlways]
 	[RequireComponent(typeof(Rigidbody2D))]
 	[DisallowMultipleComponent]
 	public class _Rigidbody2D : MonoBehaviour

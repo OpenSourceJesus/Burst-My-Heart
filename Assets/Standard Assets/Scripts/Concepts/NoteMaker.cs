@@ -12,12 +12,12 @@ namespace BMH
 
 		public virtual void OnEnable ()
 		{
-			MakeNotes.noteMakers = MakeNotes.noteMakers.Add_class(this);
+			MakeNotes.noteMakers = MakeNotes.noteMakers.Add(this);
 		}
 
 		public virtual void OnDisable ()
 		{
-			MakeNotes.noteMakers = MakeNotes.noteMakers.Remove_class(this);
+			MakeNotes.noteMakers = MakeNotes.noteMakers.Remove(this);
 		}
 	}
 }

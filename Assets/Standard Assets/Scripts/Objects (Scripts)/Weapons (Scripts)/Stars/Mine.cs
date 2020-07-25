@@ -11,7 +11,6 @@ namespace BMH
 		public LayerMask whatICantActivateIn;
 		public delegate void OnDeath();
 		public event OnDeath onDeath;
-		public SpriteRenderer[] extraSpriteRenderers = new SpriteRenderer[0];
 
 		public override void Awake ()
 		{
@@ -40,11 +39,7 @@ namespace BMH
 #endif
 			collider.enabled = false;
 			if (spriteRenderer.color.a != initSpriteRendererAlpha)
-			{
 				spriteRenderer.color = spriteRenderer.color.SetAlpha(initSpriteRendererAlpha);
-				foreach (SpriteRenderer extraSpriteRenderer in extraSpriteRenderers)
-					extraSpriteRenderer.color = extraSpriteRenderer.color.DivideAlpha(4);
-			}
 			if (onDeath != null)
 			{
 				onDeath ();
@@ -64,8 +59,6 @@ namespace BMH
 		public virtual void Activate ()
 		{
 			spriteRenderer.color = spriteRenderer.color.SetAlpha(1);
-			foreach (SpriteRenderer extraSpriteRenderer in extraSpriteRenderers)
-				extraSpriteRenderer.color = extraSpriteRenderer.color.MultiplyAlpha(4);
 			collider.enabled = true;
 		}
 	}

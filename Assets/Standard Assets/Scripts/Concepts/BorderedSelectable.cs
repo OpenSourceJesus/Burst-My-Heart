@@ -5,7 +5,7 @@ using System;
 using Extensions;
 using UnityEngine.UI;
 
-[ExecuteAlways]
+//[ExecuteAlways]
 public class BorderedSelectable : _Selectable
 {
     public Selectable[] _graphics;
@@ -15,7 +15,7 @@ public class BorderedSelectable : _Selectable
     {
         Canvas.ForceUpdateCanvases();
         RectTransform[] children = GetComponentsInChildren<RectTransform>();
-        children = children.Remove_class(combinedRectTrs);
+        children = children.Remove(combinedRectTrs);
         Rect[] graphicRects = new Rect[children.Length];
         for (int i = 0; i < children.Length; i ++)
             graphicRects[i] = children[i].GetRectInCanvasNormalized(canvasRectTrs);

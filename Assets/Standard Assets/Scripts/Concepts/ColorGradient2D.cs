@@ -80,7 +80,7 @@ public class ColorGradient2D
 				colorKeys[i2] = colorKey;
 			}
 			gradient.SetKeys(colorKeys, gradient.alphaKeys);
-			output.xGradients = output.xGradients.Add_class(gradient);
+			output.xGradients = output.xGradients.Add(gradient);
 		}
 		if (remainderKeyCount > 0)
 		{
@@ -106,7 +106,7 @@ public class ColorGradient2D
 				colorKeys[i] = colorKey;
 			}
 			gradient.SetKeys(colorKeys, gradient.alphaKeys);
-			output.xGradients = output.xGradients.Add_class(gradient);
+			output.xGradients = output.xGradients.Add(gradient);
 		}
 
 		remainderKeyCount = yColorKeys;
@@ -136,7 +136,7 @@ public class ColorGradient2D
 				colorKeys[i2] = colorKey;
 			}
 			gradient.SetKeys(colorKeys, gradient.alphaKeys);
-			output.yGradients = output.yGradients.Add_class(gradient);
+			output.yGradients = output.yGradients.Add(gradient);
 		}
 		if (remainderKeyCount > 0)
 		{
@@ -162,7 +162,7 @@ public class ColorGradient2D
 				colorKeys[i] = colorKey;
 			}
 			gradient.SetKeys(colorKeys, gradient.alphaKeys);
-			output.yGradients = output.yGradients.Add_class(gradient);
+			output.yGradients = output.yGradients.Add(gradient);
 		}
 
 		GradientAlphaKey alphaKey;

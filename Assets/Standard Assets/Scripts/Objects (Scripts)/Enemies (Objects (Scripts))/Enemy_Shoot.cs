@@ -27,7 +27,7 @@ namespace BMH
 				ShootEntry shootEntry = shootEntries[i];
 				if (!shootEntry.enabled)
 				{
-					shootEntries = shootEntries.RemoveAt_class(i);
+					shootEntries = shootEntries.RemoveAt(i);
 					i --;
 				}
 				else
@@ -75,7 +75,7 @@ namespace BMH
 				if (shootEntry.spawner == body.trs)
 					positionOffset += radius;
 			}
-			Weapon[] bullets = shootEntry.bulletPattern.Shoot (shootEntry.spawner, shootEntry.bulletPrefab, positionOffset);
+			Weapon[] bullets = shootEntry.bulletPattern.Shoot(shootEntry.spawner, shootEntry.bulletPrefab, positionOffset);
 			foreach (Weapon bullet in bullets)
 			{
 				bullet.player = this;

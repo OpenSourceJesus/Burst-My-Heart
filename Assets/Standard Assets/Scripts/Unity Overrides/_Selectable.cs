@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using Extensions;
 using BMH;
 
-[ExecuteAlways]
+//[ExecuteAlways]
 public class _Selectable : MonoBehaviour
 {
 	public Canvas canvas;
@@ -72,6 +72,8 @@ public class _Selectable : MonoBehaviour
 #if UNITY_EDITOR
 	public virtual void Update ()
 	{
+		if (Application.isPlaying)
+			return;
 		if (updateCanvas)
 		{
 			updateCanvas = false;

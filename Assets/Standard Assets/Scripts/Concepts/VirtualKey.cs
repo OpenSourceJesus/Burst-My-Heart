@@ -7,7 +7,7 @@ using Extensions;
 
 namespace BMH
 {
-	[ExecuteAlways]
+	//[ExecuteAlways]
 	public class VirtualKey : MonoBehaviour, IUpdatable
 	{
 		public Text text;
@@ -141,8 +141,8 @@ namespace BMH
 		{
 			if (GameManager.GetSingleton<VirtualKeyboard>().outputToInputField.text.Length == GameManager.GetSingleton<VirtualKeyboard>().outputToInputField.characterLimit)
 				return;
-			GameManager.GetSingleton<VirtualKeyboard>().outputToInputField.text = GameManager.GetSingleton<VirtualKeyboard>().outputToInputField.text.Insert(VirtualKeyboard.OutputPosition, text.text);
-			VirtualKeyboard.OutputPosition ++;
+			GameManager.GetSingleton<VirtualKeyboard>().outputToInputField.text = GameManager.GetSingleton<VirtualKeyboard>().outputToInputField.text.Insert(GameManager.GetSingleton<VirtualKeyboard>().OutputPosition, text.text);
+			GameManager.GetSingleton<VirtualKeyboard>().OutputPosition ++;
 			if (GameManager.GetSingleton<VirtualKeyboard>().shiftKeys[0].isActivated)
 			{
 				GameManager.GetSingleton<VirtualKeyboard>().shiftKeys[0].ToggleActivate ();

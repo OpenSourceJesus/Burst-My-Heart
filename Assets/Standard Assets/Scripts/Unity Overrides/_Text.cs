@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Extensions;
+using System;
 
 namespace BMH
 {
-	[ExecuteAlways]
+	//[ExecuteAlways]
 	[RequireComponent(typeof(Text))]
 	[DisallowMultipleComponent]
 	public class _Text : MonoBehaviour
@@ -16,6 +17,7 @@ namespace BMH
 		public bool useSeperateTextForGamepad;
 		[Multiline]
 		public string gamepadText;
+		public InputDeviceEntry[] inputDeviceEntries = new InputDeviceEntry[0];
 		public Text text;
 		public static _Text[] instances = new _Text[0];
 
@@ -27,6 +29,19 @@ namespace BMH
 				if (text == null)
 					text = GetComponent<Text>();
 				keyboardText = text.text;
+				if (inputDeviceEntries.Length == 0)
+				{
+					inputDeviceEntries = new InputDeviceEntry[3];
+					inputDeviceEntries[0].device = InputDevice.Keyboard;
+					inputDeviceEntries[0].text = text.text;
+					inputDeviceEntries[1].device = InputDevice.Gamepad;
+					if (useSeperateTextForGamepad)
+						inputDeviceEntries[1].text = gamepadText;
+					// else
+						// inputDeviceEntries[1].text = ;
+					inputDeviceEntries[2].device = InputDevice.Touchscreen;
+					inputDeviceEntries[2].text = text.text;
+				}
 				return;
 			}
 #endif
@@ -39,7 +54,7 @@ namespace BMH
 				return;
 #endif
 			UpdateText ();
-			instances = instances.Add_class(this);
+			instances = instances.Add(this);
 		}
 		
 		public virtual void UpdateText ()
@@ -61,7 +76,16 @@ namespace BMH
 			if (!Application.isPlaying)
 				return;
 #endif
-			instances = instances.Remove_class(this);
+			instances = instances.Remove(this);
+		}
+
+		[Serializable]
+		public class InputDeviceEntry
+		{
+			public InputDevice device;
+			public bool useSeperateText;
+			[Multiline]
+			public string text;
 		}
 	}
 }

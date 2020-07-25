@@ -5,27 +5,33 @@ using UnityEngine;
 using Extensions;
 using Ferr;
 
-public class AreaPathNode : EditorHelper
+namespace BMH
 {
-    public Transform trs;
-    public Color gizmosColor;
-	public AreaPathNode[] children;
-	public float radius;
-
-	public virtual void Start ()
+	public class AreaPathNode : EditorScript
 	{
-		if (!Application.isPlaying)
+		public AreaPath areaPath;
+		public Transform trs;
+		public Color gizmosColor;
+		public AreaPathNode[] children;
+		public float radius;
+
+		public virtual void Start ()
 		{
-			if (trs == null)
-				trs = GetComponent<Transform>();
+			if (!Application.isPlaying)
+			{
+				if (trs == null)
+					trs = GetComponent<Transform>();
+				if (areaPath == null)
+					areaPath = GetComponentInParent<AreaPath>();
+			}
+		}
+
+		public virtual void OnDrawGizmos ()
+		{
+			Gizmos.color = gizmosColor;
+			Gizmos.matrix = Matrix4x4.identity;
+			Gizmos.DrawSphere(trs.position, radius);
 		}
 	}
-
-    public virtual void OnDrawGizmos ()
-    {
-        Gizmos.color = gizmosColor;
-		Gizmos.matrix = Matrix4x4.identity;
-		Gizmos.DrawSphere(trs.position, radius);
-    }
 }
 #endif

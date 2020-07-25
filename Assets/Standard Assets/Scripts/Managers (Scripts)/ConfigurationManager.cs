@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 namespace BMH
 {
-	[ExecuteAlways]
+	//[ExecuteAlways]
 	public class ConfigurationManager : SingletonMonoBehaviour<ConfigurationManager>
 	{
 		[HideInInspector]

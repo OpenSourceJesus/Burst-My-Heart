@@ -5,7 +5,7 @@ using Extensions;
 
 namespace BMH
 {
-	[ExecuteAlways]
+	//[ExecuteAlways]
 	[RequireComponent(typeof(SpriteRenderer))]
 	[DisallowMultipleComponent]
 	public class _SpriteRenderer : MonoBehaviour

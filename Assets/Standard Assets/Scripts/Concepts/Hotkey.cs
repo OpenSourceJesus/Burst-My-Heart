@@ -5,7 +5,7 @@ using Extensions;
 
 namespace BMH
 {
-	[ExecuteAlways]
+	//[ExecuteAlways]
 	public class Hotkey : MonoBehaviour, IUpdatable
 	{
 		public bool anyButton;
@@ -52,10 +52,6 @@ namespace BMH
 
 		public virtual void DoUpdate ()
 		{
-#if UNITY_EDITOR
-			if (!Application.isPlaying)
-				return;
-#endif
 			if (anyButton)
 			{
 				anyButtonDown = Input.anyKeyDown || InputManager.inputters[0].GetAnyButtonDown() || InputManager.inputters[1].GetAnyButtonDown() || InputManager.inputters[0].GetAnyNegativeButtonDown() || InputManager.inputters[1].GetAnyNegativeButtonDown();
@@ -71,7 +67,7 @@ namespace BMH
 					}
 				}
 			}
-			if (inputButton.GetDown() || (anyButtonDown))
+			if (inputButton.GetDown() || anyButtonDown)
 				button.onClick.Invoke();
 		}
 	}

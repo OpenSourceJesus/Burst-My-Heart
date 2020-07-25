@@ -14,7 +14,7 @@ namespace BMH
 			Body collidedBody = coll.gameObject.GetComponent<Body>();
 			if (collidedBody == null || collidedBody.Hp == MathfExtensions.NULL_FLOAT || collidedBody.player == null || collidedBody.player.owner == player.owner)
 			{
-				if (collidedBody != null && collidedBody.player == null && Hunt.instance != null)
+				if (collidedBody != null && collidedBody.player == null && GameManager.GetSingleton<Hunt>() != null)
 					collidedBody.Death (player);
 				return;
 			}

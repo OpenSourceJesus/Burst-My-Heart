@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace BMH
 {
-	public class SetScore : EditorHelper
+	public class SetScore : EditorScript
 	{
 		public int score;
 

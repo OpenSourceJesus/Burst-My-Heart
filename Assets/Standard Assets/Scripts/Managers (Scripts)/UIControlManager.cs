@@ -37,7 +37,7 @@ public class UIControlManager : SingletonMonoBehaviour<UIControlManager>
 	{
 		if (currentSelected != null)
 		{
-			if (!selectables.Contains_class(currentSelected) || !currentSelected.selectable.IsInteractable())
+			if (!selectables.Contains(currentSelected) || !currentSelected.selectable.IsInteractable())
 			{
 				ColorSelected (currentSelected, 1);
 				HandleChangeSelected (false);
@@ -53,12 +53,12 @@ public class UIControlManager : SingletonMonoBehaviour<UIControlManager>
 
 	public virtual void AddSelectable (_Selectable selectable)
 	{
-		selectables = selectables.Add_class(selectable);
+		selectables = selectables.Add(selectable);
 	}
 
 	public virtual void RemoveSelectable (_Selectable selectable)
 	{
-		selectables = selectables.Remove_class(selectable);
+		selectables = selectables.Remove(selectable);
 	}
 
 	public virtual bool IsMousedOverSelectable (_Selectable selectable)
@@ -145,8 +145,8 @@ public class UIControlManager : SingletonMonoBehaviour<UIControlManager>
 		if (selectables.Length == 0 || inControlMode)
 			return;
 		_Selectable[] otherSelectables = new _Selectable[0];
-		otherSelectables = otherSelectables.AddRange_class(selectables);
-		otherSelectables = otherSelectables.Remove_class(currentSelected);
+		otherSelectables = otherSelectables.AddRange(selectables);
+		otherSelectables = otherSelectables.Remove(currentSelected);
 		float selectableAttractiveness;
 		_Selectable nextSelected = otherSelectables[0];
 		float highestSelectableAttractiveness = GetAttractivenessOfSelectable(nextSelected, useInputDirection);

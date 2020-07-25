@@ -4,7 +4,7 @@ using System.Collections;
 namespace BMH
 {
 	[DisallowMultipleComponent]
-	[ExecuteAlways]
+	//[ExecuteAlways]
 	public class FaceCamera : MonoBehaviour
 	{
 		public Transform trs;

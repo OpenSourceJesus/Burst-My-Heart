@@ -6,7 +6,7 @@ MonoImporter:
   defaultReferences:
   - soundPrefab: {fileID: 8288558, guid: 9f7ddde357eb8ff4aa4a607a335de91e, type: 3}
   - position: {instanceID: 0}
-  executionOrder: 100
+  executionOrder: 0
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

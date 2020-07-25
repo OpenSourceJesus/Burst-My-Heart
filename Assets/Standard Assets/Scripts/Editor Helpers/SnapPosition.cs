@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Extensions;
 
-public class SnapPosition : EditorHelper
+public class SnapPosition : EditorScript
 {
 	public Transform trs;
 	public Vector3 snap = new Vector3(1, 1, 0);

@@ -6,6 +6,8 @@ namespace Extensions
 {
 	public static class BoundsExtensions
 	{
+		public static Bounds NULL = new Bounds(VectorExtensions.NULL3, VectorExtensions.NULL3);
+
 		public static bool IsEncapsulating (Bounds b1, Bounds b2, bool equalBoundsRetunsTrue)
 		{
 			if (equalBoundsRetunsTrue)

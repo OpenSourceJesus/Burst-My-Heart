@@ -61,8 +61,19 @@ namespace BMH
 			isDead = true;
 			if (onDeath != null)
 				onDeath (killer, this);
-			if (Hunt.instance == null && GameManager.GetSingleton<OnlineBattle>() == null && (RPG.instance == null || player.owner == GameManager.GetSingleton<GameManager>().teams[0]) && !(War.instance != null && player.owner != GameManager.GetSingleton<GameManager>().teams[0]))
-				GameManager.GetSingleton<GameManager>().ReloadActiveScene ();
+			if (GameManager.GetSingleton<Hunt>() == null && GameManager.GetSingleton<OnlineArena>() == null && (GameManager.GetSingleton<RPG>() == null || player.owner == GameManager.GetSingleton<GameManager>().teams[0]) && !(GameManager.GetSingleton<War>() != null && player.owner != GameManager.GetSingleton<GameManager>().teams[0]))
+			{
+				Destroy(player.gameObject);
+				if (controllerToSwitchTo == null)
+					GameManager.GetSingleton<GameManager>().ReloadActiveScene ();
+				else
+				{
+					if (canControl)
+						SwitchControl ();
+					if (player.weapon.canControl)
+						player.weapon.SwitchControl ();
+				}
+			}
 		}
 	}
 }

@@ -47,6 +47,8 @@ namespace BMH
 
 		public override void HandleMovement ()
 		{
+			if (isTrap)
+				return;
 			if (Vector2.Distance(GameManager.GetSingleton<HumanPlayer>().body.trs.position, trs.position) < maxBodyToWeaponDist)
 				Move (trs.position - GameManager.GetSingleton<HumanPlayer>().body.trs.position);
 			else

@@ -6,13 +6,13 @@ using System.Reflection;
 
 namespace BMH
 {
-	[ExecuteAlways]
-	public class VirtualKeyboard : SingletonMonoBehaviour<VirtualKeyboard>
+	//[ExecuteAlways]
+	public class VirtualKeyboard : MonoBehaviour
 	{
 		public Transform trs;
 		public InputField outputToInputField;
-		static int outputPosition;
-		public static int OutputPosition
+		int outputPosition;
+		public int OutputPosition
 		{
 			get
 			{
@@ -21,7 +21,7 @@ namespace BMH
 			set
 			{
 				outputPosition = value;
-				GameManager.GetSingleton<VirtualKeyboard>().outputToInputField.caretPosition = value;
+				outputToInputField.caretPosition = value;
 			}
 		}
 		public VirtualKey[] keys = new VirtualKey[0];
@@ -60,6 +60,8 @@ namespace BMH
 				else
 					outputToInputField.GetComponent<CanvasGroup>().alpha = 1;
 			}
+			GameManager.singletons.Remove(GetType());
+			GameManager.singletons.Add(GetType(), this);
 		}
 
 		public virtual void OnDisable ()

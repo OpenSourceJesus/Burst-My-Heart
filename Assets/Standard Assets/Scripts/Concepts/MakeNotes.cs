@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using Extensions;
+using System;
+using Random = UnityEngine.Random;
 
 namespace BMH
 {
+	[RequireComponent(typeof(AudioSource))]
 	public class MakeNotes : SingletonMonoBehaviour<MakeNotes>, IUpdatable
 	{
 		public static NoteMaker[] noteMakers = new NoteMaker[0];
 		public float worldDistanceBetweenNotes;
-		public float noteLength = 1;
-		public float addToSoundDespawnDelay = -0.1f;
-		float note;
+		float noteFrequency;
 		Vector2 midPoint;
 		public bool PauseWhileUnfocused
 		{
@@ -18,12 +19,47 @@ namespace BMH
 				return GameManager.GetSingleton<OnlineBattle>() == null;
 			}
 		}
+		public NoteGroup[] noteGroups = new NoteGroup[0];
+		NoteGroup noteGroup;
+		public float multiplyNoteFrequency;
+		public AnimationCurve noteNormalizedFrequencyOverTime;
+		public AnimationCurve noteVolumeOverTime;
+		float timeOfLastNote;
+		public AudioSource audioSource;
+		float targetFrequency;
+		float frequency;
+		int position;
+		public bool stream;
+		public int sampleRate;
+		public float frequencyLerpRate;
+
+		public virtual void OnAudioRead (float[] data)
+		{
+			int count = 0;
+			while (count < data.Length)
+			{
+				data[count] = Mathf.Sin(2 * Mathf.PI * frequency * position / sampleRate);
+				position ++;
+				count ++;
+			}
+		}
+
+		public virtual void OnAudioSetPosition (int newPosition)
+		{
+			position = newPosition;
+		}
 
 		public override void Awake ()
 		{
 			base.Awake ();
-			noteLength /= GameManager.GetSingleton<AudioManager>().soundEffectPrefab.audio.pitch;
-			addToSoundDespawnDelay /= GameManager.GetSingleton<AudioManager>().soundEffectPrefab.audio.pitch;
+			noteGroup = noteGroups[Random.Range(0, noteGroups.Length)];
+			print(noteGroup.name);
+			if (stream)
+			{
+				AudioClip audioClip = AudioClip.Create("Note", int.MaxValue, 1, sampleRate, true, OnAudioRead, OnAudioSetPosition);
+				audioSource.clip = audioClip;
+				audioSource.Play();
+			}
 			GameManager.updatables = GameManager.updatables.Add(this);
 		}
 
@@ -37,15 +73,23 @@ namespace BMH
 				midPoint /= noteMaker.transforms.Length;
 				if (Vector2.Distance(noteMaker.positionOfPreviousNote, midPoint) > worldDistanceBetweenNotes)
 				{
-					SoundEffect soundEffect = GameManager.GetSingleton<AudioManager>().MakeSoundEffect (null, midPoint);
-					if (soundEffect == null)
-						return;
-					note = MathfExtensions.SnapToInterval(soundEffect.audio.clip.length / noteLength * GetNoteFromPosition(midPoint), noteLength);
-					soundEffect.audio.time = note;
-					GameManager.GetSingleton<ObjectPool>().DelayDespawn (soundEffect.prefabIndex, soundEffect.gameObject, soundEffect.trs, noteLength + addToSoundDespawnDelay);
+					noteFrequency = GetNoteFromPosition(midPoint);
+					noteFrequency = Mathf.Lerp(noteGroup.noteFrequencies[0], noteGroup.noteFrequencies[noteGroup.noteFrequencies.Length - 1], noteFrequency);
+					noteFrequency = MathfExtensions.GetClosestNumber(noteFrequency, noteGroup.noteFrequencies) * multiplyNoteFrequency;
 					noteMaker.positionOfPreviousNote = midPoint;
+					audioSource.volume = 0;
+					if (!stream)
+					{
+						AudioClip audioClip = AudioClip.Create("Note", (int) (sampleRate * noteNormalizedFrequencyOverTime.keys[noteNormalizedFrequencyOverTime.keys.Length - 1].time), 1, sampleRate, false, OnAudioRead, OnAudioSetPosition);
+						audioSource.clip = audioClip;
+						audioSource.Play();
+					}
+					timeOfLastNote = Time.time;
 				}
 			}
+			audioSource.volume = noteVolumeOverTime.Evaluate(Time.time - timeOfLastNote);
+			targetFrequency = noteFrequency * noteNormalizedFrequencyOverTime.Evaluate(Time.time - timeOfLastNote);
+			frequency = Mathf.Lerp(frequency, targetFrequency, frequencyLerpRate * Time.deltaTime);
 		}
 
 		public virtual float GetNoteFromPosition (Vector2 position)
@@ -61,6 +105,13 @@ namespace BMH
 		public virtual void OnDestroy ()
 		{
 			GameManager.updatables = GameManager.updatables.Remove(this);
+		}
+
+		[Serializable]
+		public class NoteGroup
+		{
+			public string name;
+			public float[] noteFrequencies = new float[0];
 		}
 	}
 }

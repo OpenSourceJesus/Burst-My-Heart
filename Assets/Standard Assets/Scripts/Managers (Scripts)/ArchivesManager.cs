@@ -7,10 +7,11 @@ using System;
 using UnityEngine.UI;
 using System.IO;
 using Random = UnityEngine.Random;
+using PlayerIOClient;
 
 namespace BMH
 {
-	[ExecuteAlways]
+	//[ExecuteAlways]
 	public class ArchivesManager : SingletonMonoBehaviour<ArchivesManager>
 	{
 		public const string EMPTY_ACCOUNT_INDICATOR = "␀";
@@ -58,6 +59,7 @@ namespace BMH
 		}
 		public GameObject deleteAccountScreen;
 		public Text deleteAccountText;
+		public static int indexOfCurrentAccountToDelete;
 		public static AccountData currentAccountToDelete;
 		public GameObject accountInfoScreen;
 		public Text accountInfoTitleText;
@@ -66,6 +68,7 @@ namespace BMH
 		public Scrollbar accountInfoScrollbar;
 		public static MenuOption player1AccountAssigner;
 		public static MenuOption player2AccountAssigner;
+		public Transform trs;
 
 		public override void Awake ()
 		{
@@ -88,22 +91,47 @@ namespace BMH
 				return;
 			}
 			base.Awake ();
-			if (GameManager.GetSingleton<BuildManager>().clearDataOnFirstStartup && BuildManager.IsFirstStartup)
+			trs.SetParent(null);
+			if (BuildManager.IsFirstStartup)
 			{
-				SaveAndLoadManager.data.Clear();
+				if (GameManager.GetSingleton<BuildManager>().clearDataOnFirstStartup)
+				{
+					SaveAndLoadManager.data.Clear();
+					if (GameManager.GetSingleton<SaveAndLoadManager>().usePlayerPrefs)
+						PlayerPrefs.DeleteAll();
+					else
+						File.Delete(GameManager.GetSingleton<SaveAndLoadManager>().saveFileFullPath);
+				}
+				else
+					GameManager.GetSingleton<SaveAndLoadManager>().Load ();
 				BuildManager.IsFirstStartup = false;
-#if UNITY_WEBGL
-				PlayerPrefs.DeleteAll();
-#else
-				File.Delete(GameManager.GetSingleton<SaveAndLoadManager>().saveFileFullPath);
-#endif
 			}
 			else
 				GameManager.GetSingleton<SaveAndLoadManager>().Load ();
+			Connect ();
+		}
+
+		public virtual void Connect ()
+		{
+			GameManager.GetSingleton<NetworkManager>().Connect (OnAuthenticateSucess, OnAuthenticateFail);
+		}
+
+		public virtual void OnAuthenticateSucess (Client client)
+		{
+			Debug.Log("OnAuthenticateSucess");
+			NetworkManager.client = client;
+		}
+
+		public virtual void OnAuthenticateFail (PlayerIOError error)
+		{
+			Debug.Log("OnAuthenticateFail: " + error.ToString());
+			// Connect ();
 		}
 
 		public virtual void UpdateMenus ()
 		{
+			if (accountOptions[0] == null)
+				return;
 			MenuOption accountOption;
 			for (int i = 0; i < MAX_ACCOUNTS; i ++)
 			{
@@ -129,14 +157,19 @@ namespace BMH
 				accountOptions[i].trs.GetChild(0).GetComponentInChildren<Menu>().options[1].enabled = true;
 			}
 			if (player1AccountData != null)
-				accountOptions[GameManager.GetSingleton<ArchivesManager>().localAccountsData.IndexOf_class(player1AccountData)].trs.GetChild(0).GetComponentInChildren<Menu>().options[0].enabled = false;
+				accountOptions[GameManager.GetSingleton<ArchivesManager>().localAccountsData.IndexOf(player1AccountData)].trs.GetChild(0).GetComponentInChildren<Menu>().options[0].enabled = false;
 			if (player2AccountData != null)
-				accountOptions[GameManager.GetSingleton<ArchivesManager>().localAccountsData.IndexOf_class(player2AccountData)].trs.GetChild(0).GetComponentInChildren<Menu>().options[1].enabled = false;
+				accountOptions[GameManager.GetSingleton<ArchivesManager>().localAccountsData.IndexOf(player2AccountData)].trs.GetChild(0).GetComponentInChildren<Menu>().options[1].enabled = false;
 			addAccountOption.enabled = LocalAccountNames.Length < MAX_ACCOUNTS;
 		}
 		
 		public virtual void StartContinuousContinuousScrollAccountInfo (float velocity)
 		{
+			if (GameManager.GetSingleton<ArchivesManager>() != this)
+			{
+				GameManager.GetSingleton<ArchivesManager>().StartContinuousContinuousScrollAccountInfo (velocity);
+				return;
+			}
 			StartCoroutine(ContinuousScrollAccountInfoRoutine (velocity));
 		}
 
@@ -156,28 +189,12 @@ namespace BMH
 
 		public virtual void EndContinuousContinuousScrollAccountInfo ()
 		{
-			StopAllCoroutines();
-		}
-
-		public virtual IEnumerator GetInfoRoutine ()
-		{
-			CoroutineWithData cd = new CoroutineWithData(this, GameManager.GetSingleton<NetworkManager>().PostFormToResource ("GetPlayersData.php", NetworkManager.defaultDatabaseAccessForm));
-			string result = "";
-			while (string.IsNullOrEmpty(result))
+			if (GameManager.GetSingleton<ArchivesManager>() != this)
 			{
-				yield return cd.coroutine;
-				if (cd.result.GetType() == typeof(Exception))
-				{
-					yield return cd.result;
-					yield break;	
-				}
-				else
-					result = cd.result as string;
+				GameManager.GetSingleton<ArchivesManager>().EndContinuousContinuousScrollAccountInfo ();
+				return;
 			}
-			// result = result.StartAfter(NetworkManager.DEBUG_INDICATOR);
-			// Debug.Log(result);
-			// result = result.Remove(result.LastIndexOf(NetworkManager.DEBUG_INDICATOR));
-			yield return result;
+			StopAllCoroutines();
 		}
 
 		public virtual void TryToSetNewAccountUsername ()
@@ -187,86 +204,57 @@ namespace BMH
 				GameManager.GetSingleton<ArchivesManager>().TryToSetNewAccountUsername ();
 				return;
 			}
-			StartCoroutine(TryToSetNewAccountUsernameRoutine ());
-		}
-
-		public virtual IEnumerator TryToSetNewAccountUsernameRoutine ()
-		{
 			GameManager.GetSingleton<VirtualKeyboard>().DisableInput ();
 			GameManager.GetSingleton<NetworkManager>().notificationTextObject.obj.SetActive(true);
-			GameManager.GetSingleton<NetworkManager>().notificationText.text = "Loading...";
+			GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "Loading...";
 			string username = GameManager.GetSingleton<VirtualKeyboard>().outputToInputField.text;
-			newAccountData.username = username;
-			username = username.Replace(" ", "");
-			if (username.Length == 0)
+			newAccountData.username = username.Replace(" ", "");
+			if (newAccountData.username.Length == 0)
 			{
-				GameManager.GetSingleton<NetworkManager>().notificationText.text = "The username must contain at least one non-space character";
-				GameManager.GetSingleton<GameManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+				GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "The username must contain at least one non-space character";
+				GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
 				GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
-				yield break;
+				return;
 			}
-			CoroutineWithData cd = new CoroutineWithData(this, GetInfoRoutine ());
-			string result = "";
-			Exception exception;
-			while (string.IsNullOrEmpty(result))
-			{
-				yield return cd.coroutine;
-				exception = cd.result as Exception;
-				if (exception != null)
+			NetworkManager.client.BigDB.LoadMyPlayerObject(
+				delegate (DatabaseObject dbObject)
 				{
-					GameManager.GetSingleton<NetworkManager>().notificationText.text = exception.Message;
-					GameManager.GetSingleton<GameManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-					GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
-					yield break;	
-				}
-				else
-					result = cd.result as string;
-			}
-			if (result.Contains("username: " + newAccountData.username))
-			{
-				GameManager.GetSingleton<NetworkManager>().notificationText.text = "The username can't be used. It has already been registered online by someone else.";
-				GameManager.GetSingleton<GameManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-				GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
-				yield break;
-			}
-			cd = new CoroutineWithData(this, AddNewPlayerRoutine ());
-			result = "";
-			while (string.IsNullOrEmpty(result))
-			{
-				yield return cd.coroutine;
-				exception = cd.result as Exception;
-				if (exception != null)
+					if (dbObject.Count > 0)
+					{
+						GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "The username can't be used. It has already been registered online by someone else.";
+						GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+						GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
+						return;
+					}
+					else
+					{
+						GameManager.GetSingleton<NetworkManager>().notificationTextObject.obj.SetActive(false);
+						GameManager.GetSingleton<VirtualKeyboard>().trs.parent.gameObject.SetActive(false);
+						GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
+						NetworkManager.client.BigDB.LoadOrCreate("PlayerObjects", username, OnNewAccountDBObjectCreateSuccess, OnNewAccountDBObjectCreateFail);
+					}
+				},
+				delegate (PlayerIOError error)
 				{
-					GameManager.GetSingleton<NetworkManager>().notificationText.text = exception.Message;
-					GameManager.GetSingleton<GameManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+					GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "Error: " + error.ToString();
+					GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
 					GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
-					yield break;	
 				}
-				else
-					result = cd.result as string;
-			}
-			// Debug.Log(result);
-			// result = result.StartAfter(NetworkManager.DEBUG_INDICATOR);
-			// Debug.Log(result);
-			// result = result.Remove(result.LastIndexOf(NetworkManager.DEBUG_INDICATOR));
-			// Debug.Log(result);
-			GameManager.GetSingleton<NetworkManager>().notificationTextObject.obj.SetActive(false);
-			GameManager.GetSingleton<VirtualKeyboard>().trs.parent.gameObject.SetActive(false);
+			);
+		}
+
+		public virtual void OnNewAccountDBObjectCreateSuccess (DatabaseObject dbObject)
+		{
+			newAccountData.username = dbObject.Key;
+			GameManager.GetSingleton<VirtualKeyboard>().trs.parent.parent.GetChild(1).gameObject.SetActive(true);
 			GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
-			if (result.Contains("Player added"))
-			{
-				// GameManager.GetSingleton<VirtualKeyboard>().trs.parent.parent.GetChild(1).gameObject.SetActive(true);
-				localAccountsData[LocalAccountNames.Length].username = newAccountData.username;
-				foreach (AccountData accountData in localAccountsData)
-					accountData.UpdateData ();
-				LocalAccountNames = LocalAccountNames.Add_class(newAccountData.username);
-				UpdateMenus ();
-			}
-			else
-			{
-				GameManager.GetSingleton<NetworkManager>().notificationText.text = "Player wasn't added. Error: Unknown";
-				GameManager.GetSingleton<GameManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-			}
+		}
+
+		public virtual void OnNewAccountDBObjectCreateFail (PlayerIOError error)
+		{
+			GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "Error: " + error.ToString();
+			GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+			GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
 		}
 
 		public virtual void TryToSetNewAccountPassword ()
@@ -276,101 +264,53 @@ namespace BMH
 				GameManager.GetSingleton<ArchivesManager>().TryToSetNewAccountPassword ();
 				return;
 			}
-			StartCoroutine(TryToSetNewAccountPasswordRoutine ());
-		}
-
-		public virtual IEnumerator TryToSetNewAccountPasswordRoutine ()
-		{
 			GameManager.GetSingleton<VirtualKeyboard>().DisableInput ();
 			GameManager.GetSingleton<NetworkManager>().notificationTextObject.obj.SetActive(true);
-			GameManager.GetSingleton<NetworkManager>().notificationText.text = "Loading...";
+			GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "Loading...";
 			newAccountData.password = GameManager.GetSingleton<VirtualKeyboard>().outputToInputField.text;
-			CoroutineWithData cd = new CoroutineWithData(this, GetInfoRoutine ());
-			string result = "";
-			Exception exception;
-			while (string.IsNullOrEmpty(result))
-			{
-				yield return cd.coroutine;
-				exception = cd.result as Exception;
-				if (exception != null)
+			NetworkManager.client.BigDB.LoadMyPlayerObject(
+				delegate (DatabaseObject dbObject)
 				{
-					GameManager.GetSingleton<NetworkManager>().notificationText.text = exception.Message;
-					GameManager.GetSingleton<GameManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-					GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
-					yield break;	
-				}
-				else
-					result = cd.result as string;
-			}
-			if (result.Contains("username: " + newAccountData.username))
-			{
-				GameManager.GetSingleton<NetworkManager>().notificationText.text = "The username previously chosen can't be used. It has already been registered online by someone else.";
-				GameManager.GetSingleton<GameManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-				GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
-				yield break;
-			}
-			cd = new CoroutineWithData(this, AddNewPlayerRoutine ());
-			result = "";
-			while (string.IsNullOrEmpty(result))
-			{
-				yield return cd.coroutine;
-				exception = cd.result as Exception;
-				if (exception != null)
+					if (dbObject.Count > 0)
+					{
+						GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "The username previously chosen can't be used. It has already been registered online by someone else.";
+						GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+						GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
+						return;
+					}
+					else
+					{
+						dbObject.Set("password", newAccountData.password);
+						dbObject.Save(true, false, OnNewAccountDBObjectSaveSuccess, OnNewAccountDBObjectSaveFail);
+					}
+				},
+				delegate (PlayerIOError error)
 				{
-					GameManager.GetSingleton<NetworkManager>().notificationText.text = exception.Message;
-					GameManager.GetSingleton<GameManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+					GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "Error: " + error.ToString();
+					GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
 					GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
-					yield break;	
 				}
-				else
-					result = cd.result as string;
-			}
-			// Debug.Log(result);
-			// result = result.StartAfter(NetworkManager.DEBUG_INDICATOR);
-			// Debug.Log(result);
-			// result = result.Remove(result.LastIndexOf(NetworkManager.DEBUG_INDICATOR));
-			// Debug.Log(result);
+			);
+		}
+
+		public virtual void OnNewAccountDBObjectSaveSuccess ()
+		{
 			GameManager.GetSingleton<NetworkManager>().notificationTextObject.obj.SetActive(false);
 			GameManager.GetSingleton<VirtualKeyboard>().trs.parent.gameObject.SetActive(false);
 			GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
-			if (result.Contains("Player added"))
-			{
-				localAccountsData[LocalAccountNames.Length].username = newAccountData.username;
-				localAccountsData[LocalAccountNames.Length].password = newAccountData.password;
-				foreach (AccountData accountData in localAccountsData)
-					accountData.UpdateData ();
-				LocalAccountNames = LocalAccountNames.Add_class(newAccountData.username);
-				LocalAccountPasswords = LocalAccountPasswords.Add_class(newAccountData.password);
-				UpdateMenus ();
-			}
-			else
-			{
-				GameManager.GetSingleton<NetworkManager>().notificationText.text = "Player wasn't added. Error: Unknown";
-				GameManager.GetSingleton<GameManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-			}
+			localAccountsData[LocalAccountNames.Length].username = newAccountData.username;
+			localAccountsData[LocalAccountNames.Length].password = newAccountData.password;
+			foreach (AccountData accountData in localAccountsData)
+				accountData.UpdateData ();
+			LocalAccountNames = LocalAccountNames.Add(newAccountData.username);
+			UpdateMenus ();
 		}
 
-		public virtual IEnumerator AddNewPlayerRoutine ()
+		public virtual void OnNewAccountDBObjectSaveFail (PlayerIOError error)
 		{
-			WWWForm form = NetworkManager.defaultDatabaseAccessForm;
-			form.AddField("username", newAccountData.username);
-			form.AddField("password", newAccountData.password);
-			CoroutineWithData cd = new CoroutineWithData(this, GameManager.GetSingleton<NetworkManager>().PostFormToResource ("AddPlayer.php", form));
-			string result = "";
-			while (string.IsNullOrEmpty(result))
-			{
-				yield return cd.coroutine;
-				if (cd.result.GetType() == typeof(Exception))
-				{
-					yield return cd.result;
-					yield break;	
-				}
-				else
-					result = cd.result as string;
-			}
-			// result = result.StartAfter(NetworkManager.DEBUG_INDICATOR);
-			// result = result.Remove(result.LastIndexOf(NetworkManager.DEBUG_INDICATOR));
-			yield return result;
+			GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "Error: " + error.ToString();
+			GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+			GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
 		}
 
 		public virtual void DeleteAccount ()
@@ -380,52 +320,35 @@ namespace BMH
 				GameManager.GetSingleton<ArchivesManager>().DeleteAccount ();
 				return;
 			}
-			StartCoroutine(DeleteAccountRoutine ());
+			NetworkManager.client.BigDB.DeleteKeys("PlayerObjects", new string[1] { LocalAccountNames[indexOfCurrentAccountToDelete] }, OnDelteAccountDBObjectSuccess, OnDeleteAccountDBObjectFail);
 		}
 
-		public virtual IEnumerator DeleteAccountRoutine ()
+		public virtual void OnDelteAccountDBObjectSuccess ()
 		{
-			WWWForm form = NetworkManager.defaultDatabaseAccessForm;
-			form.AddField("username", currentAccountToDelete.username);
-			CoroutineWithData cd = new CoroutineWithData(this, GameManager.GetSingleton<NetworkManager>().PostFormToResource ("RemovePlayer.php", form));
-			string result = "";
-			Exception exception;
-			while (string.IsNullOrEmpty(result))
+			foreach (string key in SaveAndLoadManager.data.Keys)
 			{
-				yield return cd.coroutine;
-				exception = cd.result as Exception;
-				if (exception != null)
-				{
-					GameManager.GetSingleton<NetworkManager>().notificationText.text = exception.Message;
-					GameManager.GetSingleton<GameManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-					yield break;	
-				}
-				else
-					result = cd.result as string;
+				if (key.StartsWith(LocalAccountNames[indexOfCurrentAccountToDelete] + VALUE_SEPARATOR))
+					SaveAndLoadManager.data.Remove(key);
 			}
-			// result = result.StartAfter(NetworkManager.DEBUG_INDICATOR);
-			// Debug.Log(result);
-			// result = result.Remove(result.LastIndexOf(NetworkManager.DEBUG_INDICATOR));
-			if (result.Contains("Player removed"))
-			{
-				int indexOfAccount = localAccountsData.IndexOf_class(currentAccountToDelete);
-				foreach (string key in SaveAndLoadManager.data.Keys)
-				{
-					if (key.IndexOf(localAccountsData[indexOfAccount].username + VALUE_SEPARATOR) == 0)
-						SaveAndLoadManager.data.Remove(key);
-				}
-				localAccountsData[indexOfAccount].Reset ();
-				LocalAccountNames = LocalAccountNames.RemoveAt_class(indexOfAccount);
-				// LocalAccountPasswords = LocalAccountPasswords.RemoveAt_class(indexOfAccount);
-				foreach (AccountData accountData in localAccountsData)
-					accountData.UpdateData ();
-				UpdateMenus ();
-			}
-			else
-			{
-				GameManager.GetSingleton<NetworkManager>().notificationText.text = "Player wasn't removed. Error: Unknown";
-				GameManager.GetSingleton<GameManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-			}
+			localAccountsData[indexOfCurrentAccountToDelete].Reset ();
+			LocalAccountNames = LocalAccountNames.RemoveAt(indexOfCurrentAccountToDelete);
+			LocalAccountPasswords = LocalAccountPasswords.RemoveAt(indexOfCurrentAccountToDelete);
+			foreach (AccountData accountData in localAccountsData)
+				accountData.UpdateData ();
+			if (activeAccountData == localAccountsData[indexOfCurrentAccountToDelete])
+				activeAccountData = null;
+			if (player1AccountData == localAccountsData[indexOfCurrentAccountToDelete])
+				player1AccountData = null;
+			else if (player2AccountData == localAccountsData[indexOfCurrentAccountToDelete])
+				player2AccountData = null;
+			GameManager.GetSingleton<SaveAndLoadManager>().Save ();
+			UpdateMenus ();
+		}
+
+		public virtual void OnDeleteAccountDBObjectFail (PlayerIOError error)
+		{
+			GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "Error: " + error.ToString();
+			GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
 		}
 
 		public virtual void UpdateAccountData (AccountData accountData)
@@ -434,33 +357,6 @@ namespace BMH
 			{
 				GameManager.GetSingleton<ArchivesManager>().UpdateAccountData (accountData);
 				return;
-			}
-			StopAllCoroutines();
-			StartCoroutine(UpdateAccountDataRoutine (accountData));
-		}
-
-		public virtual IEnumerator UpdateAccountDataRoutine (AccountData accountData)
-		{
-			WWWForm form = NetworkManager.defaultDatabaseAccessForm;
-			form.AddField("username", accountData.username);
-			form.AddField("data", SaveAndLoadManager.Serialize(accountData, typeof(AccountData)));
-			CoroutineWithData cd = new CoroutineWithData(this, GameManager.GetSingleton<NetworkManager>().PostFormToResource ("UpdatePlayer.php", form));
-			string result = "";
-			Exception exception;
-			while (string.IsNullOrEmpty(result))
-			{
-				yield return cd.coroutine;
-				exception = cd.result as Exception;
-				if (exception != null)
-				{
-					Debug.Log(exception.Message);
-					yield break;
-				}
-				else
-					result = cd.result as string;
-			}
-			if (result.Contains("Player updated"))
-			{
 			}
 		}
 	}

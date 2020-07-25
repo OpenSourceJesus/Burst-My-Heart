@@ -85,7 +85,7 @@ namespace Extensions
 			LayerMask collisionMask2 = (LayerMask) Physics2D.GetLayerCollisionMask(layer2);
 			string[] collisionMask1LayerNames = collisionMask1.MaskToNames();
 			string[] collisionMask2LayerNames = collisionMask2.MaskToNames();
-			output = collisionMask1 == collisionMask2 || (collisionMask1.MaskContainsLayer(layer1) == collisionMask2.MaskContainsLayer(layer1) && collisionMask1.MaskContainsLayer(layer2) == collisionMask2.MaskContainsLayer(layer2) && collisionMask1LayerNames.Remove_class(LayerMask.LayerToName(layer1)).Remove_class(LayerMask.LayerToName(layer2)) == collisionMask2LayerNames.Remove_class(LayerMask.LayerToName(layer1)).Remove_class(LayerMask.LayerToName(layer2)));
+			output = collisionMask1 == collisionMask2 || (collisionMask1.MaskContainsLayer(layer1) == collisionMask2.MaskContainsLayer(layer1) && collisionMask1.MaskContainsLayer(layer2) == collisionMask2.MaskContainsLayer(layer2) && collisionMask1LayerNames.Remove(LayerMask.LayerToName(layer1)).Remove(LayerMask.LayerToName(layer2)) == collisionMask2LayerNames.Remove(LayerMask.LayerToName(layer1)).Remove(LayerMask.LayerToName(layer2)));
 			return output;
 		}
 	}

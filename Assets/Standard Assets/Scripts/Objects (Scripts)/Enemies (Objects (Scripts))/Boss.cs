@@ -29,11 +29,11 @@ namespace BMH
 			{
 				enabled = false;
 				nextPart.trs.SetParent(null);
-				instances = instances.Add_class(this);
+				instances = instances.Add(this);
 				Boss part = nextPart;
 				while (part != null)
 				{
-					instances = instances.Add_class(part);
+					instances = instances.Add(part);
 					part.gameObject.SetActive(false);
 					part = part.nextPart;
 				}
@@ -115,6 +115,10 @@ namespace BMH
 			instances = new Boss[0];
 			initialized = false;
 			Instantiate(Resources.Load<Boss>(name), trs.position, trs.rotation, trs.parent);
+		}
+
+		public override void UpdateGraphics ()
+		{
 		}
 	}
 }

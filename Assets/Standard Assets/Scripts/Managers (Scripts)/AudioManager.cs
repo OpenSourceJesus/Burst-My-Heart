@@ -55,7 +55,10 @@ namespace BMH
 		public virtual void UpdateAudioListener ()
 		{
 			AudioListener.pause = Mute;
-			AudioListener.volume = Volume;
+			if (Mute)
+				AudioListener.volume = 0;
+			else
+				AudioListener.volume = Volume;
 		}
 
 		public virtual void ToggleMute ()
@@ -72,6 +75,8 @@ namespace BMH
 
 		public virtual void UpdateMuteText ()
 		{
+			if (muteToggleTextMesh == null)
+				return;
 			if (Mute)
 			{
 				muteToggleTextMesh.text = "Unmute";
@@ -91,7 +96,7 @@ namespace BMH
 			SoundEffect output = GameManager.GetSingleton<ObjectPool>().SpawnComponent<SoundEffect>(soundEffectPrefab.prefabIndex, position);
 			if (output == null)
 				return null;
-			soundEffects = soundEffects.Add_class(output);
+			soundEffects = soundEffects.Add(output);
 			output.audio.volume = soundEffectVolumeOverCount.Evaluate(soundEffects.Length);
 			if (settings != null)
 			{

@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using BMH;
+using System;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace Extensions
 {
@@ -21,19 +25,72 @@ namespace Extensions
 			Debug.DrawLine(new Vector2(rect.xMax, rect.yMin), rect.min, color, duration);
 		}
 
-		public static void Log (string elementSeperator, params object[] data)
+		public static void Log (string elementSeperator = ", ", LogType logType = LogType.Info, params object[] data)
 		{
-			Debug.Log(data.ToString(elementSeperator));
+			if (logType == LogType.Info)
+				Debug.Log(data.ToString(elementSeperator));
+			else if (logType == LogType.Warning)
+				Debug.LogWarning(data.ToString(elementSeperator));
+			else
+				Debug.LogError(data.ToString(elementSeperator));
 		}
 
-		public static void LogError (string elementSeperator, params object[] data)
+		public static void Log<T> (string elementSeperator = ", ", LogType logType = LogType.Info, params Data<T>[] data)
 		{
-			Debug.LogError(data.ToString(elementSeperator));
+			string output = "";
+			foreach (Data<T> dataPiece in data)
+				output += dataPiece.value.ToString() + elementSeperator;
+			if (logType == LogType.Info)
+				Debug.Log(output);
+			else if (logType == LogType.Warning)
+				Debug.LogWarning(output);
+			else
+				Debug.LogError(output);
 		}
 
-		public static void LogWarning (string elementSeperator, params object[] data)
+		public static void Log (in object data, LogType logType = LogType.Info)
 		{
-			Debug.LogWarning(data.ToString(elementSeperator));
+			if (logType == LogType.Info)
+				Debug.Log(data.ToString());
+			else if (logType == LogType.Warning)
+				Debug.LogWarning(data.ToString());
+			else
+				Debug.LogError(data.ToString());
+		}
+
+		public static void DelayedLog (float delay, bool realtime = true, string elementSeperator = ", ", LogType logType = LogType.Info, params object[] data)
+		{
+			GameManager.GetSingleton<GameManager>().StartCoroutine(DelayedLogRoutine (delay, realtime, elementSeperator, logType, data));
+		}
+
+		public static IEnumerator DelayedLogRoutine (float delay, bool realtime = true, string elementSeperator = ", ", LogType logType = LogType.Info, params object[] data)
+		{
+			if (realtime)
+				yield return new WaitForSecondsRealtime(delay);
+			else
+				yield return new WaitForSeconds(delay);
+			DebugExtensions.Log (elementSeperator, logType, data);
+		}
+
+		public static void DelayedLog<T> (float delay, bool realtime = true, string elementSeperator = ", ", LogType logType = LogType.Info, params Data<T>[] data)
+		{
+			GameManager.GetSingleton<GameManager>().StartCoroutine(DelayedLogRoutine (delay, realtime, elementSeperator, logType, data));
+		}
+
+		public static IEnumerator DelayedLogRoutine<T> (float delay, bool realtime = true, string elementSeperator = ", ", LogType logType = LogType.Info, params Data<T>[] data)
+		{
+			if (realtime)
+				yield return new WaitForSecondsRealtime(delay);
+			else
+				yield return new WaitForSeconds(delay);
+			DebugExtensions.Log (elementSeperator, logType, data);
+		}
+
+		public enum LogType
+		{
+			Info,
+			Error,
+			Warning
 		}
 	}
 }
