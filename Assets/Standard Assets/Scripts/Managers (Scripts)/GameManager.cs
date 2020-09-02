@@ -268,8 +268,6 @@ namespace BMH
 		{
 			currentPauses = Mathf.Clamp(currentPauses + pauses, 0, int.MaxValue);
 			paused = currentPauses > 0;
-			if (paused)
-				GetSingleton<GameMode>().HasPaused = true;
 			Time.timeScale = timeScale * (1 - paused.GetHashCode());
 			AudioListener.pause = paused;
 			if (paused)

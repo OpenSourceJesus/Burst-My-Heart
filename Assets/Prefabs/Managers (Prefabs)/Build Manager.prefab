@@ -47,7 +47,7 @@ MonoBehaviour:
   persistant: 0
   buildActions:
   - name: Windows x32
-    enabled: 1
+    enabled: 0
     target: 5
     locationPath: /home/gileadcosman/Break My Heart/Builds/Break My Heart (Windows
       x32)/Break My Heart.exe
@@ -58,7 +58,7 @@ MonoBehaviour:
     zipLocationPath: 
     clearDataOnFirstStartup: 0
   - name: Windows x64
-    enabled: 1
+    enabled: 0
     target: 19
     locationPath: /home/gileadcosman/Break My Heart/Builds/Break My Heart (Windows
       x64)/Break My Heart.exe
@@ -69,7 +69,7 @@ MonoBehaviour:
     zipLocationPath: 
     clearDataOnFirstStartup: 0
   - name: Mac
-    enabled: 1
+    enabled: 0
     target: 2
     locationPath: /home/gileadcosman/Break My Heart/Builds/Break My Heart (Mac).app
     options: 00000800
@@ -79,10 +79,10 @@ MonoBehaviour:
     zipLocationPath: 
     clearDataOnFirstStartup: 0
   - name: Linux x64
-    enabled: 1
+    enabled: 0
     target: 24
-    locationPath: /home/gileadcosman/Break My Heart/Builds/Break My Heart (Linux x64)/Break
-      My Heart.x86_64
+    locationPath: /home/gileadcosman/Break My Heart/Builds/Break My Heart (Linux
+      x64)/Break My Heart.x86_64
     options: 0000080004000000
     makeZip: 0
     moveCrashHandler: 0
@@ -90,9 +90,9 @@ MonoBehaviour:
     zipLocationPath: 
     clearDataOnFirstStartup: 0
   - name: WebGL
-    enabled: 0
+    enabled: 1
     target: 20
-    locationPath: /home/gileadcosman/Break My Heart/Builds/Break My Heart (WebGL)
+    locationPath: Users/gilea/Break My Heart/Builds/Break My Heart (WebGL)
     options: 0000080004000000
     makeZip: 0
     moveCrashHandler: 0

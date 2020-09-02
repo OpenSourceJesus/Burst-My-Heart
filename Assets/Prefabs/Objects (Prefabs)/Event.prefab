@@ -54,17 +54,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 164860640869232412}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
   m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 8845120bd6343ae58ac6640d999b7ea1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -74,6 +74,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &549544506207982163
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,27 +119,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 549544506207982163}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3ebfa94624aaec439c4f0d2e8d8c242, type: 3}
+  m_Script: {fileID: 11500000, guid: 63e37619a071de64b927a74ed5ab11c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handleMultipleInstances: 0
-  setInstance: 1
-  persistant: 0
   trs: {fileID: 549544506207982160}
   beginTimer:
-    duration: 30
+    duration: 0
     timeRemaining: 0
     loop: 0
     pauseIfCan: 0
-    realtime: 1
-    canBePaused: 0
+    realtime: 0
+    canBePaused: 1
     autoStopIfNotLooping: 1
   participators: []
   hasStarted: 0
   spriteRenderer: {fileID: 8016993503059922530}
-  startedColor: {r: 0, g: 0, b: 0, a: 0.5019608}
-  timerVisualizerTrs: {fileID: 7857582620105013210}
+  startedColor: {r: 0, g: 0, b: 0, a: 0}
+  timerVisualizerTrs: {fileID: 1258766646923197955}
   collider: {fileID: 4555213137767216846}
+  isDestroyed: 0
 --- !u!212 &8016993503059922530
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -153,6 +152,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -164,6 +165,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -292,7 +294,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4093432936165065622}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
