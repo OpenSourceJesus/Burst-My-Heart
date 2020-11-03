@@ -1,24 +1,56 @@
 ﻿using UnityEngine;
-using System.Collections;
+using Extensions;
+using BMH;
 
-public class SphereAnimation : MonoBehaviour
+public class SphereAnimation : SingletonMonoBehaviour<SphereAnimation>, IUpdatable
 {
-	public float rotaPerSecond;
-	public float addToRotaPerSecond;
-	public float maxRotaPerSecond;
-	public float volativity;
-	public Vector3 deltaRota;
-
-    void Start()
-    {
-        if (deltaRota == Vector3.zero)
-            deltaRota = Random.onUnitSphere;
-    }
-
-	void Update ()
+	public bool PauseWhileUnfocused
 	{
-		rotaPerSecond = Mathf.Clamp(rotaPerSecond + addToRotaPerSecond * Time.deltaTime, 0, maxRotaPerSecond);
-		deltaRota = Vector3.RotateTowards(deltaRota, Random.onUnitSphere, 180 * volativity * Mathf.Deg2Rad * Time.deltaTime, 0);
-		transform.Rotate(deltaRota.normalized * rotaPerSecond * Time.deltaTime);
+		get
+		{
+			return true;
+		}
+	}
+	public Transform trs;
+	public float missileMapBounds;
+	public float missileTurnRate;
+	public float missileSpeed;
+	Vector2 missilePosition;
+	Vector2 missileDestination;
+	Vector2 missileVelocity;
+	float missileDistToDestSqr;
+	bool missileHasReducedDistToDest;
+	
+	public override void Awake ()
+	{
+		base.Awake ();
+		missileVelocity = Random.insideUnitCircle.normalized * missileSpeed;
+		missileDestination = Random.insideUnitCircle * missileMapBounds;
+		GameManager.updatables = GameManager.updatables.Add(this);
+	}
+
+	void OnDestroy ()
+	{
+		GameManager.updatables = GameManager.updatables.Remove(this);
+	}
+
+	public virtual void DoUpdate ()
+	{
+		float prevMissileDistToDestSqr = (missilePosition - missileDestination).sqrMagnitude;
+		float missileIdealTurnAmount = Vector2.Angle(missileVelocity, missileDestination - missilePosition);
+		float missileTurnAmount = Mathf.Clamp(missileIdealTurnAmount, -missileTurnRate * Time.deltaTime, missileTurnRate * Time.deltaTime);
+		missileVelocity = VectorExtensions.Rotate(missileVelocity, missileTurnAmount);
+		missileVelocity = missileVelocity.normalized * missileSpeed * Time.deltaTime;
+		missilePosition += missileVelocity;
+		float missileDistToDestSqr = (missilePosition - missileDestination).sqrMagnitude;
+		if (missileHasReducedDistToDest && missileDistToDestSqr > prevMissileDistToDestSqr)
+		{
+			missileDestination = Random.insideUnitCircle * missileMapBounds;
+			missileHasReducedDistToDest = false;
+		}
+		else if (missileDistToDestSqr < prevMissileDistToDestSqr)
+			missileHasReducedDistToDest = true;
+		trs.RotateAround(trs.position, trs.forward, missileVelocity.x);
+		trs.RotateAround(trs.position, trs.right, missileVelocity.y);
 	}
 }
