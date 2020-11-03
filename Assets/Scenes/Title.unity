@@ -40647,11 +40647,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b35a0ef1963f964f958b4001f5e9058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotaPerSecond: 0
-  addToRotaPerSecond: 5
-  maxRotaPerSecond: 25
-  volativity: 0.002
-  deltaRota: {x: 0, y: 0, z: 0}
+  handleMultipleInstances: 0
+  persistant: 0
+  trs: {fileID: 1020226525}
+  missileMapBounds: 100
+  missileTurnRate: 30
+  missileSpeed: 25
 --- !u!1 &1021667761
 GameObject:
   m_ObjectHideFlags: 0
