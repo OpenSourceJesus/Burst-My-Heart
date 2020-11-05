@@ -73,6 +73,7 @@ namespace BMH
 						i --;
 					}
 				}
+#if UNITY_EDITOR
 				if (uniqueId == 0)
 				{
 					do
@@ -82,6 +83,7 @@ namespace BMH
 					while (GameManager.UniqueIds.Contains(uniqueId));
 					GameManager.UniqueIds = GameManager.UniqueIds.Add(uniqueId);
 				}
+#endif
 				difficulty = enemies.Length;
 				foreach (Enemy_Follow enemy in enemies)
 				{

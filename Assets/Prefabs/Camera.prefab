@@ -47,15 +47,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 194302}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38dde4a900cea004abf79dfdcee3dd48, type: 3}
+  m_Script: {fileID: 11500000, guid: cadc9ef93ad5bd14abc6ec249562c790, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handleMultipleInstances: 0
-  setInstance: 1
-  persistant: 0
-  trs: {fileID: 457354}
-  camera: {fileID: 2042640}
-  viewSize: {x: 200, y: 100}
+  trs: {fileID: 0}
+  camera: {fileID: 0}
+  viewSize: {x: 0, y: 0}
+  viewRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
 --- !u!20 &2042640
 Camera:
   m_ObjectHideFlags: 0
@@ -120,11 +123,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handleMultipleInstances: 0
-  setInstance: 1
   persistant: 0
   worldDistanceBetweenNotes: 5
-  noteLength: 1
-  addToSoundDespawnDelay: -0.1
+  noteGroups: []
+  multiplyNoteFrequency: 0
+  noteNormalizedFrequencyOverTime:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  noteVolumeOverTime:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  audioSource: {fileID: 0}
+  stream: 0
+  sampleRate: 0
+  frequencyLerpRate: 0
 --- !u!1 &925465411554540206
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,76 +186,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bf2cb82c45b71d4799d9d62b24043a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handleMultipleInstances: 2
-  setInstance: 1
-  persistant: 0
   preloadOnAwake: 1
   trs: {fileID: 3827358186033759295}
   spawnEntries:
   - prefab: {fileID: 25, guid: 9f7ddde357eb8ff4aa4a607a335de91e, type: 3}
     trs: {fileID: 55, guid: 9f7ddde357eb8ff4aa4a607a335de91e, type: 3}
     prefabIndex: 0
-    createdCount: 0
     preload: 50
   - prefab: {fileID: 167238, guid: ae07d2643b3267190be6644adb6a578f, type: 3}
     trs: {fileID: 404204, guid: ae07d2643b3267190be6644adb6a578f, type: 3}
     prefabIndex: 0
-    createdCount: 0
     preload: 200
   - prefab: {fileID: 167238, guid: 5228efd1e919d95fd80936372f49ff0f, type: 3}
     trs: {fileID: 404204, guid: 5228efd1e919d95fd80936372f49ff0f, type: 3}
     prefabIndex: 0
-    createdCount: 0
     preload: 100
   - prefab: {fileID: 167238, guid: 3d6c471a8933888769724e9d404ef06b, type: 3}
     trs: {fileID: 404204, guid: 3d6c471a8933888769724e9d404ef06b, type: 3}
     prefabIndex: 0
-    createdCount: 0
     preload: 25
   - prefab: {fileID: 167238, guid: 396f63a9709148943b142cda726f61dd, type: 3}
     trs: {fileID: 404204, guid: 396f63a9709148943b142cda726f61dd, type: 3}
     prefabIndex: 0
-    createdCount: 0
     preload: 200
   - prefab: {fileID: 167238, guid: 7083158c972240ca3bf66515f564cca8, type: 3}
     trs: {fileID: 404204, guid: 7083158c972240ca3bf66515f564cca8, type: 3}
     prefabIndex: 0
-    createdCount: 0
     preload: 200
   - prefab: {fileID: 3307287000961673541, guid: 04546e3cfd0c87242a79cc19f2e3e8cc,
       type: 3}
     trs: {fileID: 3307287000961470685, guid: 04546e3cfd0c87242a79cc19f2e3e8cc, type: 3}
     prefabIndex: 0
-    createdCount: 0
     preload: 25
   - prefab: {fileID: 3307287000961673541, guid: 55c46edf6ac942e359c949abe8c120ae,
       type: 3}
     trs: {fileID: 3307287000961470685, guid: 55c46edf6ac942e359c949abe8c120ae, type: 3}
     prefabIndex: 0
-    createdCount: 0
     preload: 25
   - prefab: {fileID: 3307287000961673541, guid: 6ab35001766cb33fc822b788f0896f4e,
       type: 3}
     trs: {fileID: 3307287000961470685, guid: 6ab35001766cb33fc822b788f0896f4e, type: 3}
     prefabIndex: 0
-    createdCount: 0
     preload: 25
   - prefab: {fileID: 1513292943038218934, guid: e5e7eaea1f95036358d42cdc45ed8f37,
       type: 3}
     trs: {fileID: 1513292943038036782, guid: e5e7eaea1f95036358d42cdc45ed8f37, type: 3}
     prefabIndex: 0
-    createdCount: 0
     preload: 25
   - prefab: {fileID: 3307287000961673541, guid: 961480c9aebc8cb7a89c652e669db07c,
       type: 3}
     trs: {fileID: 3307287000961470685, guid: 961480c9aebc8cb7a89c652e669db07c, type: 3}
     prefabIndex: 0
-    createdCount: 0
     preload: 25
   - prefab: {fileID: 167238, guid: 7db3a4ac678798e15b73ae71b0374009, type: 3}
     trs: {fileID: 404204, guid: 7db3a4ac678798e15b73ae71b0374009, type: 3}
     prefabIndex: 0
-    createdCount: 0
     preload: 25
 --- !u!1 &3774194626397663045
 GameObject:
@@ -285,7 +288,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3774194626397663045}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -320,6 +323,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7733373101646184409}
+        m_TargetAssemblyTypeName: 
         m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
@@ -330,8 +334,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &8961408103628312497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,17 +408,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 4365712663266873033}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
@@ -446,6 +448,7 @@ MonoBehaviour:
   keyboardText: Press P to pause
   useSeperateTextForGamepad: 1
   gamepadText: Press a center button to pause
+  inputDeviceEntries: []
   text: {fileID: 6796560726142091613}
 --- !u!95 &5193465208152707423
 Animator:
@@ -608,7 +611,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7733373101646184409}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
