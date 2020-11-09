@@ -76,44 +76,44 @@ namespace BMH
 			if (!Application.isPlaying)
 				return;
 #endif
-			if (GameManager.GetSingleton<ArchivesManager>() != null && GameManager.GetSingleton<ArchivesManager>() != this)
+			if (ArchivesManager.Instance != null && ArchivesManager.Instance != this)
 			{
 				UpdateMenus ();
-				GameManager.GetSingleton<ArchivesManager>().addAccountOption = addAccountOption;
-				GameManager.GetSingleton<ArchivesManager>().accountOptions = accountOptions;
-				GameManager.GetSingleton<ArchivesManager>().viewInfoMenuOptions = viewInfoMenuOptions;
-				GameManager.GetSingleton<ArchivesManager>().deleteAccountScreen = deleteAccountScreen;
-				GameManager.GetSingleton<ArchivesManager>().deleteAccountText = deleteAccountText;
-				GameManager.GetSingleton<ArchivesManager>().accountInfoScreen = accountInfoScreen;
-				GameManager.GetSingleton<ArchivesManager>().accountInfoTitleText = accountInfoTitleText;
-				GameManager.GetSingleton<ArchivesManager>().accountInfoContentText = accountInfoContentText;
-				GameManager.GetSingleton<ArchivesManager>().accountInfoScrollbar = accountInfoScrollbar;
+				ArchivesManager.Instance.addAccountOption = addAccountOption;
+				ArchivesManager.Instance.accountOptions = accountOptions;
+				ArchivesManager.Instance.viewInfoMenuOptions = viewInfoMenuOptions;
+				ArchivesManager.Instance.deleteAccountScreen = deleteAccountScreen;
+				ArchivesManager.Instance.deleteAccountText = deleteAccountText;
+				ArchivesManager.Instance.accountInfoScreen = accountInfoScreen;
+				ArchivesManager.Instance.accountInfoTitleText = accountInfoTitleText;
+				ArchivesManager.Instance.accountInfoContentText = accountInfoContentText;
+				ArchivesManager.Instance.accountInfoScrollbar = accountInfoScrollbar;
 				return;
 			}
 			base.Awake ();
 			trs.SetParent(null);
 			if (BuildManager.IsFirstStartup)
 			{
-				if (GameManager.GetSingleton<BuildManager>().clearDataOnFirstStartup)
+				if (BuildManager.Instance.clearDataOnFirstStartup)
 				{
 					SaveAndLoadManager.data.Clear();
-					if (GameManager.GetSingleton<SaveAndLoadManager>().usePlayerPrefs)
+					if (SaveAndLoadManager.Instance.usePlayerPrefs)
 						PlayerPrefs.DeleteAll();
 					else
-						File.Delete(GameManager.GetSingleton<SaveAndLoadManager>().saveFileFullPath);
+						File.Delete(SaveAndLoadManager.Instance.saveFileFullPath);
 				}
 				else
-					GameManager.GetSingleton<SaveAndLoadManager>().Load ();
+					SaveAndLoadManager.Instance.Load ();
 				BuildManager.IsFirstStartup = false;
 			}
 			else
-				GameManager.GetSingleton<SaveAndLoadManager>().Load ();
+				SaveAndLoadManager.Instance.Load ();
 			Connect ();
 		}
 
 		public virtual void Connect ()
 		{
-			GameManager.GetSingleton<NetworkManager>().Connect (OnAuthenticateSucess, OnAuthenticateFail);
+			NetworkManager.Instance.Connect (OnAuthenticateSucess, OnAuthenticateFail);
 		}
 
 		public virtual void OnAuthenticateSucess (Client client)
@@ -157,17 +157,17 @@ namespace BMH
 				accountOptions[i].trs.GetChild(0).GetComponentInChildren<Menu>().options[1].enabled = true;
 			}
 			if (player1AccountData != null)
-				accountOptions[GameManager.GetSingleton<ArchivesManager>().localAccountsData.IndexOf(player1AccountData)].trs.GetChild(0).GetComponentInChildren<Menu>().options[0].enabled = false;
+				accountOptions[ArchivesManager.Instance.localAccountsData.IndexOf(player1AccountData)].trs.GetChild(0).GetComponentInChildren<Menu>().options[0].enabled = false;
 			if (player2AccountData != null)
-				accountOptions[GameManager.GetSingleton<ArchivesManager>().localAccountsData.IndexOf(player2AccountData)].trs.GetChild(0).GetComponentInChildren<Menu>().options[1].enabled = false;
+				accountOptions[ArchivesManager.Instance.localAccountsData.IndexOf(player2AccountData)].trs.GetChild(0).GetComponentInChildren<Menu>().options[1].enabled = false;
 			addAccountOption.enabled = LocalAccountNames.Length < MAX_ACCOUNTS;
 		}
 		
 		public virtual void StartContinuousContinuousScrollAccountInfo (float velocity)
 		{
-			if (GameManager.GetSingleton<ArchivesManager>() != this)
+			if (ArchivesManager.Instance != this)
 			{
-				GameManager.GetSingleton<ArchivesManager>().StartContinuousContinuousScrollAccountInfo (velocity);
+				ArchivesManager.Instance.StartContinuousContinuousScrollAccountInfo (velocity);
 				return;
 			}
 			StartCoroutine(ContinuousScrollAccountInfoRoutine (velocity));
@@ -189,9 +189,9 @@ namespace BMH
 
 		public virtual void EndContinuousContinuousScrollAccountInfo ()
 		{
-			if (GameManager.GetSingleton<ArchivesManager>() != this)
+			if (ArchivesManager.Instance != this)
 			{
-				GameManager.GetSingleton<ArchivesManager>().EndContinuousContinuousScrollAccountInfo ();
+				ArchivesManager.Instance.EndContinuousContinuousScrollAccountInfo ();
 				return;
 			}
 			StopAllCoroutines();
@@ -199,21 +199,21 @@ namespace BMH
 
 		public virtual void TryToSetNewAccountUsername ()
 		{
-			if (GameManager.GetSingleton<ArchivesManager>() != this)
+			if (ArchivesManager.Instance != this)
 			{
-				GameManager.GetSingleton<ArchivesManager>().TryToSetNewAccountUsername ();
+				ArchivesManager.Instance.TryToSetNewAccountUsername ();
 				return;
 			}
-			GameManager.GetSingleton<VirtualKeyboard>().DisableInput ();
-			GameManager.GetSingleton<NetworkManager>().notificationTextObject.obj.SetActive(true);
-			GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "Loading...";
-			string username = GameManager.GetSingleton<VirtualKeyboard>().outputToInputField.text;
+			VirtualKeyboard.Instance.DisableInput ();
+			NetworkManager.Instance.notificationTextObject.obj.SetActive(true);
+			NetworkManager.Instance.notificationTextObject.text.text = "Loading...";
+			string username = VirtualKeyboard.Instance.outputToInputField.text;
 			newAccountData.username = username.Replace(" ", "");
 			if (newAccountData.username.Length == 0)
 			{
-				GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "The username must contain at least one non-space character";
-				GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-				GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
+				NetworkManager.Instance.notificationTextObject.text.text = "The username must contain at least one non-space character";
+				NetworkManager.Instance.StartCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
+				VirtualKeyboard.Instance.EnableInput ();
 				return;
 			}
 			NetworkManager.client.BigDB.LoadMyPlayerObject(
@@ -221,24 +221,24 @@ namespace BMH
 				{
 					if (dbObject.Count > 0)
 					{
-						GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "The username can't be used. It has already been registered online by someone else.";
-						GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-						GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
+						NetworkManager.Instance.notificationTextObject.text.text = "The username can't be used. It has already been registered online by someone else.";
+						NetworkManager.Instance.StartCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
+						VirtualKeyboard.Instance.EnableInput ();
 						return;
 					}
 					else
 					{
-						GameManager.GetSingleton<NetworkManager>().notificationTextObject.obj.SetActive(false);
-						GameManager.GetSingleton<VirtualKeyboard>().trs.parent.gameObject.SetActive(false);
-						GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
+						NetworkManager.Instance.notificationTextObject.obj.SetActive(false);
+						VirtualKeyboard.Instance.trs.parent.gameObject.SetActive(false);
+						VirtualKeyboard.Instance.EnableInput ();
 						NetworkManager.client.BigDB.LoadOrCreate("PlayerObjects", username, OnNewAccountDBObjectCreateSuccess, OnNewAccountDBObjectCreateFail);
 					}
 				},
 				delegate (PlayerIOError error)
 				{
-					GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "Error: " + error.ToString();
-					GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-					GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
+					NetworkManager.Instance.notificationTextObject.text.text = "Error: " + error.ToString();
+					NetworkManager.Instance.StartCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
+					VirtualKeyboard.Instance.EnableInput ();
 				}
 			);
 		}
@@ -246,36 +246,36 @@ namespace BMH
 		public virtual void OnNewAccountDBObjectCreateSuccess (DatabaseObject dbObject)
 		{
 			newAccountData.username = dbObject.Key;
-			GameManager.GetSingleton<VirtualKeyboard>().trs.parent.parent.GetChild(1).gameObject.SetActive(true);
-			GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
+			VirtualKeyboard.Instance.trs.parent.parent.GetChild(1).gameObject.SetActive(true);
+			VirtualKeyboard.Instance.EnableInput ();
 		}
 
 		public virtual void OnNewAccountDBObjectCreateFail (PlayerIOError error)
 		{
-			GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "Error: " + error.ToString();
-			GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-			GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
+			NetworkManager.Instance.notificationTextObject.text.text = "Error: " + error.ToString();
+			NetworkManager.Instance.StartCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
+			VirtualKeyboard.Instance.EnableInput ();
 		}
 
 		public virtual void TryToSetNewAccountPassword ()
 		{
-			if (GameManager.GetSingleton<ArchivesManager>() != this)
+			if (ArchivesManager.Instance != this)
 			{
-				GameManager.GetSingleton<ArchivesManager>().TryToSetNewAccountPassword ();
+				ArchivesManager.Instance.TryToSetNewAccountPassword ();
 				return;
 			}
-			GameManager.GetSingleton<VirtualKeyboard>().DisableInput ();
-			GameManager.GetSingleton<NetworkManager>().notificationTextObject.obj.SetActive(true);
-			GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "Loading...";
-			newAccountData.password = GameManager.GetSingleton<VirtualKeyboard>().outputToInputField.text;
+			VirtualKeyboard.Instance.DisableInput ();
+			NetworkManager.Instance.notificationTextObject.obj.SetActive(true);
+			NetworkManager.Instance.notificationTextObject.text.text = "Loading...";
+			newAccountData.password = VirtualKeyboard.Instance.outputToInputField.text;
 			NetworkManager.client.BigDB.LoadMyPlayerObject(
 				delegate (DatabaseObject dbObject)
 				{
 					if (dbObject.Count > 0)
 					{
-						GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "The username previously chosen can't be used. It has already been registered online by someone else.";
-						GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-						GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
+						NetworkManager.Instance.notificationTextObject.text.text = "The username previously chosen can't be used. It has already been registered online by someone else.";
+						NetworkManager.Instance.StartCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
+						VirtualKeyboard.Instance.EnableInput ();
 						return;
 					}
 					else
@@ -286,18 +286,18 @@ namespace BMH
 				},
 				delegate (PlayerIOError error)
 				{
-					GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "Error: " + error.ToString();
-					GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-					GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
+					NetworkManager.Instance.notificationTextObject.text.text = "Error: " + error.ToString();
+					NetworkManager.Instance.StartCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
+					VirtualKeyboard.Instance.EnableInput ();
 				}
 			);
 		}
 
 		public virtual void OnNewAccountDBObjectSaveSuccess ()
 		{
-			GameManager.GetSingleton<NetworkManager>().notificationTextObject.obj.SetActive(false);
-			GameManager.GetSingleton<VirtualKeyboard>().trs.parent.gameObject.SetActive(false);
-			GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
+			NetworkManager.Instance.notificationTextObject.obj.SetActive(false);
+			VirtualKeyboard.Instance.trs.parent.gameObject.SetActive(false);
+			VirtualKeyboard.Instance.EnableInput ();
 			localAccountsData[LocalAccountNames.Length].username = newAccountData.username;
 			localAccountsData[LocalAccountNames.Length].password = newAccountData.password;
 			foreach (AccountData accountData in localAccountsData)
@@ -308,16 +308,16 @@ namespace BMH
 
 		public virtual void OnNewAccountDBObjectSaveFail (PlayerIOError error)
 		{
-			GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "Error: " + error.ToString();
-			GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-			GameManager.GetSingleton<VirtualKeyboard>().EnableInput ();
+			NetworkManager.Instance.notificationTextObject.text.text = "Error: " + error.ToString();
+			NetworkManager.Instance.StartCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
+			VirtualKeyboard.Instance.EnableInput ();
 		}
 
 		public virtual void DeleteAccount ()
 		{
-			if (GameManager.GetSingleton<ArchivesManager>() != this)
+			if (ArchivesManager.Instance != this)
 			{
-				GameManager.GetSingleton<ArchivesManager>().DeleteAccount ();
+				ArchivesManager.Instance.DeleteAccount ();
 				return;
 			}
 			NetworkManager.client.BigDB.DeleteKeys("PlayerObjects", new string[1] { LocalAccountNames[indexOfCurrentAccountToDelete] }, OnDelteAccountDBObjectSuccess, OnDeleteAccountDBObjectFail);
@@ -341,21 +341,21 @@ namespace BMH
 				player1AccountData = null;
 			else if (player2AccountData == localAccountsData[indexOfCurrentAccountToDelete])
 				player2AccountData = null;
-			GameManager.GetSingleton<SaveAndLoadManager>().Save ();
+			SaveAndLoadManager.Instance.Save ();
 			UpdateMenus ();
 		}
 
 		public virtual void OnDeleteAccountDBObjectFail (PlayerIOError error)
 		{
-			GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "Error: " + error.ToString();
-			GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+			NetworkManager.Instance.notificationTextObject.text.text = "Error: " + error.ToString();
+			NetworkManager.Instance.StartCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
 		}
 
 		public virtual void UpdateAccountData (AccountData accountData)
 		{
-			if (GameManager.GetSingleton<ArchivesManager>() != this)
+			if (ArchivesManager.Instance != this)
 			{
-				GameManager.GetSingleton<ArchivesManager>().UpdateAccountData (accountData);
+				ArchivesManager.Instance.UpdateAccountData (accountData);
 				return;
 			}
 		}

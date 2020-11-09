@@ -142,7 +142,7 @@ namespace DialogAndStory
 						isFinished = true;
 						onFinishedEvent.Do ();
 						if (autoEnd)
-							GameManager.GetSingleton<DialogManager>().EndDialog (this);
+							DialogManager.Instance.EndDialog (this);
 					}
 				}
 			}

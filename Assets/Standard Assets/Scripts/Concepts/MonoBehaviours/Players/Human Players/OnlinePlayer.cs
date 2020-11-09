@@ -77,7 +77,7 @@ namespace BMH
 				if (OnlineBattle.localPlayer.playerId == onlineKiller.playerId)
 				{
 					onlineKiller.ChangeScore ((uint) Mathf.Clamp(victim.player.Score, 1, int.MaxValue));
-					SendChangeScoreMessage ((uint) Mathf.Clamp(score * GameManager.GetSingleton<OnlineBattle>().bountyMultiplier, 1, int.MaxValue));
+					SendChangeScoreMessage ((uint) Mathf.Clamp(score * OnlineBattle.Instance.bountyMultiplier, 1, int.MaxValue));
 				}
 			}
 			if (OnlineBattle.localPlayer == this)
@@ -86,9 +86,9 @@ namespace BMH
 				{
 					ArchivesManager.player1AccountData.onlineData.deaths ++;
 					ArchivesManager.player1AccountData.onlineData.killDeathRatio = ArchivesManager.player1AccountData.onlineData.kills / ArchivesManager.player1AccountData.onlineData.deaths;
-					GameManager.GetSingleton<ArchivesManager>().UpdateAccountData (ArchivesManager.player1AccountData);
+					ArchivesManager.Instance.UpdateAccountData (ArchivesManager.player1AccountData);
 				}
-				GameManager.GetSingleton<GameManager>().ReloadActiveScene ();
+				GameManager.Instance.ReloadActiveScene ();
 			}
 		}
 
@@ -109,11 +109,11 @@ namespace BMH
 					ArchivesManager.player1AccountData.onlineData.killDeathRatio = ArchivesManager.player1AccountData.onlineData.kills / ArchivesManager.player1AccountData.onlineData.deaths;
 					if (score > ArchivesManager.player1AccountData.onlineData.highscore)
 						ArchivesManager.player1AccountData.onlineData.highscore = score;
-					GameManager.GetSingleton<ArchivesManager>().UpdateAccountData (ArchivesManager.player1AccountData);
+					ArchivesManager.Instance.UpdateAccountData (ArchivesManager.player1AccountData);
 				}
 			}
 			else
-				scoreText.text = "Bounty: " + Mathf.Clamp(score * GameManager.GetSingleton<OnlineBattle>().bountyMultiplier, 1, int.MaxValue);
+				scoreText.text = "Bounty: " + Mathf.Clamp(score * OnlineBattle.Instance.bountyMultiplier, 1, int.MaxValue);
 		}
 
 		public virtual void OnDisable ()

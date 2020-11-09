@@ -40,9 +40,9 @@ namespace DialogAndStory
 			foreach (Dialog dialog in dialogs)
 			{
 				currentDialog = dialog;
-				GameManager.GetSingleton<DialogManager>().StartDialog (dialog);
+				DialogManager.Instance.StartDialog (dialog);
 				yield return new WaitUntil(() => (!dialog.IsActive));
-				GameManager.GetSingleton<DialogManager>().EndDialog (dialog);
+				DialogManager.Instance.EndDialog (dialog);
 			}
 			yield break;
 		}

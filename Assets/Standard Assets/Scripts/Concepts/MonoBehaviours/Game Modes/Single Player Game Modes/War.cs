@@ -11,6 +11,16 @@ namespace BMH
 	//[ExecuteAlways]
 	public class War : SinglePlayerGameMode
 	{
+		public new static War instance;
+		public new static War Instance
+		{
+			get
+			{
+				if (instance == null)
+					instance = FindObjectOfType<War>();
+				return instance;
+			}
+		}
 		public float deathPenalty = 10;
 		public float addToIdealDifficulty = 1;
 		public float idealDifficulty = 1;
@@ -101,9 +111,9 @@ namespace BMH
 				bool isValidSpawnPosition;
 				while (true)
 				{
-					spawnPosition = Random.insideUnitCircle * (GameManager.GetSingleton<Area>().trs.localScale.x / 2 - minCreateRangeFromWall);
+					spawnPosition = Random.insideUnitCircle * (Area.Instance.trs.localScale.x / 2 - minCreateRangeFromWall);
 					isValidSpawnPosition = true;
-					foreach (Enemy enemy in GameManager.GetSingleton<War>().enemies)
+					foreach (Enemy enemy in War.Instance.enemies)
 					{
 						if (Vector2.Distance(enemy.trs.position, spawnPosition) < minCreateRangeFromEnemy)
 						{
@@ -116,11 +126,11 @@ namespace BMH
 					else
 						break;
 				}
-				// Enemy enemy = GameManager.GetSingleton<ObjectPool>().SpawnComponent<Enemy>(enemyPrefab.prefabIndex, position);
+				// Enemy enemy = ObjectPool.Instance.SpawnComponent<Enemy>(enemyPrefab.prefabIndex, position);
 				Enemy newEnemy = (Enemy) GameManager.Clone (enemyPrefab, spawnPosition, Quaternion.identity);
 				newEnemy.UpdateGraphics ();
-				newEnemy.body.onDeath += GameManager.GetSingleton<War>().OnEnemyKilled;
-				GameManager.GetSingleton<War>().enemies = GameManager.GetSingleton<War>().enemies.Add(newEnemy);
+				newEnemy.body.onDeath += War.Instance.OnEnemyKilled;
+				War.Instance.enemies = War.Instance.enemies.Add(newEnemy);
 			}
 		}
 	}

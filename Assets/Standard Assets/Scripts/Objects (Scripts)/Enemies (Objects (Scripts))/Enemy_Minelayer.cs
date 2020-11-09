@@ -59,7 +59,7 @@ namespace BMH
 
 		public virtual IEnumerator LayMineRoutine ()
 		{
-			mine = GameManager.GetSingleton<ObjectPool>().SpawnComponent<Mine>(minePrefab.prefabIndex, spawnPoint.position, spawnPoint.rotation, mineParent);
+			mine = ObjectPool.Instance.SpawnComponent<Mine>(minePrefab.prefabIndex, spawnPoint.position, spawnPoint.rotation, mineParent);
 			mine.player = this;
 			yield return new WaitUntil(() => (Vector2.Distance(trs.position, mine.trs.position) > radius + mine.radius));
 			mine.Activate ();

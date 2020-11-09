@@ -7,7 +7,7 @@ using System.Reflection;
 namespace BMH
 {
 	//[ExecuteAlways]
-	public class VirtualKeyboard : MonoBehaviour
+	public class VirtualKeyboard : SingletonMonoBehaviour<VirtualKeyboard>
 	{
 		public Transform trs;
 		public InputField outputToInputField;
@@ -44,7 +44,7 @@ namespace BMH
 				return;
 			}
 #endif
-			GameManager.GetSingleton<Menus>().enabled = false;
+			Menus.Instance.enabled = false;
 			if (outputToInputField != null)
 			{
 				OutputPosition = 0;
@@ -70,7 +70,7 @@ namespace BMH
 			if (!Application.isPlaying)
 				return;
 #endif
-			GameManager.GetSingleton<Menus>().enabled = true;
+			Menus.Instance.enabled = true;
 			if (outputToInputField != null)
 				outputToInputField.GetComponent<CanvasGroup>().alpha = 0;
 		}

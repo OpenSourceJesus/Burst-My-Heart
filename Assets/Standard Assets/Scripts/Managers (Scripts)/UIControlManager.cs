@@ -120,9 +120,9 @@ public class UIControlManager : SingletonMonoBehaviour<UIControlManager>
 	public virtual void HandleMovementInput ()
 	{
 		inputDirection = InputManager.inputters[0].GetAxis2D(horizontalAxisName, verticalAxisName) + InputManager.inputters[1].GetAxis2D(horizontalAxisName, verticalAxisName);
-		if (inputDirection.magnitude > GameManager.GetSingleton<InputManager>().joystickDeadzone)
+		if (inputDirection.magnitude > InputManager.Instance.joystickDeadzone)
 		{
-			if (previousInputDirection.magnitude <= GameManager.GetSingleton<InputManager>().joystickDeadzone)
+			if (previousInputDirection.magnitude <= InputManager.Instance.joystickDeadzone)
 			{
 				HandleChangeSelected (true);
 				ControlSelected ();

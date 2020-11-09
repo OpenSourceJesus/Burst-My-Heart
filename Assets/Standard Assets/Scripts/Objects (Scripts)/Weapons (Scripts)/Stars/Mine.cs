@@ -51,7 +51,7 @@ namespace BMH
 		{
 			yield return new WaitForSeconds(delay);
 			if (duration != 0)
-				delayedDespawn = GameManager.GetSingleton<ObjectPool>().DelayDespawn (prefabIndex, gameObject, trs, duration);
+				delayedDespawn = ObjectPool.Instance.DelayDespawn (prefabIndex, gameObject, trs, duration);
 			yield return new WaitUntil(() => (Physics2D.OverlapCircle(trs.position, radius, whatICantActivateIn) == null));
 			Activate ();
 		}

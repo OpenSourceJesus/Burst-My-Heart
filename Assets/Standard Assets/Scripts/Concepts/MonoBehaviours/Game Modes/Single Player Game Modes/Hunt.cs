@@ -26,9 +26,9 @@ namespace BMH
 			base.Awake ();
 			// heartEnemy.onDeath += OnHeartKilled;
 			if (Player.CanSwitchPositions)
-				deathTimer.duration = Mathf.Min(Vector2.Distance(GameManager.GetSingleton<HumanPlayer>().body.trs.position, heartEnemy.trs.position), Vector2.Distance(GameManager.GetSingleton<HumanPlayer>().weapon.trs.position, heartEnemy.trs.position)) * timePerDistUnit + extraTime;
+				deathTimer.duration = Mathf.Min(Vector2.Distance(HumanPlayer.Instance.body.trs.position, heartEnemy.trs.position), Vector2.Distance(HumanPlayer.Instance.weapon.trs.position, heartEnemy.trs.position)) * timePerDistUnit + extraTime;
 			else
-				deathTimer.duration = Vector2.Distance(GameManager.GetSingleton<HumanPlayer>().weapon.trs.position, heartEnemy.trs.position) * timePerDistUnit + extraTime;
+				deathTimer.duration = Vector2.Distance(HumanPlayer.Instance.weapon.trs.position, heartEnemy.trs.position) * timePerDistUnit + extraTime;
 			deathTimer.Reset ();
 			deathTimer.onFinished += GameOver;
 			deathTimer.Start ();
@@ -36,7 +36,7 @@ namespace BMH
 			Player.players = FindObjectsOfType<Player>();
 			heartEnemy.trs.position = Random.insideUnitCircle * (mapRadius - heartEnemy.radius);
 			heartEnemy.trs.eulerAngles = Vector3.forward * Random.value * 360;
-			GameManager.GetSingleton<HumanPlayer>().weapon.onCollide += OnWeaponCollide;
+			HumanPlayer.Instance.weapon.onCollide += OnWeaponCollide;
 		}
 
 		public override void DoUpdate ()
@@ -47,7 +47,7 @@ namespace BMH
 		public virtual void OnWeaponCollide (Collision2D coll, Weapon weapon)
 		{
 			if (coll.collider == heartEnemy.collider)
-				OnHeartKilled (GameManager.GetSingleton<HumanPlayer>(), heartEnemy);
+				OnHeartKilled (HumanPlayer.Instance, heartEnemy);
 		}
 
 		public virtual void OnHeartKilled (Player killer, Body victim)
@@ -83,7 +83,7 @@ namespace BMH
 
 		public virtual void GameOver (params object[] args)
 		{
-			GameManager.GetSingleton<GameManager>().ReloadActiveScene ();
+			GameManager.Instance.ReloadActiveScene ();
 		}
 
 		public override void OnDestroy ()
@@ -91,7 +91,7 @@ namespace BMH
 			base.OnDestroy ();
 			deathTimer.onFinished -= GameOver;
 			// heartEnemy.onDeath -= OnHeartKilled;
-			GameManager.GetSingleton<HumanPlayer>().weapon.onCollide -= OnWeaponCollide;
+			HumanPlayer.Instance.weapon.onCollide -= OnWeaponCollide;
 		}
 	}
 }

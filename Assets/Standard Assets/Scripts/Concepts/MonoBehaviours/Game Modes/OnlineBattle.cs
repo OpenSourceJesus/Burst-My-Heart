@@ -12,6 +12,16 @@ namespace BMH
 	//[ExecuteAlways]
 	public class OnlineBattle : GameMode
 	{
+		public new static OnlineBattle instance;
+		public new static OnlineBattle Instance
+		{
+			get
+			{
+				if (instance == null)
+					instance = FindObjectOfType<OnlineBattle>();
+				return instance;
+			}
+		}
 		public const uint DATA_PER_EVENT = 4;
 		public static OnlinePlayer localPlayer;
 		public static OnlinePlayer[] nonLocalPlayers = new OnlinePlayer[0];
@@ -40,7 +50,7 @@ namespace BMH
 
 		public virtual void Connect ()
 		{
-			GameManager.GetSingleton<NetworkManager>().Connect (OnAuthenticateSucess, OnAuthenticateFail);
+			NetworkManager.Instance.Connect (OnAuthenticateSucess, OnAuthenticateFail);
 		}
 
 		public virtual void OnAuthenticateSucess (Client client)
@@ -55,8 +65,8 @@ namespace BMH
 		public virtual void OnAuthenticateFail (PlayerIOError error)
 		{
 			// Debug.Log("OnAuthenticateFail: " + error.ToString());
-			GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "Error: " + error.ToString();
-			GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+			NetworkManager.Instance.notificationTextObject.text.text = "Error: " + error.ToString();
+			NetworkManager.Instance.StartCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
 			// Connect ();
 		}
 
@@ -129,7 +139,7 @@ namespace BMH
 
 		public virtual void OnAnotherPlayerJoined ()
 		{
-			if (GameManager.GetSingleton<SinglePlayerGameMode>() != null || SceneManager.GetActiveScene().name.Contains("AI"))
+			if (SinglePlayerGameMode.Instance != null || SceneManager.GetActiveScene().name.Contains("AI"))
 				SceneManager.sceneLoaded += OnSceneLoaded;
 			else
 				StartCoroutine(LoadOnlineArenaAfterNotificationRoutine ());
@@ -137,27 +147,27 @@ namespace BMH
 
 		public virtual IEnumerator LoadOnlineArenaAfterNotificationRoutine ()
 		{
-			GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "Another player has joined online! You will be transported to the online arena after this message disappears.";
-			GameManager.GetSingleton<NetworkManager>().StopCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-			GameManager.GetSingleton<NetworkManager>().notificationTextObject.Show ();
-			GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-			yield return new WaitUntil(() => (!GameManager.GetSingleton<NetworkManager>().notificationTextObject.obj.activeSelf));
+			NetworkManager.Instance.notificationTextObject.text.text = "Another player has joined online! You will be transported to the online arena after this message disappears.";
+			NetworkManager.Instance.StopCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
+			NetworkManager.Instance.notificationTextObject.Show ();
+			NetworkManager.Instance.StartCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
+			yield return new WaitUntil(() => (!NetworkManager.Instance.notificationTextObject.obj.activeSelf));
 			SceneManager.sceneLoaded += OnSceneLoaded;
-			GameManager.GetSingleton<GameManager>().LoadScene ("Online");
+			GameManager.Instance.LoadScene ("Online");
 		}
 
 		public virtual void OnSceneLoaded (Scene scene = new Scene(), LoadSceneMode loadMode = LoadSceneMode.Single)
 		{
 			SceneManager.sceneLoaded -= OnSceneLoaded;
-			if (GameManager.GetSingleton<OnlineArena>() == null)
+			if (OnlineArena.Instance == null)
 			{
 				StartCoroutine(LoadOnlineArenaAfterNotificationRoutine ());
 				return;
 			}
-			// GameManager.GetSingleton<GameManager>().PauseGame (100);
-			// GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "Waiting for the other player to be trasported to this arena...";
-			// GameManager.GetSingleton<NetworkManager>().StopCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-			// GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+			// GameManager.Instance.PauseGame (100);
+			// NetworkManager.Instance.notificationTextObject.text.text = "Waiting for the other player to be trasported to this arena...";
+			// NetworkManager.Instance.StopCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
+			// NetworkManager.Instance.StartCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
 			pauseInstructionsObj.SetActive(!HasPaused);
 			foreach (Message spawnPlayerMessage in spawnPlayerMessages)
 				SpawnPlayer (spawnPlayerMessage);
@@ -173,10 +183,10 @@ namespace BMH
 			OnlinePlayer player;
 			if (message.Count == 4)
 			{
-				// player = GameManager.GetSingleton<ObjectPool>().SpawnComponent<OnlinePlayer>(playerPrefab.prefabIndex, new Vector2(message.GetFloat(1), message.GetFloat(2)), Quaternion.LookRotation(Vector3.forward, VectorExtensions.FromFacingAngle(message.GetFloat(3))));
+				// player = ObjectPool.Instance.SpawnComponent<OnlinePlayer>(playerPrefab.prefabIndex, new Vector2(message.GetFloat(1), message.GetFloat(2)), Quaternion.LookRotation(Vector3.forward, VectorExtensions.FromFacingAngle(message.GetFloat(3))));
 				player = Instantiate(playerPrefab, new Vector2(message.GetFloat(1), message.GetFloat(2)), Quaternion.LookRotation(Vector3.forward, VectorExtensions.FromFacingAngle(message.GetFloat(3))));
 				OnlineBattle.localPlayer = player;
-				player.owner = GameManager.GetSingleton<GameManager>().teams[0];
+				player.owner = GameManager.Instance.teams[0];
 				player.SetColor (player.owner.color);
 				player.scoreText.text = "Score: " + player.Score;
 				GameManager.updatables = GameManager.updatables.Add(this);
@@ -186,7 +196,7 @@ namespace BMH
 			}
 			else
 			{
-				// player = GameManager.GetSingleton<ObjectPool>().SpawnComponent<OnlinePlayer>(playerPrefab.prefabIndex);
+				// player = ObjectPool.Instance.SpawnComponent<OnlinePlayer>(playerPrefab.prefabIndex);
 				player = Instantiate(playerPrefab);
 				player.body.trs.position = new Vector2(message.GetFloat(1), message.GetFloat(2));
 				player.weapon.trs.position = new Vector2(message.GetFloat(3), message.GetFloat(4));
@@ -198,7 +208,7 @@ namespace BMH
 			}
 			player.playerId = message.GetInteger(0);
 			playerIdsDict.Add(player.playerId, player);
-			GameManager.GetSingleton<OnlineArena>().SetSize ((uint) playerIdsDict.Count);
+			OnlineArena.Instance.SetSize ((uint) playerIdsDict.Count);
 		}
 
 		public virtual void OnMoveTransformMessage (object sender, Message message)
@@ -212,8 +222,8 @@ namespace BMH
 				player.weapon.trs.position = new Vector2(message.GetFloat(2), message.GetFloat(3));
 			// if (OnlinePlayer.localPlayer == player)
 			// {
-			// 	GameManager.GetSingleton<GameManager>().PauseGame (-100);
-			// 	GameManager.GetSingleton<NetworkManager>().notificationTextObject.Hide ();
+			// 	GameManager.Instance.PauseGame (-100);
+			// 	NetworkManager.Instance.notificationTextObject.Hide ();
 			// }
 		}
 
@@ -233,7 +243,7 @@ namespace BMH
 				return;
 			Destroy(player.gameObject);
 			playerIdsDict.Remove(playerId);
-			GameManager.GetSingleton<OnlineArena>().SetSize ((uint) playerIdsDict.Count);
+			OnlineArena.Instance.SetSize ((uint) playerIdsDict.Count);
 		}
 
 		public virtual void OnMakeEventsMessage (object sender, Message message)
@@ -261,13 +271,13 @@ namespace BMH
 				uint eventTypeIndex = message.GetUnsignedInteger(i);
 				Vector2 spawnPosition = new Vector2(message.GetFloat(i + 1), message.GetFloat(i + 2));
 				float spawnRotation = message.GetFloat(i + 3);
-				events.Add(MakeEvent (GameManager.GetSingleton<OnlineBattle>().eventPrefabs[eventTypeIndex], spawnPosition, spawnRotation));
+				events.Add(MakeEvent (OnlineBattle.Instance.eventPrefabs[eventTypeIndex], spawnPosition, spawnRotation));
 			}
 		}
 
 		public override void DoUpdate ()
 		{
-			GameManager.GetSingleton<CameraScript>().trs.position = localPlayer.lengthVisualizerTrs.position.SetZ(GameManager.GetSingleton<CameraScript>().trs.position.z);
+			CameraScript.Instance.trs.position = localPlayer.lengthVisualizerTrs.position.SetZ(CameraScript.Instance.trs.position.z);
 			foreach (OnlinePlayer player in nonLocalPlayers)
 				player.UpdateGraphics ();
 		}

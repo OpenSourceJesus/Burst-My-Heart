@@ -203,9 +203,9 @@ namespace BMH.Analytics
 			
 			public virtual void Init ()
 			{
-				if (GameManager.GetSingleton<AnalyticsManager>() == null)
+				if (AnalyticsManager.Instance == null)
 					return;
-				AnalyticsEvent _event = (AnalyticsEvent) typeof(AnalyticsManager).GetField("_" + GetName()).GetValue(GameManager.GetSingleton<AnalyticsManager>());
+				AnalyticsEvent _event = (AnalyticsEvent) typeof(AnalyticsManager).GetField("_" + GetName()).GetValue(AnalyticsManager.Instance);
 				gameVersion.dataColumnName = _event.gameVersion.dataColumnName;
 				player.dataColumnName = _event.player.dataColumnName;
 				scene.dataColumnName = _event.scene.dataColumnName;
@@ -250,10 +250,10 @@ namespace BMH.Analytics
 			
 			public override void Init ()
 			{
-				if (GameManager.GetSingleton<AnalyticsManager>() == null)
+				if (AnalyticsManager.Instance == null)
 					return;
 				base.Init ();
-				PlayerDiedEvent _event = (PlayerDiedEvent) typeof(AnalyticsManager).GetField("_" + GetName()).GetValue(GameManager.GetSingleton<AnalyticsManager>());
+				PlayerDiedEvent _event = (PlayerDiedEvent) typeof(AnalyticsManager).GetField("_" + GetName()).GetValue(AnalyticsManager.Instance);
 				killedBy.dataColumnName = _event.killedBy.dataColumnName;
 			}
 			
@@ -328,7 +328,7 @@ namespace BMH.Analytics
 		{
 			public override string GetValue (AnalyticsManager analyticsManager)
 			{
-				return "" + GameManager.GetSingleton<BuildManager>().versionIndex;
+				return "" + BuildManager.Instance.versionIndex;
 			}
 		}
 

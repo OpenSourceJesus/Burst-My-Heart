@@ -17,13 +17,13 @@ using Extensions;
 [ExecuteInEditMode]
 [RequireComponent (typeof(MeshFilter), (typeof(MeshRenderer)))]
 [AddComponentMenu("Vector Grid/Vector Grid")]
-public class VectorGrid : MonoBehaviour, IUpdatable
+public class VectorGrid : SingletonMonoBehaviour<VectorGrid>, IUpdatable
 {
 	public bool PauseWhileUnfocused
 	{
 		get
 		{
-			return GameManager.GetSingleton<OnlineBattle>() == null;
+			return OnlineBattle.Instance == null;
 		}
 	}
 	public Transform trs;

@@ -60,9 +60,9 @@ namespace BMH
 		{
 			if (isSelected)
 			{
-				if (InputManager.inputters[0].GetButtonDown(GameManager.GetSingleton<VirtualKeyboard>().submitButtonName) || InputManager.inputters[1].GetButtonDown(GameManager.GetSingleton<VirtualKeyboard>().submitButtonName))
+				if (InputManager.inputters[0].GetButtonDown(VirtualKeyboard.Instance.submitButtonName) || InputManager.inputters[1].GetButtonDown(VirtualKeyboard.Instance.submitButtonName))
 					OnPressed ();
-				else if (isPressed && (InputManager.inputters[0].GetButtonUp(GameManager.GetSingleton<VirtualKeyboard>().submitButtonName) || InputManager.inputters[1].GetButtonUp(GameManager.GetSingleton<VirtualKeyboard>().submitButtonName)))
+				else if (isPressed && (InputManager.inputters[0].GetButtonUp(VirtualKeyboard.Instance.submitButtonName) || InputManager.inputters[1].GetButtonUp(VirtualKeyboard.Instance.submitButtonName)))
 					OnReleased ();
 			}
 			else if (isPressed)
@@ -129,24 +129,24 @@ namespace BMH
 		public virtual IEnumerator ContinuousOutputToInputFieldRoutine ()
 		{
 			OutputToInputField ();
-			yield return new WaitForSecondsRealtime(GameManager.GetSingleton<VirtualKeyboard>().repeatDelay);
+			yield return new WaitForSecondsRealtime(VirtualKeyboard.Instance.repeatDelay);
 			while (true)
 			{
-				yield return new WaitForSecondsRealtime(GameManager.GetSingleton<VirtualKeyboard>().repeatRate);
+				yield return new WaitForSecondsRealtime(VirtualKeyboard.Instance.repeatRate);
 				OutputToInputField ();
 			}
 		}
 
 		public virtual void OutputToInputField ()
 		{
-			if (GameManager.GetSingleton<VirtualKeyboard>().outputToInputField.text.Length == GameManager.GetSingleton<VirtualKeyboard>().outputToInputField.characterLimit)
+			if (VirtualKeyboard.Instance.outputToInputField.text.Length == VirtualKeyboard.Instance.outputToInputField.characterLimit)
 				return;
-			GameManager.GetSingleton<VirtualKeyboard>().outputToInputField.text = GameManager.GetSingleton<VirtualKeyboard>().outputToInputField.text.Insert(GameManager.GetSingleton<VirtualKeyboard>().OutputPosition, text.text);
-			GameManager.GetSingleton<VirtualKeyboard>().OutputPosition ++;
-			if (GameManager.GetSingleton<VirtualKeyboard>().shiftKeys[0].isActivated)
+			VirtualKeyboard.Instance.outputToInputField.text = VirtualKeyboard.Instance.outputToInputField.text.Insert(VirtualKeyboard.Instance.OutputPosition, text.text);
+			VirtualKeyboard.Instance.OutputPosition ++;
+			if (VirtualKeyboard.Instance.shiftKeys[0].isActivated)
 			{
-				GameManager.GetSingleton<VirtualKeyboard>().shiftKeys[0].ToggleActivate ();
-				GameManager.GetSingleton<VirtualKeyboard>().OnShiftReleased (GameManager.GetSingleton<VirtualKeyboard>().shiftKeys[0]);
+				VirtualKeyboard.Instance.shiftKeys[0].ToggleActivate ();
+				VirtualKeyboard.Instance.OnShiftReleased (VirtualKeyboard.Instance.shiftKeys[0]);
 			}
 		}
 

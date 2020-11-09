@@ -52,7 +52,7 @@ namespace BMH
 			if (OnlineBattle.isPlaying)
 			{
 				if (OnlineBattle.localPlayer == player)
-					GameManager.GetSingleton<OnlineBattle>().bountyMultiplier *= bountyMultiplier;
+					OnlineBattle.Instance.bountyMultiplier *= bountyMultiplier;
 				else
 				{
 					OnlinePlayer onlinePlayer = player as OnlinePlayer;
@@ -60,15 +60,15 @@ namespace BMH
 				}
 			}
 			else if (Battle.player1 == player)
-				GameManager.GetSingleton<Battle>().scoreChangeAmount *= bountyMultiplier;
+				Battle.Instance.scoreChangeAmount *= bountyMultiplier;
 		}
 
 		public override void UnapplyEffect (Player player)
 		{
-			if (GameManager.GetSingleton<OnlineBattle>() != null)
+			if (OnlineBattle.Instance != null)
 			{
 				if (OnlineBattle.localPlayer == player)
-					GameManager.GetSingleton<OnlineBattle>().bountyMultiplier /= bountyMultiplier;
+					OnlineBattle.Instance.bountyMultiplier /= bountyMultiplier;
 				else
 				{
 					OnlinePlayer onlinePlayer = player as OnlinePlayer;
@@ -76,7 +76,7 @@ namespace BMH
 				}
 			}
 			else if (Battle.player1 == player)
-				GameManager.GetSingleton<Battle>().scoreChangeAmount /= bountyMultiplier;
+				Battle.Instance.scoreChangeAmount /= bountyMultiplier;
 		}
 	}
 }

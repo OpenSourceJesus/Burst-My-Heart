@@ -16,7 +16,7 @@ namespace BMH
 		{
 			get
 			{
-				return true && GameManager.GetSingleton<OnlineBattle>() == null;
+				return true && OnlineBattle.Instance == null;
 			}
 		}
 

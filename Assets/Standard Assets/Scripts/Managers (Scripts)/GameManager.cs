@@ -97,76 +97,58 @@ namespace BMH
 
 		public static T GetSingleton<T> ()
 		{
-			if (!singletons.ContainsKey(typeof(T)))
-				return GetSingleton<T>(FindObjectsOfType<Object>());
-			else
-			{
-				if (singletons[typeof(T)] == null || singletons[typeof(T)].Equals(default(T)))
-				{
-					T singleton = GetSingleton<T>(FindObjectsOfType<Object>());
-					singletons[typeof(T)] = singleton;
-					return singleton;
-				}
-				else
-					return (T) singletons[typeof(T)];
-			}
+			object obj = null;
+			if (!singletons.TryGetValue(typeof(T), out obj))
+				obj = GetSingleton<T>(FindObjectsOfType<Object>());
+			return (T) obj;
 		}
 
 		public static T GetSingleton<T> (Object[] objects)
 		{
 			if (typeof(T).IsSubclassOf(typeof(Object)))
 			{
-				foreach (Object obj in objects)
+				for (int i = 0; i < objects.Length; i ++)
 				{
+					Object obj = objects[i];
 					if (obj is T)
 					{
-						singletons.Remove(typeof(T));
-						singletons.Add(typeof(T), obj);
-						break;
+						if (singletons.ContainsKey(typeof(T)))
+							singletons[typeof(T)] = obj;
+						else
+							singletons.Add(typeof(T), obj);
+						return (T) (object) obj;
 					}
 				}
 			}
-			if (singletons.ContainsKey(typeof(T)))
-				return (T) singletons[typeof(T)];
-			else
-				return default(T);
+			return (T) (object) null;
 		}
 
 		public static T GetSingletonIncludingAssets<T> ()
 		{
-			if (!singletons.ContainsKey(typeof(T)))
-				return GetSingletonIncludingAssets<T>(Object.FindObjectsOfTypeIncludingAssets(typeof(T)));
-			else
-			{
-				if (singletons[typeof(T)] == null || singletons[typeof(T)].Equals(default(T)))
-				{
-					T singleton = GetSingleton<T>(Object.FindObjectsOfTypeIncludingAssets(typeof(T)));
-					singletons[typeof(T)] = singleton;
-					return singleton;
-				}
-				else
-					return (T) singletons[typeof(T)];
-			}
+			object obj = null;
+			if (!singletons.TryGetValue(typeof(T), out obj))
+				obj = GetSingletonIncludingAssets<T>(Object.FindObjectsOfTypeIncludingAssets(typeof(T)));
+			return (T) obj;
 		}
 
 		public static T GetSingletonIncludingAssets<T> (Object[] objects)
 		{
 			if (typeof(T).IsSubclassOf(typeof(Object)))
 			{
-				foreach (Object obj in objects)
+				for (int i = 0; i < objects.Length; i ++)
 				{
+					Object obj = objects[i];
 					if (obj is T)
 					{
-						singletons.Remove(typeof(T));
-						singletons.Add(typeof(T), obj);
-						break;
+						if (singletons.ContainsKey(typeof(T)))
+							singletons[typeof(T)] = obj;
+						else
+							singletons.Add(typeof(T), obj);
+						return (T) (object) obj;
 					}
 				}
 			}
-			if (singletons.ContainsKey(typeof(T)))
-				return (T) singletons[typeof(T)];
-			else
-				return default(T);
+			return (T) (object) null;
 		}
 
 		public override void Awake ()

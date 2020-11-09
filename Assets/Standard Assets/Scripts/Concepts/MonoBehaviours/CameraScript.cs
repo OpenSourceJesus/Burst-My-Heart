@@ -8,7 +8,7 @@ namespace BMH
 	// [ExecuteAlways]
 	[RequireComponent(typeof(Camera))]
 	[DisallowMultipleComponent]
-	public class CameraScript : MonoBehaviour
+	public class CameraScript : SingletonMonoBehaviour<CameraScript>
 	{
 		public Transform trs;
 		public new Camera camera;

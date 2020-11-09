@@ -40,10 +40,10 @@ namespace BMH
 		{
 			UpdateAudioListener ();
 			UpdateMuteText ();
-			if (GameManager.GetSingleton<AudioManager>() != null && GameManager.GetSingleton<AudioManager>() != this)
+			if (AudioManager.Instance != null && AudioManager.Instance != this)
 			{
-				GameManager.GetSingleton<AudioManager>().muteToggleTextMesh = muteToggleTextMesh;
-				GameManager.GetSingleton<AudioManager>().muteToggleTrs = muteToggleTrs;
+				AudioManager.Instance.muteToggleTextMesh = muteToggleTextMesh;
+				AudioManager.Instance.muteToggleTrs = muteToggleTrs;
 			}
 			else
 			{
@@ -63,9 +63,9 @@ namespace BMH
 
 		public virtual void ToggleMute ()
 		{
-			if (GameManager.GetSingleton<AudioManager>() != this)
+			if (AudioManager.Instance != this)
 			{
-				GameManager.GetSingleton<AudioManager>().ToggleMute ();
+				AudioManager.Instance.ToggleMute ();
 				return;
 			}
 			Mute = !Mute;
@@ -93,7 +93,7 @@ namespace BMH
 		{
 			if (Mute)
 				return null;
-			SoundEffect output = GameManager.GetSingleton<ObjectPool>().SpawnComponent<SoundEffect>(soundEffectPrefab.prefabIndex, position);
+			SoundEffect output = ObjectPool.Instance.SpawnComponent<SoundEffect>(soundEffectPrefab.prefabIndex, position);
 			if (output == null)
 				return null;
 			soundEffects = soundEffects.Add(output);

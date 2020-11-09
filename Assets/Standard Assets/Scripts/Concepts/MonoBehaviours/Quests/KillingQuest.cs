@@ -31,9 +31,9 @@ namespace BMH
 			base.Begin ();
 			if (changePlayerHealth)
 			{
-				// GameManager.GetSingleton<Player>().Hp = playerHp;
-				// for (int i = playerHp; i < GameManager.GetSingleton<Player>().Hp; i ++)
-					// Destroy(GameManager.GetSingleton<Player>().lifeIconsParent.GetChild(0).gameObject);
+				// Player.Instance.Hp = playerHp;
+				// for (int i = playerHp; i < Player.Instance.Hp; i ++)
+					// Destroy(Player.Instance.lifeIconsParent.GetChild(0).gameObject);
 			}
 		}
 	}

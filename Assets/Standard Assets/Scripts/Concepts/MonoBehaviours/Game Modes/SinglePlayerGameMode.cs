@@ -9,6 +9,16 @@ namespace BMH
 	[DisallowMultipleComponent]
     public class SinglePlayerGameMode : GameMode
     {
+		public new static SinglePlayerGameMode instance;
+		public new static SinglePlayerGameMode Instance
+		{
+			get
+			{
+				if (instance == null)
+					instance = FindObjectOfType<SinglePlayerGameMode>();
+				return instance;
+			}
+		}
     	[HideInInspector]
 		public float score;
 		public Text scoreText;
@@ -37,7 +47,7 @@ namespace BMH
 			{
 				Highscore = (uint) score;
 				if (ArchivesManager.activeAccountData != null)
-					GameManager.GetSingleton<ArchivesManager>().UpdateAccountData (ArchivesManager.activeAccountData);
+					ArchivesManager.Instance.UpdateAccountData (ArchivesManager.activeAccountData);
 			}
 		}
     }

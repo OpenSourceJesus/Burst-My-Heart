@@ -8,6 +8,16 @@ namespace BMH
 {
     public class Battle : GameMode
     {
+		public new static Battle instance;
+		public new static Battle Instance
+		{
+			get
+			{
+				if (instance == null)
+					instance = FindObjectOfType<Battle>();
+				return instance;
+			}
+		}
     	public Text scoreText1;
     	public Text scoreText2;
 		public Animator scoreAnimator1;
@@ -31,8 +41,8 @@ namespace BMH
 
 		public override void Awake ()
 		{
-			player1 = GameManager.GetSingleton<Player>();
-			if (player1.owner != GameManager.GetSingleton<GameManager>().teams[0])
+			player1 = Player.Instance;
+			if (player1.owner != GameManager.Instance.teams[0])
 				player1 = player1.owner.opponent.representative;
 			player2 = player1.owner.opponent.representative;
 			scoreText1.text = "" + player1.Score;
@@ -44,7 +54,7 @@ namespace BMH
 			Player.players = FindObjectsOfType<Player>();
 			foreach (Player _player in Player.players)
 				_player.body.onDeath += OnDeath;
-			GameManager.GetSingleton<GameManager>().PauseGame (1);
+			GameManager.Instance.PauseGame (1);
 			pauseInstructionsObj.SetActive(!HasPaused);
 			if (EventChance > Random.value)
 			{
@@ -58,7 +68,7 @@ namespace BMH
 						i --;
 					}
 				}
-				Event newEvent = MakeEvent (eventPrefabs[Random.Range(0, eventPrefabs.Length)], GameManager.GetSingleton<Area>().trs.position, Random.value * 360);
+				Event newEvent = MakeEvent (eventPrefabs[Random.Range(0, eventPrefabs.Length)], Area.Instance.trs.position, Random.value * 360);
 				DestroyImmediate(newEvent.collider);
 				foreach (Player _player in Player.players)
 					newEvent.AddPlayer(_player);
@@ -100,7 +110,7 @@ namespace BMH
 
 		public virtual void Begin ()
 		{
-			GameManager.GetSingleton<GameManager>().PauseGame (-1000);
+			GameManager.Instance.PauseGame (-1000);
 			isPlaying = true;
 			if (!HasPaused)
 				pauseInstructionsObj.SetActive(true);

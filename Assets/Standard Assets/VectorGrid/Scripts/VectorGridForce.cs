@@ -18,7 +18,7 @@ public class VectorGridForce : MonoBehaviour, IUpdatable
 	{
 		get
 		{
-			return GameManager.GetSingleton<OnlineBattle>() == null;
+			return OnlineBattle.Instance == null;
 		}
 	}
 
@@ -49,8 +49,8 @@ public class VectorGridForce : MonoBehaviour, IUpdatable
 	public virtual void DoUpdate () 
 	{
 		if (isDirectional)
-			GameManager.GetSingleton<VectorGrid>().AddGridForce(trs.position, rigid.velocity * forceScale, radius, color, hasColor);
+			VectorGrid.Instance.AddGridForce(trs.position, rigid.velocity * forceScale, radius, color, hasColor);
 		else
-			GameManager.GetSingleton<VectorGrid>().AddGridForce(trs.position, forceScale, radius, color, hasColor);
+			VectorGrid.Instance.AddGridForce(trs.position, forceScale, radius, color, hasColor);
 	}
 }

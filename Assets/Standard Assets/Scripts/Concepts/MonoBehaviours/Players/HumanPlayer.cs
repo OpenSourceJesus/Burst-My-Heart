@@ -6,6 +6,16 @@ namespace BMH
 {
 	public class HumanPlayer : Player, ISavableAndLoadable
 	{
+		public new static HumanPlayer instance;
+		public new static HumanPlayer Instance
+		{
+			get
+			{
+				if (instance == null)
+					instance = FindObjectOfType<HumanPlayer>();
+				return instance;
+			}
+		}
 		public string Name
 		{
 			get
@@ -66,7 +76,7 @@ namespace BMH
 			set
 			{
 				while (Physics2D.OverlapCircle(value, weapon.radius, Physics2D.GetLayerCollisionMask(weapon.gameObject.layer)) != null)
-					value = (Vector2) body.trs.position + Random.insideUnitCircle.normalized * GameManager.GetSingleton<HumanPlayer>().maxBodyToWeaponDist;
+					value = (Vector2) body.trs.position + Random.insideUnitCircle.normalized * HumanPlayer.Instance.maxBodyToWeaponDist;
 				weapon.trs.position = value;
 			}
 		}
@@ -104,7 +114,7 @@ namespace BMH
 				return;
 			body.DoUpdate ();
 			weapon.DoUpdate ();
-			if (InputManager.inputters[GameManager.GetSingleton<GameManager>().teams.IndexOf(owner)].GetButtonDown("Switch Positions") && CanSwitchPositions)
+			if (InputManager.inputters[GameManager.Instance.teams.IndexOf(owner)].GetButtonDown("Switch Positions") && CanSwitchPositions)
 				SwitchPositions ();
 			base.DoUpdate ();
 		}

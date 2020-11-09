@@ -9,7 +9,7 @@ namespace BMH
 		public override void OnCollisionEnter2D (Collision2D coll)
 		{
 			base.OnCollisionEnter2D (coll);
-			GameManager.GetSingleton<ObjectPool>().Despawn (prefabIndex, gameObject, trs);
+			ObjectPool.Instance.Despawn (prefabIndex, gameObject, trs);
 		}
 	}
 }

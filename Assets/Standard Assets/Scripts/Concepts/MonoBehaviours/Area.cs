@@ -5,7 +5,7 @@ namespace BMH
 {
 	//[ExecuteAlways]
 	[ExecuteInEditMode]
-	public class Area : MonoBehaviour
+	public class Area : SingletonMonoBehaviour<Area>
 	{
 		public Transform trs;
 		public Renderer colorGradient2DRenderer;

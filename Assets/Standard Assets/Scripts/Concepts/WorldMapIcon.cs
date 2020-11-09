@@ -39,8 +39,8 @@ namespace BMH
 			else
 			{
 				cellBoundsRect = new RectInt();
-				// cellBoundsRect.size = GameManager.GetSingleton<WorldMap>().unexploredTilemap.WorldToCell(collider.bounds.max).ToVec2Int() - GameManager.GetSingleton<WorldMap>().unexploredTilemap.WorldToCell(collider.bounds.min).ToVec2Int() + Vector2Int.one;
-				// cellBoundsRect.position = new Vector2Int(GameManager.GetSingleton<WorldMap>().unexploredTilemap.WorldToCell(collider.bounds.min).ToVec2Int().x, GameManager.GetSingleton<WorldMap>().unexploredTilemap.WorldToCell(collider.bounds.max).ToVec2Int().y);
+				// cellBoundsRect.size = WorldMap.Instance.unexploredTilemap.WorldToCell(collider.bounds.max).ToVec2Int() - WorldMap.Instance.unexploredTilemap.WorldToCell(collider.bounds.min).ToVec2Int() + Vector2Int.one;
+				// cellBoundsRect.position = new Vector2Int(WorldMap.Instance.unexploredTilemap.WorldToCell(collider.bounds.min).ToVec2Int().x, WorldMap.Instance.unexploredTilemap.WorldToCell(collider.bounds.max).ToVec2Int().y);
 				if (goEntries.Length == 0)
 					goEntries = goEntries.Add(new GameObjectEntry(gameObject));
 				else

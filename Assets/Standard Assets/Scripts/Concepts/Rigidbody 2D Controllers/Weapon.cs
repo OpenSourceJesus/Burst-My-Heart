@@ -30,8 +30,8 @@ namespace BMH
 			if (useDespawnDelay)
 			{
 				if (delayedDespawn != null)
-					GameManager.GetSingleton<ObjectPool>().CancelDelayedDespawn (delayedDespawn);
-				delayedDespawn = GameManager.GetSingleton<ObjectPool>().DelayDespawn (prefabIndex, gameObject, trs, despawnDelay);
+					ObjectPool.Instance.CancelDelayedDespawn (delayedDespawn);
+				delayedDespawn = ObjectPool.Instance.DelayDespawn (prefabIndex, gameObject, trs, despawnDelay);
 			}
 		}
 
@@ -42,7 +42,7 @@ namespace BMH
 				return;
 #endif
 			if (delayedDespawn != null)
-				GameManager.GetSingleton<ObjectPool>().CancelDelayedDespawn (delayedDespawn);
+				ObjectPool.Instance.CancelDelayedDespawn (delayedDespawn);
 		}
 
 		public virtual void OnCollisionEnter2D (Collision2D coll)

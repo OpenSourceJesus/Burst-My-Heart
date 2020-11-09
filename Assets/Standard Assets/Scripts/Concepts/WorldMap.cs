@@ -11,7 +11,7 @@ using UnityEditor;
 namespace BMH
 {
 	[ExecuteInEditMode]
-	public class WorldMap : MonoBehaviour
+	public class WorldMap : SingletonMonoBehaviour<WorldMap>
 	{
 		// public Tilemap[] tilemaps = new Tilemap[0];
 		// public Tilemap unexploredTilemap;
@@ -81,18 +81,18 @@ namespace BMH
 			{
 				if (startOver)
 				{
-					GameManager.GetSingleton<World>().update = true;
-					GameManager.GetSingleton<World>().Update ();
-					x = GameManager.GetSingleton<World>().cellBoundsRect.xMin;
-					y = GameManager.GetSingleton<World>().cellBoundsRect.yMin;
+					World.Instance.update = true;
+					World.Instance.Update ();
+					x = World.Instance.cellBoundsRect.xMin;
+					y = World.Instance.cellBoundsRect.yMin;
 					startOver = false;
 				}
 				// 	unexploredTilemap.SetTile(new Vector3Int(x, y, 0), unexploredTile);
-				if (x > GameManager.GetSingleton<World>().cellBoundsRect.xMax + 1)
+				if (x > World.Instance.cellBoundsRect.xMax + 1)
 				{
-					x = GameManager.GetSingleton<World>().cellBoundsRect.xMin;
+					x = World.Instance.cellBoundsRect.xMin;
 					y ++;
-					if (y > GameManager.GetSingleton<World>().cellBoundsRect.yMax + 1)
+					if (y > World.Instance.cellBoundsRect.yMax + 1)
 						update = false;
 				}
 				else
@@ -103,8 +103,8 @@ namespace BMH
 
 		public virtual void Init ()
 		{
-			// minCellPosition = unexploredTilemap.WorldToCell(GameManager.GetSingleton<GameCamera>().viewRect.min).ToVec2Int();
-			// maxCellPosition = unexploredTilemap.WorldToCell(GameManager.GetSingleton<GameCamera>().viewRect.max).ToVec2Int();
+			// minCellPosition = unexploredTilemap.WorldToCell(GameCamera.Instance.viewRect.min).ToVec2Int();
+			// maxCellPosition = unexploredTilemap.WorldToCell(GameCamera.Instance.viewRect.max).ToVec2Int();
 			exploredCellPositions.Clear();
 			Vector2Int cellPosition;
 // #if UNITY_EDITOR
@@ -188,8 +188,8 @@ namespace BMH
 						GameManager.activeCursorEntry.rectTrs.position = GameManager.cursorEntriesDict["Default"].rectTrs.position;
 					}
 					GameManager.activeCursorEntry.rectTrs.up = moveInput;
-					// if (GameManager.GetSingleton<GameManager>().worldMapTutorialConversation.currentDialog == GameManager.GetSingleton<GameManager>().worldMapMoveViewTutorialDialog)
-					// 	GameManager.GetSingleton<DialogManager>().EndDialog (GameManager.GetSingleton<GameManager>().worldMapMoveViewTutorialDialog);
+					// if (GameManager.Instance.worldMapTutorialConversation.currentDialog == GameManager.Instance.worldMapMoveViewTutorialDialog)
+					// 	DialogManager.Instance.EndDialog (GameManager.Instance.worldMapMoveViewTutorialDialog);
 				}
 				else if (GameManager.activeCursorEntry.name != "Default")
 				{
@@ -220,12 +220,12 @@ namespace BMH
 			if (fastTravelToObelisk != null && InputManager.GetButtonDown("Interact"))
 			{
 				WorldMap.playerJustFastTraveled = true;
-				GameManager.GetSingleton<HumanPlayer>().BodyPosition = fastTravelToObelisk.worldMapIcon.collider.bounds.center;
-				GameManager.GetSingleton<HumanPlayer>().WeaponPosition = fastTravelToObelisk.worldMapIcon.collider.bounds.center;
-				GameManager.GetSingleton<SaveAndLoadManager>().Save ();
+				HumanPlayer.Instance.BodyPosition = fastTravelToObelisk.worldMapIcon.collider.bounds.center;
+				HumanPlayer.Instance.WeaponPosition = fastTravelToObelisk.worldMapIcon.collider.bounds.center;
+				SaveAndLoadManager.Instance.Save ();
 				Close ();
 				isOpen = false;
-				GameManager.GetSingleton<GameManager>().ReloadActiveScene ();
+				GameManager.Instance.ReloadActiveScene ();
 			}
 		}
 
@@ -233,7 +233,7 @@ namespace BMH
 		{
 			canControlCamera = false;
 			isOpen = true;
-			GameManager.GetSingleton<GameManager>().PauseGame (1000000);
+			GameManager.Instance.PauseGame (1000000);
 			foreach (WorldMapIcon worldMapIcon in worldMapIcons)
 			{
 				foreach (Vector2Int position in worldMapIcon.cellBoundsRect.allPositionsWithin)
@@ -254,7 +254,7 @@ namespace BMH
 				exploredCellPositionsSinceLastTimeOpened.Remove(exploredCellPositionAtLastTimeOpened);
 			// for (int i = 0; i < tilemaps.Length; i ++)
 			// {
-			// 	worldTilemap = GameManager.GetSingleton<World>().tilemaps[i];
+			// 	worldTilemap = World.Instance.tilemaps[i];
 			// 	worldMapTilemap = tilemaps[i];
 			// 	worldMapTilemap.gameObject.SetActive(true);
 			// 	foreach (Vector2Int exploredCellPositionSinceLastTimeOpened in exploredCellPositionsSinceLastTimeOpened)
@@ -269,12 +269,12 @@ namespace BMH
 			// 			unexploredTilemap.SetTile(exploredCellPositionSinceLastTimeOpened.ToVec3Int(), null);
 			// 	}
 			// }
-			worldMapCamera.trs.position = GameManager.GetSingleton<Player>().trs.position.SetZ(worldMapCamera.trs.position.z);
+			worldMapCamera.trs.position = Player.Instance.trs.position.SetZ(worldMapCamera.trs.position.z);
 			worldMapCamera.gameObject.SetActive(true);
-			// if (GameManager.GetSingleton<GameManager>().worldMapTutorialConversation.gameObject.activeSelf && GameManager.GetSingleton<GameManager>().worldMapTutorialConversation.updateRoutine == null)
+			// if (GameManager.Instance.worldMapTutorialConversation.gameObject.activeSelf && GameManager.Instance.worldMapTutorialConversation.updateRoutine == null)
 			// {
-			// 	GameManager.GetSingleton<DialogManager>().StartConversation (GameManager.GetSingleton<GameManager>().worldMapTutorialConversation);
-			// 	foreach (Dialog dialog in GameManager.GetSingleton<GameManager>().worldMapTutorialConversation.dialogs)
+			// 	DialogManager.Instance.StartConversation (GameManager.Instance.worldMapTutorialConversation);
+			// 	foreach (Dialog dialog in GameManager.Instance.worldMapTutorialConversation.dialogs)
 			// 		dialog.canvas.worldCamera = worldMapCamera.camera;
 			// }
 			if (InputManager.UsingGamepad)
@@ -289,9 +289,9 @@ namespace BMH
 
 		public virtual void Open ()
 		{
-			if (GameManager.GetSingleton<WorldMap>() != this)
+			if (WorldMap.Instance != this)
 			{
-				GameManager.GetSingleton<WorldMap>().Open ();
+				WorldMap.Instance.Open ();
 				return;
 			}
 			StopAllCoroutines();
@@ -300,9 +300,9 @@ namespace BMH
 
 		public virtual void Close ()
 		{
-			if (GameManager.GetSingleton<WorldMap>() != this)
+			if (WorldMap.Instance != this)
 			{
-				GameManager.GetSingleton<WorldMap>().Close ();
+				WorldMap.Instance.Close ();
 				return;
 			}
 			isOpen = false;
@@ -321,8 +321,8 @@ namespace BMH
 			// 	worldMapTilemap.gameObject.SetActive(false);
 			// }
 			worldMapCamera.gameObject.SetActive(false);
-			// if (!GameManager.GetSingleton<PauseMenu>().gameObject.activeSelf)
-				GameManager.GetSingleton<GameManager>().PauseGame (-1000000);
+			// if (!PauseMenu.Instance.gameObject.activeSelf)
+				GameManager.Instance.PauseGame (-1000000);
 			if (!InputManager.UsingGamepad)
 				GameManager.cursorEntriesDict["Default"].SetAsActive ();
 			else
@@ -333,8 +333,8 @@ namespace BMH
 		{
 			int x;
 			int y;
-			// minCellPosition = unexploredTilemap.WorldToCell(GameManager.GetSingleton<GameCamera>().viewRect.min).ToVec2Int();
-			// maxCellPosition = unexploredTilemap.WorldToCell(GameManager.GetSingleton<GameCamera>().viewRect.max).ToVec2Int();
+			// minCellPosition = unexploredTilemap.WorldToCell(GameCamera.Instance.viewRect.min).ToVec2Int();
+			// maxCellPosition = unexploredTilemap.WorldToCell(GameCamera.Instance.viewRect.max).ToVec2Int();
 			// if (TeleportArrow.justTeleported)
 			// {
 			// 	TeleportArrow.justTeleported = false;

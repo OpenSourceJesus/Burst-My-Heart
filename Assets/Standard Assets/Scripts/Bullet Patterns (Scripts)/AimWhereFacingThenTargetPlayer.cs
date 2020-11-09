@@ -14,13 +14,13 @@ namespace BMH
 		{
 			Weapon[] output = base.Shoot (spawner, bulletPrefab, positionOffset);
 			foreach (Weapon bullet in output)
-				GameManager.GetSingleton<GameManager>().StartCoroutine(RetargetAfterDelay (bullet, retargetTime));
+				GameManager.Instance.StartCoroutine(RetargetAfterDelay (bullet, retargetTime));
 			return output;
 		}
 		
 		public override Vector2 GetRetargetDirection (Weapon bullet)
 		{
-			return GameManager.GetSingleton<HumanPlayer>().body.trs.position - bullet.trs.position;
+			return HumanPlayer.Instance.body.trs.position - bullet.trs.position;
 		}
 	}
 }

@@ -54,7 +54,7 @@ namespace BMH
 			if (invokeEvent != null)
 				invokeEvent.Invoke();
 			if (!string.IsNullOrEmpty(loadScene) && trs.GetChild(0).GetChild(0).childCount == 0)
-				GameManager.GetSingleton<GameManager>().LoadScene (loadScene);
+				GameManager.Instance.LoadScene (loadScene);
 		}
 
 		public virtual void OnDisable ()
@@ -76,17 +76,17 @@ namespace BMH
 		{
 			string windEventEnabledPlayerPrefsKey = "Wind Event enabled";
 			string scoreMultiplierEventEnabledPlayerPrefsKey = "Bounty Multiplier Event enabled";
-			if (GameManager.GetSingleton<Menus>().toggleAllEventsTextMeshes.Contains(textMesh))
+			if (Menus.Instance.toggleAllEventsTextMeshes.Contains(textMesh))
 			{
 				bool newEnabledValue = !(SaveAndLoadManager.GetValue<bool>(windEventEnabledPlayerPrefsKey, true) && SaveAndLoadManager.GetValue<bool>(scoreMultiplierEventEnabledPlayerPrefsKey, true));
 				SaveAndLoadManager.SetValue(windEventEnabledPlayerPrefsKey, newEnabledValue);
 				SaveAndLoadManager.SetValue(scoreMultiplierEventEnabledPlayerPrefsKey, newEnabledValue);
 			}
-			else if (GameManager.GetSingleton<Menus>().toggleWindEventTextMeshes.Contains(textMesh))
+			else if (Menus.Instance.toggleWindEventTextMeshes.Contains(textMesh))
 				SaveAndLoadManager.SetValue(windEventEnabledPlayerPrefsKey, !SaveAndLoadManager.GetValue<bool>(windEventEnabledPlayerPrefsKey, true));
-			else if (GameManager.GetSingleton<Menus>().toggleScoreMultiplierEventTextMeshes.Contains(textMesh))
+			else if (Menus.Instance.toggleScoreMultiplierEventTextMeshes.Contains(textMesh))
 				SaveAndLoadManager.SetValue(scoreMultiplierEventEnabledPlayerPrefsKey, !SaveAndLoadManager.GetValue<bool>(scoreMultiplierEventEnabledPlayerPrefsKey, true));
-			GameManager.GetSingleton<Menus>().UpdateToggleEventTextMeshes ();
+			Menus.Instance.UpdateToggleEventTextMeshes ();
 		}
 
 		public virtual void TryToGoOnline ()
@@ -96,35 +96,35 @@ namespace BMH
 				if (!OnlineBattle.isWaitingForAnotherPlayer)
 				{
 					OnlineBattle.isWaitingForAnotherPlayer = true;
-					GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = GameManager.GetSingleton<OnlineBattle>().isWaitingForAnotherPlayerText;
-					GameManager.GetSingleton<GameManager>().StopCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-					GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-					GameManager.GetSingleton<OnlineBattle>().Connect ();
+					NetworkManager.Instance.notificationTextObject.text.text = OnlineBattle.Instance.isWaitingForAnotherPlayerText;
+					GameManager.Instance.StopCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
+					NetworkManager.Instance.StartCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
+					OnlineBattle.Instance.Connect ();
 					// NetworkManager.IsOnline = true;
-					// GameManager.GetSingleton<GameManager>().LoadScene("Online");
+					// GameManager.Instance.LoadScene("Online");
 				}
 				else
 				{
-					GameManager.GetSingleton<OnlineBattle>().OnDestroy ();
-					GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = GameManager.GetSingleton<OnlineBattle>().isNotWaitingForAnotherPlayerText;
-					GameManager.GetSingleton<GameManager>().StopCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-					GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+					OnlineBattle.Instance.OnDestroy ();
+					NetworkManager.Instance.notificationTextObject.text.text = OnlineBattle.Instance.isNotWaitingForAnotherPlayerText;
+					GameManager.Instance.StopCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
+					NetworkManager.Instance.StartCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
 				}
 			}
 			else
 			{
 				if (!OnlineBattle.isWaitingForAnotherPlayer)
 				{
-					GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = "Multiple game instances on a single computer playing multiplayer is not allowed";
-					GameManager.GetSingleton<GameManager>().StopCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-					GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+					NetworkManager.Instance.notificationTextObject.text.text = "Multiple game instances on a single computer playing multiplayer is not allowed";
+					GameManager.Instance.StopCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
+					NetworkManager.Instance.StartCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
 				}
 				else
 				{
-					GameManager.GetSingleton<OnlineBattle>().OnDestroy ();
-					GameManager.GetSingleton<NetworkManager>().notificationTextObject.text.text = GameManager.GetSingleton<OnlineBattle>().isNotWaitingForAnotherPlayerText;
-					GameManager.GetSingleton<GameManager>().StopCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
-					GameManager.GetSingleton<NetworkManager>().StartCoroutine(GameManager.GetSingleton<NetworkManager>().notificationTextObject.DisplayRoutine ());
+					OnlineBattle.Instance.OnDestroy ();
+					NetworkManager.Instance.notificationTextObject.text.text = OnlineBattle.Instance.isNotWaitingForAnotherPlayerText;
+					GameManager.Instance.StopCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
+					NetworkManager.Instance.StartCoroutine(NetworkManager.Instance.notificationTextObject.DisplayRoutine ());
 				}
 			}
 		}
@@ -132,19 +132,19 @@ namespace BMH
 		public virtual void OpenDeleteAccountScreen ()
 		{
 			ArchivesManager.indexOfCurrentAccountToDelete = trs.parent.parent.parent.parent.parent.parent.parent.parent.parent.GetSiblingIndex() - 1;
-			ArchivesManager.currentAccountToDelete = GameManager.GetSingleton<ArchivesManager>().localAccountsData[ArchivesManager.indexOfCurrentAccountToDelete];
-			GameManager.GetSingleton<ArchivesManager>().deleteAccountText.text = "Delete Account " + ArchivesManager.currentAccountToDelete.username;
-			GameManager.GetSingleton<ArchivesManager>().deleteAccountScreen.SetActive(true);
-			GameManager.GetSingleton<Menus>().enabled = false;
+			ArchivesManager.currentAccountToDelete = ArchivesManager.Instance.localAccountsData[ArchivesManager.indexOfCurrentAccountToDelete];
+			ArchivesManager.Instance.deleteAccountText.text = "Delete Account " + ArchivesManager.currentAccountToDelete.username;
+			ArchivesManager.Instance.deleteAccountScreen.SetActive(true);
+			Menus.Instance.enabled = false;
 		}
 
 		public virtual void OpenAccountInfoScreen ()
 		{
-			ArchivesManager.currentAccountToViewInfo = GameManager.GetSingleton<ArchivesManager>().localAccountsData[trs.parent.parent.parent.GetSiblingIndex()];
-			GameManager.GetSingleton<ArchivesManager>().accountInfoTitleText.text = ArchivesManager.currentAccountToViewInfo.username + " Account Info";
-			GameManager.GetSingleton<ArchivesManager>().accountInfoContentText.text = ArchivesManager.currentAccountToViewInfo.ToString();
-			GameManager.GetSingleton<ArchivesManager>().accountInfoScreen.SetActive(true);
-			GameManager.GetSingleton<Menus>().enabled = false;
+			ArchivesManager.currentAccountToViewInfo = ArchivesManager.Instance.localAccountsData[trs.parent.parent.parent.GetSiblingIndex()];
+			ArchivesManager.Instance.accountInfoTitleText.text = ArchivesManager.currentAccountToViewInfo.username + " Account Info";
+			ArchivesManager.Instance.accountInfoContentText.text = ArchivesManager.currentAccountToViewInfo.ToString();
+			ArchivesManager.Instance.accountInfoScreen.SetActive(true);
+			Menus.Instance.enabled = false;
 		}
 
 		public virtual void AssignAccountToPlayer1 ()
@@ -157,7 +157,7 @@ namespace BMH
 				ArchivesManager.player2AccountData = null;
 			}
 			ArchivesManager.player1AccountAssigner = this;
-			ArchivesManager.player1AccountData = GameManager.GetSingleton<ArchivesManager>().localAccountsData[trs.parent.parent.parent.parent.parent.parent.parent.parent.parent.GetSiblingIndex() - 1];
+			ArchivesManager.player1AccountData = ArchivesManager.Instance.localAccountsData[trs.parent.parent.parent.parent.parent.parent.parent.parent.parent.GetSiblingIndex() - 1];
 			enabled = false;
 		}
 
@@ -171,7 +171,7 @@ namespace BMH
 				ArchivesManager.player1AccountData = null;
 			}
 			ArchivesManager.player2AccountAssigner = this;
-			ArchivesManager.player2AccountData = GameManager.GetSingleton<ArchivesManager>().localAccountsData[trs.parent.parent.parent.parent.parent.parent.parent.parent.parent.GetSiblingIndex() - 1];
+			ArchivesManager.player2AccountData = ArchivesManager.Instance.localAccountsData[trs.parent.parent.parent.parent.parent.parent.parent.parent.parent.GetSiblingIndex() - 1];
 			enabled = false;
 		}
 
@@ -182,9 +182,9 @@ namespace BMH
 
 		public virtual IEnumerator ContinousManageAccountRoutine ()
 		{
-			while (GameManager.GetSingleton<Menus>().currentMenu.trs.parent.parent == trs)
+			while (Menus.Instance.currentMenu.trs.parent.parent == trs)
 			{
-				GameManager.GetSingleton<Menus>().currentMenu.description = "Manage Account " + ArchivesManager.LocalAccountNames[trs.parent.parent.parent.GetSiblingIndex() - 1];
+				Menus.Instance.currentMenu.description = "Manage Account " + ArchivesManager.LocalAccountNames[trs.parent.parent.parent.GetSiblingIndex() - 1];
 				yield return new WaitForEndOfFrame();
 			}
 		}

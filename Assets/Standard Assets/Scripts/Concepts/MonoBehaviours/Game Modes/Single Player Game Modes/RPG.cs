@@ -19,10 +19,10 @@ namespace BMH
 				return;
 #endif
 			base.Awake ();
-			// GameManager.GetSingleton<SaveAndLoadManager>().Load ();
+			// SaveAndLoadManager.Instance.Load ();
 			Boss[] bosses = FindObjectsOfType<Boss>();
 			foreach (Boss boss in bosses)
-				boss.OnTriggerExit2D (GameManager.GetSingleton<HumanPlayer>().body.collider);
+				boss.OnTriggerExit2D (HumanPlayer.Instance.body.collider);
 		}
 
 // #if UNITY_EDITOR
@@ -39,7 +39,7 @@ namespace BMH
 		public override void DoUpdate ()
 		{
 			base.DoUpdate ();
-			GameManager.GetSingleton<CameraScript>().trs.position = GameManager.GetSingleton<HumanPlayer>().lengthVisualizerTrs.position.SetZ(GameManager.GetSingleton<CameraScript>().trs.position.z);
+			CameraScript.Instance.trs.position = HumanPlayer.Instance.lengthVisualizerTrs.position.SetZ(CameraScript.Instance.trs.position.z);
 		}
 
 		public virtual void SetScore (int amount)

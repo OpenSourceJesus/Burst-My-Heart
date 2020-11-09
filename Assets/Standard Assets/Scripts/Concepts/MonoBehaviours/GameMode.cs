@@ -5,7 +5,7 @@ namespace BMH
 {
 	// //[ExecuteAlways]
 	[DisallowMultipleComponent]
-	public class GameMode : MonoBehaviour, IUpdatable
+	public class GameMode : SingletonMonoBehaviour<GameMode>, IUpdatable
 	{
 		public GameObject pauseInstructionsObj;
 		public bool HasPaused
@@ -26,7 +26,7 @@ namespace BMH
 		{
 			get
 			{
-				return GameManager.GetSingleton<OnlineBattle>() == null;
+				return OnlineBattle.Instance == null;
 			}
 		}
 

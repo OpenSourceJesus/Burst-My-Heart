@@ -8,7 +8,7 @@ using System;
 
 namespace BMH
 {
-	public class NetworkManager : MonoBehaviour
+	public class NetworkManager : SingletonMonoBehaviour<NetworkManager>
 	{
 		public static Connection connection;
 		public static Client client;

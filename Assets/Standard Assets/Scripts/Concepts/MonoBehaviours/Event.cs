@@ -35,7 +35,7 @@ namespace BMH
 		{
 			get
 			{
-				return GameManager.GetSingleton<OnlineBattle>() == null;
+				return OnlineBattle.Instance == null;
 			}
 		}
 
@@ -141,7 +141,7 @@ namespace BMH
 		public virtual void DestroyMe ()
 		{
 			if (OnlineBattle.isPlaying && OnlinePlayer.localPlayer.playerId == OnlineBattle.playerIdsDict.GetKey(0))
-				NetworkManager.connection.Send("Event Done", GameManager.GetSingleton<OnlineBattle>().events.IndexOf(this));
+				NetworkManager.connection.Send("Event Done", OnlineBattle.Instance.events.IndexOf(this));
 			Destroy (gameObject);
 			isDestroyed = true;
 		}

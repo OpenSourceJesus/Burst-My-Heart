@@ -26,9 +26,9 @@ namespace DialogAndStory
 
 		public virtual void RetryCurrentQuest ()
 		{
-			if (GameManager.GetSingleton<QuestManager>() != this)
+			if (QuestManager.Instance != this)
 			{
-				GameManager.GetSingleton<QuestManager>().RetryCurrentQuest ();
+				QuestManager.Instance.RetryCurrentQuest ();
 				return;
 			}
 			retryQuestScreen.SetActive(false);
@@ -37,21 +37,21 @@ namespace DialogAndStory
 		
 		public virtual void StopCurrentQuest ()
 		{
-			if (GameManager.GetSingleton<QuestManager>() != this)
+			if (QuestManager.Instance != this)
 			{
-				GameManager.GetSingleton<QuestManager>().StopCurrentQuest ();
+				QuestManager.Instance.StopCurrentQuest ();
 				return;
 			}
 			currentQuest = null;
 			retryQuestScreen.SetActive(false);
-			// GameManager.onGameScenesLoaded -= delegate { GameManager.GetSingleton<QuestManager>().ShowRetryScreen (); };
+			// GameManager.onGameScenesLoaded -= delegate { QuestManager.Instance.ShowRetryScreen (); };
 		}
 
 		public virtual void ShowRetryScreen ()
 		{
-			if (GameManager.GetSingleton<QuestManager>() != this)
+			if (QuestManager.Instance != this)
 			{
-				GameManager.GetSingleton<QuestManager>().ShowRetryScreen ();
+				QuestManager.Instance.ShowRetryScreen ();
 				return;
 			}
 			retryQuestScreen.SetActive(true);
@@ -74,9 +74,9 @@ namespace DialogAndStory
 
 		public virtual void ShowQuestsScreen ()
 		{
-			if (GameManager.GetSingleton<QuestManager>() != this)
+			if (QuestManager.Instance != this)
 			{
-				GameManager.GetSingleton<QuestManager>().ShowQuestsScreen ();
+				QuestManager.Instance.ShowQuestsScreen ();
 				return;
 			}
 			questsScreen.SetActive(true);
@@ -84,9 +84,9 @@ namespace DialogAndStory
 
 		public virtual void HideQuestsScreen ()
 		{
-			if (GameManager.GetSingleton<QuestManager>() != this)
+			if (QuestManager.Instance != this)
 			{
-				GameManager.GetSingleton<QuestManager>().HideQuestsScreen ();
+				QuestManager.Instance.HideQuestsScreen ();
 				return;
 			}
 			questsScreen.SetActive(false);

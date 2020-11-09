@@ -10,7 +10,7 @@ using Utf8Json;
 namespace BMH
 {
 	//[ExecuteAlways]
-	public class SaveAndLoadManager : MonoBehaviour
+	public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
 	{
 		[HideInInspector]
 		public SaveAndLoadObject[] saveAndLoadObjects = new SaveAndLoadObject[0];
@@ -82,7 +82,7 @@ namespace BMH
 			else
 				data.Add(key, Serialize(value, value.GetType()));
 #if UNITY_WEBGL
-			GameManager.GetSingleton<SaveAndLoadManager>().Save ();
+			SaveAndLoadManager.Instance.Save ();
 #endif
 		}
 
@@ -106,9 +106,9 @@ namespace BMH
 		
 		public virtual void Save ()
 		{
-			if (GameManager.GetSingleton<SaveAndLoadManager>() != this)
+			if (SaveAndLoadManager.Instance != this)
 			{
-				GameManager.GetSingleton<SaveAndLoadManager>().Save ();
+				SaveAndLoadManager.Instance.Save ();
 				return;
 			}
 			for (int i = 0; i < savedObjectEntries.Length; i ++)
@@ -125,9 +125,9 @@ namespace BMH
 		
 		public virtual void Load ()
 		{
-			if (GameManager.GetSingleton<SaveAndLoadManager>() != this)
+			if (SaveAndLoadManager.Instance != this)
 			{
-				GameManager.GetSingleton<SaveAndLoadManager>().Load ();
+				SaveAndLoadManager.Instance.Load ();
 				return;
 			}
 			saveAndLoadObjectTypeDict.Clear();
@@ -155,11 +155,11 @@ namespace BMH
 				data.Add(saveFileData[i - 1], saveFileData[i]);
 			for (int i = 0; i < savedObjectEntries.Length; i ++)
 				savedObjectEntries[i].Load ();
-			GameManager.GetSingleton<GameManager>().SetGosActive ();
-			GameManager.GetSingleton<AudioManager>().Awake ();
-			foreach (AccountData accountData in GameManager.GetSingleton<ArchivesManager>().localAccountsData)
+			GameManager.Instance.SetGosActive ();
+			AudioManager.Instance.Awake ();
+			foreach (AccountData accountData in ArchivesManager.Instance.localAccountsData)
 				accountData.UpdateData ();
-			GameManager.GetSingleton<ArchivesManager>().UpdateMenus ();
+			ArchivesManager.Instance.UpdateMenus ();
 		}
 		
 		public class SavedObjectEntry

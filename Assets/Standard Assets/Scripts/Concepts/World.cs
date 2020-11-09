@@ -9,7 +9,7 @@ using UnityEditor;
 namespace BMH
 {
 	[ExecuteInEditMode]
-	public class World : MonoBehaviour, IUpdatable
+	public class World : SingletonMonoBehaviour<World>, IUpdatable
 	{
 		// public Tilemap[] tilemaps;
 		// public Tilemap[] tilemapsIncludedInPieces;
@@ -120,13 +120,13 @@ namespace BMH
 				for (int y = 0; y <= maxPieceLocation.y; y ++)
 				{
 					_piece = pieces[x, y];
-					if (_piece.worldBoundsRect.Contains(GameManager.GetSingleton<HumanPlayer>().body.trs.position.ToVec2Int()))
+					if (_piece.worldBoundsRect.Contains(HumanPlayer.Instance.body.trs.position.ToVec2Int()))
 					{
 						surroundingPieces = GetSurroundingPieces(_piece);
 						foreach (WorldPiece surroundingPiece in surroundingPieces)
 						{
 							loadPieceRangeRect = surroundingPiece.worldBoundsRect.Expand(loadPiecesRange * 2);
-							if (GameManager.GetSingleton<GameCamera>().viewRect.IsIntersecting(loadPieceRangeRect))
+							if (GameCamera.Instance.viewRect.IsIntersecting(loadPieceRangeRect))
 							{
 								piecesNearPlayer.Add(surroundingPiece);
 								activePieces.Add(surroundingPiece);
@@ -151,7 +151,7 @@ namespace BMH
 			{
 				pieceNearPlayer = piecesNearPlayer[i];
 				loadPieceRangeRect = pieceNearPlayer.worldBoundsRect.Expand(loadPiecesRange * 2);
-				pieceShouldBeActive = GameManager.GetSingleton<GameCamera>().viewRect.IsIntersecting(loadPieceRangeRect);
+				pieceShouldBeActive = GameCamera.Instance.viewRect.IsIntersecting(loadPieceRangeRect);
 				if (pieceShouldBeActive)
 				{
 					if (!pieceNearPlayer.gameObject.activeSelf)

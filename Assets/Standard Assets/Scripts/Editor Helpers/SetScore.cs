@@ -10,7 +10,7 @@ namespace BMH
 
 		public virtual void Update ()
 		{
-			GameManager.GetSingleton<SinglePlayerGameMode>().SetScore (score);
+			SinglePlayerGameMode.Instance.SetScore (score);
 		}
 	}
 }

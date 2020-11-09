@@ -88,10 +88,10 @@ namespace BMH
 				offlineData.battleMode.versusHuman.noSwitchingVariant.data[i].accountName = username;
 				offlineData.battleMode.versusHuman.switchPositionsVariant.data[i].accountName = username;
 				offlineData.battleMode.versusHuman.switchControlVariant.data[i].accountName = username;
-				if (i == GameManager.GetSingleton<ArchivesManager>().localAccountsData.IndexOf(this))
+				if (i == ArchivesManager.Instance.localAccountsData.IndexOf(this))
 					opponentNameString = "a human";
 				else
-					opponentNameString = GameManager.GetSingleton<ArchivesManager>().localAccountsData[i].username;
+					opponentNameString = ArchivesManager.Instance.localAccountsData[i].username;
 				offlineData.battleMode.versusHuman.data[i].opponentNameString = opponentNameString;
 				offlineData.battleMode.versusHuman.noSwitchingVariant.data[i].opponentNameString = opponentNameString;
 				offlineData.battleMode.versusHuman.switchPositionsVariant.data[i].opponentNameString = opponentNameString;

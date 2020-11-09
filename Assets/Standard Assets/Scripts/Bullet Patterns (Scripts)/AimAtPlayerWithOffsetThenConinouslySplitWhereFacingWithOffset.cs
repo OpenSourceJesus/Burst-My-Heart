@@ -18,7 +18,7 @@ namespace BMH
 		{
 			Weapon[] output = base.Shoot(spawner, bulletPrefab);
 			foreach (Weapon bullet in output)
-				GameManager.GetSingleton<GameManager>().StartCoroutine(SplitAfterDelay (bullet, splitBulletPrefab, splitDelay, bullet.radius + splitBulletPrefab.radius));
+				GameManager.Instance.StartCoroutine(SplitAfterDelay (bullet, splitBulletPrefab, splitDelay, bullet.radius + splitBulletPrefab.radius));
 			return output;
 		}
 		

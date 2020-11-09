@@ -22,7 +22,7 @@ namespace BMH
 				return;
 #endif
 			base.Awake ();
-			if (GameManager.GetSingleton<War>() != null)
+			if (War.Instance != null)
 			{
 				enabled = false;
 				Destroy(visionCollider);
@@ -70,7 +70,7 @@ namespace BMH
 
 		public override void HandleMovement ()
 		{
-			Move (GameManager.GetSingleton<HumanPlayer>().body.trs.position - body.trs.position);
+			Move (HumanPlayer.Instance.body.trs.position - body.trs.position);
 		}
 
 		public override void OnDestroy ()
@@ -82,7 +82,7 @@ namespace BMH
 			base.OnDestroy ();
 			if (body != null)
 				body.onDeath -= OnDeath;
-			if (GameManager.GetSingleton<War>() != null)
+			if (War.Instance != null)
 				awakenTimer.onFinished -= Awaken;
 		}
 

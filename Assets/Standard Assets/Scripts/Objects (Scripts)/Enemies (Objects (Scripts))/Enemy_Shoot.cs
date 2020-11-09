@@ -57,7 +57,7 @@ namespace BMH
 			if (isTrap)
 				return;
 			base.DoUpdate ();
-			body.trs.up = GameManager.GetSingleton<HumanPlayer>().body.trs.position - body.trs.position;
+			body.trs.up = HumanPlayer.Instance.body.trs.position - body.trs.position;
 		}
 
 		public virtual void _Shoot (params object[] args)
@@ -87,10 +87,10 @@ namespace BMH
 
 		public override void HandleMovement ()
 		{
-			if (Vector2.Distance(GameManager.GetSingleton<HumanPlayer>().body.trs.position, body.trs.position) < stopDist)
-				Move (body.trs.position - GameManager.GetSingleton<HumanPlayer>().body.trs.position);
+			if (Vector2.Distance(HumanPlayer.Instance.body.trs.position, body.trs.position) < stopDist)
+				Move (body.trs.position - HumanPlayer.Instance.body.trs.position);
 			else
-				Move (GameManager.GetSingleton<HumanPlayer>().body.trs.position - body.trs.position);
+				Move (HumanPlayer.Instance.body.trs.position - body.trs.position);
 		}
 
 		public override void UpdateGraphics ()

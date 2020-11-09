@@ -7,6 +7,16 @@ namespace BMH
 	[DisallowMultipleComponent]
     public class OnlineArena : Area
     {
+		public new static OnlineArena instance;
+		public new static OnlineArena Instance
+		{
+			get
+			{
+				if (instance == null)
+					instance = FindObjectOfType<OnlineArena>();
+				return instance;
+			}
+		}
     	public int areaPerPlayer;
     	public float lerpRate;
 		public float noSpawnBorder;

@@ -61,12 +61,12 @@ namespace BMH
 		[MenuItem("Build/Make Builds")]
 		public static void Build ()
 		{
-			GameManager.GetSingleton<BuildManager>()._Build ();
+			BuildManager.Instance._Build ();
 		}
 
 		public virtual void _Build ()
 		{
-			GameManager.GetSingleton<BuildManager>().versionIndex ++;
+			BuildManager.Instance.versionIndex ++;
 			foreach (BuildAction buildAction in buildActions)
 			{
 				if (buildAction.enabled)
@@ -90,11 +90,11 @@ namespace BMH
 			
 			public virtual void Do ()
 			{
-				GameManager.GetSingleton<BuildManager>().clearDataOnFirstStartup = clearDataOnFirstStartup;
-				if (GameManager.GetSingleton<BuildManager>().versionNumberText != null)
-					GameManager.GetSingleton<BuildManager>().versionNumberText.text = GameManager.GetSingleton<BuildManager>().versionNumberPrefix + DateTime.Now.Date.ToString("MMdd");
-				if (GameManager.GetSingleton<ConfigurationManager>() != null)
-					GameManager.GetSingleton<ConfigurationManager>().canvas.gameObject.SetActive(false);
+				BuildManager.Instance.clearDataOnFirstStartup = clearDataOnFirstStartup;
+				if (BuildManager.Instance.versionNumberText != null)
+					BuildManager.Instance.versionNumberText.text = BuildManager.Instance.versionNumberPrefix + DateTime.Now.Date.ToString("MMdd");
+				if (ConfigurationManager.Instance != null)
+					ConfigurationManager.Instance.canvas.gameObject.SetActive(false);
 				EditorSceneManager.MarkAllScenesDirty();
 				EditorSceneManager.SaveOpenScenes();
 				buildOptions = new BuildPlayerOptions();
@@ -104,8 +104,8 @@ namespace BMH
 				foreach (BuildOptions option in options)
 					buildOptions.options |= option;
 				BuildPipeline.BuildPlayer(buildOptions);
-				if (GameManager.GetSingleton<ConfigurationManager>() != null)
-					GameManager.GetSingleton<ConfigurationManager>().canvas.gameObject.SetActive(true);
+				if (ConfigurationManager.Instance != null)
+					ConfigurationManager.Instance.canvas.gameObject.SetActive(true);
 				AssetDatabase.Refresh();
 				if (moveCrashHandler)
 				{

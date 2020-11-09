@@ -5,6 +5,16 @@ using BMH;
 
 public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
 {
+	public static T instance;
+	public static T Instance
+	{
+		get
+		{
+			if (instance == null)
+				instance = FindObjectOfType<T>();
+			return instance;
+		}
+	}
 	public MultipleInstancesHandlingType handleMultipleInstances;
 	public bool persistant;
 	
@@ -14,7 +24,7 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
 		if (!Application.isPlaying)
 			return;
 #endif
-		if (handleMultipleInstances != MultipleInstancesHandlingType.KeepAll && GameManager.GetSingleton<T>() != null && GameManager.GetSingleton<T>() != this)
+		if (handleMultipleInstances != MultipleInstancesHandlingType.KeepAll && Instance != null && instance != this)
 		{
 			if (handleMultipleInstances == MultipleInstancesHandlingType.DestroyNew)
 			{
@@ -22,7 +32,7 @@ public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
 				return;
 			}
 			else
-				Destroy(GameManager.GetSingleton<T>().gameObject);
+				Destroy(instance.gameObject);
 		}
 		if (persistant)
 			DontDestroyOnLoad(gameObject);

@@ -75,16 +75,16 @@ namespace BMH
 				if (!quest.IsComplete)
 					quest.IsActive = true;
 			}
-			// GameManager.GetSingleton<Player>().AddMoney (moneyReward);
+			// Player.Instance.AddMoney (moneyReward);
 			// SkipManager.Skips += skipsReward;
 			IsActive = false;
-			GameManager.GetSingleton<GameManager>().DeactivateGoForever (gameObject);
-			GameManager.GetSingleton<SaveAndLoadManager>().Save ();
+			GameManager.Instance.DeactivateGoForever (gameObject);
+			SaveAndLoadManager.Instance.Save ();
 		}
 
 		public virtual void OnFail (params object[] args)
 		{
-			// GameManager.GetSingleton<QuestManager>().ShowRetryScreen ();
+			// QuestManager.Instance.ShowRetryScreen ();
 		}
 
 		public virtual void OnDestroy ()
@@ -95,7 +95,7 @@ namespace BMH
 		public virtual void OnActivate ()
 		{
 			// QuestManager.activeQuests = QuestManager.activeQuests.Add(this);
-			GameManager.GetSingleton<GameManager>().ActivateGoForever (gameObject);
+			GameManager.Instance.ActivateGoForever (gameObject);
 		}
 
 		public virtual void Begin ()
@@ -103,7 +103,7 @@ namespace BMH
 			if (!CanBegin)
 				return;
 			// if (startPoint != null)
-				// GameManager.GetSingleton<Player>().trs.position = GameManager.GetSingleton<Player>().unrotatedColliderRectOnOrigin.AnchorToPoint(startPoint.trs.position, startPoint.anchorPoint).center;
+				// Player.Instance.trs.position = Player.Instance.unrotatedColliderRectOnOrigin.AnchorToPoint(startPoint.trs.position, startPoint.anchorPoint).center;
 			failTimer.Reset ();
 			failTimer.Start ();
 			// QuestManager.currentQuest = this;

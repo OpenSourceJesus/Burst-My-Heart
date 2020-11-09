@@ -111,30 +111,30 @@ namespace BMH
 			if (defeated)
 				return;
 			defeated = true;
-			GameManager.GetSingleton<RPG>().AddScore (difficulty);
+			RPG.Instance.AddScore (difficulty);
 			foreach (Enemy_Follow enemy in enemies)
 				enemy.visionVisualizer.color = defeatedColor;
-			GameManager.GetSingleton<HumanPlayer>().nameOfEnemyGroupImInside = null;
-			GameManager.GetSingleton<SaveAndLoadManager>().Save ();
+			HumanPlayer.Instance.nameOfEnemyGroupImInside = null;
+			SaveAndLoadManager.Instance.Save ();
 		}
 
 		public virtual void OnTriggerEnter2D (Collider2D other)
 		{
-			if (other.gameObject != GameManager.GetSingleton<HumanPlayer>().body.gameObject || !enabled)
+			if (other.gameObject != HumanPlayer.Instance.body.gameObject || !enabled)
 				return;
 			duplicate = Instantiate(trs, trs.parent);
 			duplicate.gameObject.SetActive(false);
 			compositeCollider2D.generationType = CompositeCollider2D.GenerationType.Manual;
 			foreach (Enemy_Follow enemy in enemies)
 				enemy.enabled = true;
-			GameManager.GetSingleton<HumanPlayer>().nameOfEnemyGroupImInside = name.Replace("(Clone)", "");
-			// if (GameManager.GetSingleton<SaveAndLoadManager>() != null)
-				GameManager.GetSingleton<SaveAndLoadManager>().Save ();
+			HumanPlayer.Instance.nameOfEnemyGroupImInside = name.Replace("(Clone)", "");
+			// if (SaveAndLoadManager.Instance != null)
+				SaveAndLoadManager.Instance.Save ();
 		}
 
 		public virtual void OnTriggerExit2D (Collider2D other)
 		{
-			if (other != GameManager.GetSingleton<HumanPlayer>().body.collider || !enabled)
+			if (other != HumanPlayer.Instance.body.collider || !enabled)
 				return;
 			Destroy(trs.gameObject);
 			duplicate.gameObject.SetActive(true);

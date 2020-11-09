@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DialogAndStory
 {
-	public class DialogManager : MonoBehaviour
+	public class DialogManager : SingletonMonoBehaviour<DialogManager>
 	{
 		public static Conversation currentConversation;
 

@@ -57,7 +57,7 @@ namespace BMH
 			partTimer.onFinished -= OnEndOfPart;
 			Weapon[] bullets = GetComponentsInChildren<Weapon>();
 			foreach (Weapon bullet in bullets)
-				GameManager.GetSingleton<ObjectPool>().Despawn (bullet.prefabIndex, bullet.gameObject, bullet.trs);
+				ObjectPool.Instance.Despawn (bullet.prefabIndex, bullet.gameObject, bullet.trs);
 		}
 
 		public override void DoUpdate ()
@@ -95,14 +95,14 @@ namespace BMH
 
 		public virtual void OnTriggerEnter2D (Collider2D other)
 		{
-			if (other.gameObject != GameManager.GetSingleton<HumanPlayer>().body.gameObject)
+			if (other.gameObject != HumanPlayer.Instance.body.gameObject)
 				return;
 			enabled = true;
 		}
 
 		public virtual void OnTriggerExit2D (Collider2D other)
 		{
-			if (other.gameObject != GameManager.GetSingleton<HumanPlayer>().body.gameObject)
+			if (other.gameObject != HumanPlayer.Instance.body.gameObject)
 				return;
 			Destroy(gameObject);
 			if (isDead)

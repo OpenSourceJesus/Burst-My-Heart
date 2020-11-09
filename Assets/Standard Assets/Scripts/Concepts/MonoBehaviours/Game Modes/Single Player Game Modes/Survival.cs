@@ -12,6 +12,16 @@ namespace BMH
 	[DisallowMultipleComponent]
 	public class Survival : SinglePlayerGameMode
 	{
+		public new static Survival instance;
+		public new static Survival Instance
+		{
+			get
+			{
+				if (instance == null)
+					instance = FindObjectOfType<Survival>();
+				return instance;
+			}
+		}
 		public EnemyEntry[] enemyEntries;
 		public int deathPenalty = 20;
 		public LayerMask whatEnemiesCantSpawnIn;
@@ -49,7 +59,7 @@ namespace BMH
 					}
 				}
 			}
-			Player.players = new Player[] { GameManager.GetSingleton<HumanPlayer>() };
+			Player.players = new Player[] { HumanPlayer.Instance };
 		}
 		
 		public override void DoUpdate ()
@@ -63,7 +73,7 @@ namespace BMH
 			Vector2 spawnPosition = new Vector2();
 			do
 			{
-				spawnPosition = Random.insideUnitCircle * (GameManager.GetSingleton<Area>().trs.localScale.x / 2 - enemy.radius);
+				spawnPosition = Random.insideUnitCircle * (Area.Instance.trs.localScale.x / 2 - enemy.radius);
 			}
 			while (Physics2D.OverlapCircle(spawnPosition, enemy.radius, whatEnemiesCantSpawnIn) != null);
 			Instantiate(enemy, spawnPosition, Quaternion.identity);

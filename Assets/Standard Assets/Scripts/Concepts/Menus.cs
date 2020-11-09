@@ -139,9 +139,9 @@ namespace BMH
 					menu.trs.rotation = Quaternion.Slerp(menu.trs.rotation, Quaternion.Euler(Vector3.forward * 360f / menu.trs.childCount * menu.currentSelection), slerpRate * Time.deltaTime);
 			}
 			input = GetInput();
-			if (Mathf.Abs(input.y) > GameManager.GetSingleton<InputManager>().joystickDeadzone)
+			if (Mathf.Abs(input.y) > InputManager.Instance.joystickDeadzone)
 			{
-				if (Mathf.Abs(prevVerticalAxis) <= GameManager.GetSingleton<InputManager>().joystickDeadzone)
+				if (Mathf.Abs(prevVerticalAxis) <= InputManager.Instance.joystickDeadzone)
 				{
 					repeatTimer = -repeatDelay;
 					ChangeSelectionVertical ((int) Mathf.Sign(input.y));
@@ -156,9 +156,9 @@ namespace BMH
 					}
 				}
 			}
-			GameManager.GetSingleton<CameraScript>().trs.position = Vector3.Lerp(GameManager.GetSingleton<CameraScript>().trs.position, currentMenu.trs.position + cameraOffset, cameraLerpRate * Time.deltaTime);
-			GameManager.GetSingleton<CameraScript>().trs.eulerAngles = cameraRota;
-			GameManager.GetSingleton<CameraScript>().trs.GetChild(0).gameObject.SetActive(true);
+			CameraScript.Instance.trs.position = Vector3.Lerp(CameraScript.Instance.trs.position, currentMenu.trs.position + cameraOffset, cameraLerpRate * Time.deltaTime);
+			CameraScript.Instance.trs.eulerAngles = cameraRota;
+			CameraScript.Instance.trs.GetChild(0).gameObject.SetActive(true);
 			float descriptionTextMeshColorAlpha = descriptionTextMesh.color.a;
 			if (descriptionTextMeshColorAlpha <= minDescriptionTextMeshColorAlpha)
 			{
@@ -167,7 +167,7 @@ namespace BMH
 			}
 			descriptionTextMeshColorAlpha = Mathf.Lerp(descriptionTextMeshColorAlpha, desiredDescriptionAlpha, cameraLerpRate * 2 * Time.deltaTime);
 			descriptionTextMesh.color = descriptionTextMesh.color.SetAlpha(descriptionTextMeshColorAlpha);
-			if (Mathf.Abs(input.x) > GameManager.GetSingleton<InputManager>().joystickDeadzone && Mathf.Abs(prevHorizontalAxis) <= GameManager.GetSingleton<InputManager>().joystickDeadzone)
+			if (Mathf.Abs(input.x) > InputManager.Instance.joystickDeadzone && Mathf.Abs(prevHorizontalAxis) <= InputManager.Instance.joystickDeadzone)
 				ChangeSelectionHorizonal ((int) Mathf.Sign(input.x));
 			prevHorizontalAxis = input.x;
 			prevVerticalAxis = input.y;

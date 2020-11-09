@@ -33,13 +33,13 @@ namespace BMH
 		public virtual Weapon[] Shoot (Transform spawner, Weapon bulletPrefab, float positionOffset = 0)
 		{
 			spawner.up = GetShootDirection(spawner);
-			return new Weapon[] {  GameManager.GetSingleton<ObjectPool>().SpawnComponent<Weapon>(bulletPrefab.prefabIndex, spawner.position + spawner.up * positionOffset, Quaternion.LookRotation(Vector3.forward, spawner.up)) };
-			// return new Weapon[] { GameManager.GetSingleton<ObjectPool>().SpawnComponent<Weapon>(bulletPrefab.prefabIndex, spawner.position, Quaternion.LookRotation(Vector3.forward, GetShootDirection(spawner))) };
+			return new Weapon[] {  ObjectPool.Instance.SpawnComponent<Weapon>(bulletPrefab.prefabIndex, spawner.position + spawner.up * positionOffset, Quaternion.LookRotation(Vector3.forward, spawner.up)) };
+			// return new Weapon[] { ObjectPool.Instance.SpawnComponent<Weapon>(bulletPrefab.prefabIndex, spawner.position, Quaternion.LookRotation(Vector3.forward, GetShootDirection(spawner))) };
 		}
 		
 		public virtual Weapon[] Shoot (Vector2 spawnPos, Vector2 direction, Weapon bulletPrefab, float positionOffset = 0)
 		{
-			return new Weapon[] { GameManager.GetSingleton<ObjectPool>().SpawnComponent<Weapon>(bulletPrefab.prefabIndex, spawnPos + direction.normalized * positionOffset, Quaternion.LookRotation(Vector3.forward, direction)) };
+			return new Weapon[] { ObjectPool.Instance.SpawnComponent<Weapon>(bulletPrefab.prefabIndex, spawnPos + direction.normalized * positionOffset, Quaternion.LookRotation(Vector3.forward, direction)) };
 		}
 		
 		public virtual IEnumerator RetargetAfterDelay (Weapon bullet, float delay)

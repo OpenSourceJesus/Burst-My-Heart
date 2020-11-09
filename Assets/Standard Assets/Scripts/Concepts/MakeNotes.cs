@@ -16,7 +16,7 @@ namespace BMH
 		{
 			get
 			{
-				return GameManager.GetSingleton<OnlineBattle>() == null;
+				return OnlineBattle.Instance == null;
 			}
 		}
 		public NoteGroup[] noteGroups = new NoteGroup[0];
@@ -95,8 +95,8 @@ namespace BMH
 		public virtual float GetNoteFromPosition (Vector2 position)
 		{
 			float output;
-			Vector2 normalizedPosition = (Vector2) GameManager.GetSingleton<Area>().colorGradient2DRenderer.bounds.ToRect().ToNormalizedPosition(position);
-			Color color = GameManager.GetSingleton<Area>().colorGradient2D.Evaluate(normalizedPosition);
+			Vector2 normalizedPosition = (Vector2) Area.Instance.colorGradient2DRenderer.bounds.ToRect().ToNormalizedPosition(position);
+			Color color = Area.Instance.colorGradient2D.Evaluate(normalizedPosition);
 			output = color.r + color.g + color.b;
 			output /= 3;
 			return output;

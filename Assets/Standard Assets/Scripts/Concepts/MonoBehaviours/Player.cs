@@ -7,7 +7,7 @@ namespace BMH
 {
 	//[ExecuteAlways]
 	[DisallowMultipleComponent]
-	public class Player : MonoBehaviour, IUpdatable
+	public class Player : SingletonMonoBehaviour<Player>, IUpdatable
 	{
 		public float autoBalanceMoveSpeedMultiplier;
 		public float defaultMoveSpeedMultiplier;
@@ -237,7 +237,7 @@ namespace BMH
 			}
 			else
 				WinsInARow = Mathf.Clamp(WinsInARow - 1, int.MinValue, -1);
-			int playerNumber = GameManager.GetSingleton<GameManager>().teams.IndexOf(owner);
+			int playerNumber = GameManager.Instance.teams.IndexOf(owner);
 			AccountData accountData = null;
 			AccountData opponentAccountData = null;
 			if (playerNumber == 0)
@@ -245,18 +245,18 @@ namespace BMH
 				accountData = ArchivesManager.player1AccountData;
 				opponentAccountData = ArchivesManager.player2AccountData;
 			}
-			else if (GameManager.GetSingleton<AI>() == null)
+			else if (AI.Instance == null)
 			{
 				accountData = ArchivesManager.player2AccountData;
 				opponentAccountData = ArchivesManager.player1AccountData;
 			}
 			else
 				return;
-			int indexOfAccountData = GameManager.GetSingleton<ArchivesManager>().localAccountsData.IndexOf(accountData);
-			int indexOfOpponentAccountData = GameManager.GetSingleton<ArchivesManager>().localAccountsData.IndexOf(opponentAccountData);
+			int indexOfAccountData = ArchivesManager.Instance.localAccountsData.IndexOf(accountData);
+			int indexOfOpponentAccountData = ArchivesManager.Instance.localAccountsData.IndexOf(opponentAccountData);
 			if (accountData != null)
 			{
-				if (GameManager.GetSingleton<AI>() != null)
+				if (AI.Instance != null)
 				{
 					if (MoveSpeedMultiplier == owner.opponent.representative.MoveSpeedMultiplier)
 					{
@@ -403,7 +403,7 @@ namespace BMH
 						}
 					}
 				}
-				GameManager.GetSingleton<ArchivesManager>().UpdateAccountData (accountData);
+				ArchivesManager.Instance.UpdateAccountData (accountData);
 			}
 		}
 	}

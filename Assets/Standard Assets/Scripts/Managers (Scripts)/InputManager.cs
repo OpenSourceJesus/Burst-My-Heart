@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 namespace BMH
 {
-	public class InputManager : MonoBehaviour, IUpdatable
+	public class InputManager : SingletonMonoBehaviour<InputManager>, IUpdatable
 	{
 		public static Rewired.Player[] inputters = new Rewired.Player[0];
 		public InputDevice[] defaultInputDevices = new InputDevice[0];

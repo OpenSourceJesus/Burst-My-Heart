@@ -59,17 +59,17 @@ namespace BMH
 		#endif
 		public static void MakeConfigFile ()
 		{
-			if (File.Exists(GameManager.GetSingleton<ConfigurationManager>().configFilePath))
-				File.Delete(GameManager.GetSingleton<ConfigurationManager>().configFilePath);
-			fileWriter = File.CreateText(GameManager.GetSingleton<ConfigurationManager>().configFilePath);
+			if (File.Exists(ConfigurationManager.Instance.configFilePath))
+				File.Delete(ConfigurationManager.Instance.configFilePath);
+			fileWriter = File.CreateText(ConfigurationManager.Instance.configFilePath);
 			string[] config;
 			List<string> finishedCategories = new List<string>();
-			foreach (string category in GameManager.GetSingleton<ConfigurationManager>().configurableCatergories.Values)
+			foreach (string category in ConfigurationManager.Instance.configurableCatergories.Values)
 			{
 				if (!finishedCategories.Contains(category))
 				{
 					fileWriter.WriteLine(CATEGORY_SEPERATOR + category + CATEGORY_SEPERATOR);
-					foreach (IConfigurable configurable in GameManager.GetSingleton<ConfigurationManager>().configurableCatergories.Keys)
+					foreach (IConfigurable configurable in ConfigurationManager.Instance.configurableCatergories.Keys)
 					{
 						if (configurable.Category == category)
 						{
@@ -90,11 +90,11 @@ namespace BMH
 		#endif
 		public static void ApplyConfigFile ()
 		{
-			fileReader = File.OpenText(GameManager.GetSingleton<ConfigurationManager>().configFilePath);
-			foreach (string category in GameManager.GetSingleton<ConfigurationManager>().configurableCatergories.Values)
+			fileReader = File.OpenText(ConfigurationManager.Instance.configFilePath);
+			foreach (string category in ConfigurationManager.Instance.configurableCatergories.Values)
 			{
 				fileReader.ReadLine();
-				foreach (IConfigurable configurable in GameManager.GetSingleton<ConfigurationManager>().configurableCatergories.Keys)
+				foreach (IConfigurable configurable in ConfigurationManager.Instance.configurableCatergories.Keys)
 				{
 					if (configurable.Category == category)
 					{

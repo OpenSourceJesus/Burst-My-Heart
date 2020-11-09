@@ -9,7 +9,7 @@ namespace BMH
 	{
 		public override Vector2 GetShootDirection (Transform spawner)
 		{
-			return GameManager.GetSingleton<HumanPlayer>().body.trs.position - spawner.position;
+			return HumanPlayer.Instance.body.trs.position - spawner.position;
 		}
 	}
 }

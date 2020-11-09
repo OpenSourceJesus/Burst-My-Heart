@@ -47,7 +47,7 @@ namespace BMH
 		public virtual void DoUpdate ()
 		{
 			if ((InputManager.inputters[0].GetButtonDown("Interact") || InputManager.inputters[1].GetButtonDown("Interact")) && !WorldMap.isOpen)
-				GameManager.GetSingleton<WorldMap>().Open ();
+				WorldMap.Instance.Open ();
 		}
 
 		public virtual void OnDestroy ()
@@ -68,7 +68,7 @@ namespace BMH
 			WorldMap.playerIsAtObelisk = true;
 			GameManager.updatables = GameManager.updatables.Add(this);
 			Found = true;
-			GameManager.GetSingleton<SaveAndLoadManager>().Save ();
+			SaveAndLoadManager.Instance.Save ();
 		}
 
 		public virtual void OnTriggerExit2D (Collider2D other)

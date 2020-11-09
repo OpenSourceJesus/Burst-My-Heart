@@ -11,7 +11,7 @@ namespace BMH
 
 		public override void HandlePosition ()
 		{
-			trs.position = ((GameManager.GetSingleton<HumanPlayer>().BodyPosition + GameManager.GetSingleton<HumanPlayer>().WeaponPosition) / 2).SetZ(trs.position.z);
+			trs.position = ((HumanPlayer.Instance.BodyPosition + HumanPlayer.Instance.WeaponPosition) / 2).SetZ(trs.position.z);
 			base.HandlePosition ();
 		}
 	}

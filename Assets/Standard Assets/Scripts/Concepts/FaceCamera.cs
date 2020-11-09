@@ -30,7 +30,7 @@ namespace BMH
 			if (!Application.isPlaying)
 				return;
 #endif
-			Vector3 toCamera = GameManager.GetSingleton<CameraScript>().trs.position - trs.position;
+			Vector3 toCamera = CameraScript.Instance.trs.position - trs.position;
 			trs.rotation = Quaternion.LookRotation(transform.forward, new Vector3(toCamera.x * xMultiplier, toCamera.y * yMultiplier, toCamera.z * zMultiplier));
 		}
 	}

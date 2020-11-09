@@ -90,8 +90,8 @@ namespace BMH
 
 		public static void ShowPieces (bool show)
 		{
-			GameManager.GetSingleton<World>().SetPieces ();
-			foreach (WorldPiece worldPiece in GameManager.GetSingleton<World>().piecesDict.Values)
+			World.Instance.SetPieces ();
+			foreach (WorldPiece worldPiece in World.Instance.piecesDict.Values)
 				worldPiece.gameObject.SetActive(show);
 			piecesAreShown = show;
 		}
@@ -101,7 +101,7 @@ namespace BMH
 			Transform sceneRoot = GameObject.Find("Test Scene").GetComponent<Transform>();
 			for (int i = 0; i < sceneRoot.childCount; i ++)
 			{
-				// foreach (Tilemap tilemap in GameManager.GetSingleton<World>().tilemapsIncludedInPieces)
+				// foreach (Tilemap tilemap in World.Instance.tilemapsIncludedInPieces)
 				// 	tilemap.gameObject.SetActive(active);
 				ObjectInWorld worldObject = sceneRoot.GetChild(i).GetComponent<ObjectInWorld>();
 				if (worldObject != null && worldObject.enabled)
@@ -112,40 +112,40 @@ namespace BMH
 
 		public static void SetPiecesActive (bool active)
 		{
-			GameManager.GetSingleton<World>().piecesParent.gameObject.SetActive(active);
+			World.Instance.piecesParent.gameObject.SetActive(active);
 			piecesAreActive = active;
 		}
 
 		public static void UseEnemyGroupsOfWorld ()
 		{
-			for (int i = 0; i < GameManager.GetSingleton<World>().enemyGroups.Length; i ++)
+			for (int i = 0; i < World.Instance.enemyGroups.Length; i ++)
 			{
-				for (int i2 = 0; i2 < GameManager.GetSingleton<World>().enemyGroups[i].enemies.Length; i2 ++)
+				for (int i2 = 0; i2 < World.Instance.enemyGroups[i].enemies.Length; i2 ++)
 				{
-					if (GameManager.GetSingleton<World>().enemyGroups[i].enemies[i2].GetComponent<ObjectInWorld>().IsInPieces)
-						GameManager.GetSingleton<World>().enemyGroups[i].enemies[i2] = GameManager.GetSingleton<World>().enemyGroups[i].enemies[i2].GetComponent<ObjectInWorld>().duplicateGo.GetComponent<Enemy_Follow>();
+					if (World.Instance.enemyGroups[i].enemies[i2].GetComponent<ObjectInWorld>().IsInPieces)
+						World.Instance.enemyGroups[i].enemies[i2] = World.Instance.enemyGroups[i].enemies[i2].GetComponent<ObjectInWorld>().duplicateGo.GetComponent<Enemy_Follow>();
 				}
-				// for (int i2 = 0; i2 < GameManager.GetSingleton<World>().enemyGroups[i].awakableEnemies.Length; i2 ++)
+				// for (int i2 = 0; i2 < World.Instance.enemyGroups[i].awakableEnemies.Length; i2 ++)
 				// {
-				// 	if (GameManager.GetSingleton<World>().enemyGroups[i].awakableEnemies[i2].GetComponent<ObjectInWorld>().IsInPieces)
-				// 		GameManager.GetSingleton<World>().enemyGroups[i].awakableEnemies[i2] = GameManager.GetSingleton<World>().enemyGroups[i].awakableEnemies[i2].GetComponent<ObjectInWorld>().duplicateGo.GetComponent<AwakableEnemy>();
+				// 	if (World.Instance.enemyGroups[i].awakableEnemies[i2].GetComponent<ObjectInWorld>().IsInPieces)
+				// 		World.Instance.enemyGroups[i].awakableEnemies[i2] = World.Instance.enemyGroups[i].awakableEnemies[i2].GetComponent<ObjectInWorld>().duplicateGo.GetComponent<AwakableEnemy>();
 				// }
 			}
 		}
 
 		public static void UseEnemyGroupsOfPieces ()
 		{
-			for (int i = 0; i < GameManager.GetSingleton<World>().enemyGroups.Length; i ++)
+			for (int i = 0; i < World.Instance.enemyGroups.Length; i ++)
 			{
-				for (int i2 = 0; i2 < GameManager.GetSingleton<World>().enemyGroups[i].enemies.Length; i2 ++)
+				for (int i2 = 0; i2 < World.Instance.enemyGroups[i].enemies.Length; i2 ++)
 				{
-					if (!GameManager.GetSingleton<World>().enemyGroups[i].enemies[i2].GetComponent<ObjectInWorld>().IsInPieces)
-						GameManager.GetSingleton<World>().enemyGroups[i].enemies[i2] = GameManager.GetSingleton<World>().enemyGroups[i].enemies[i2].GetComponent<ObjectInWorld>().duplicateGo.GetComponent<Enemy_Follow>();
+					if (!World.Instance.enemyGroups[i].enemies[i2].GetComponent<ObjectInWorld>().IsInPieces)
+						World.Instance.enemyGroups[i].enemies[i2] = World.Instance.enemyGroups[i].enemies[i2].GetComponent<ObjectInWorld>().duplicateGo.GetComponent<Enemy_Follow>();
 				}
-				// for (int i2 = 0; i2 < GameManager.GetSingleton<World>().enemyGroups[i].awakableEnemies.Length; i2 ++)
+				// for (int i2 = 0; i2 < World.Instance.enemyGroups[i].awakableEnemies.Length; i2 ++)
 				// {
-				// 	if (!GameManager.GetSingleton<World>().enemyGroups[i].awakableEnemies[i2].GetComponent<ObjectInWorld>().IsInPieces)
-				// 		GameManager.GetSingleton<World>().enemyGroups[i].awakableEnemies[i2] = GameManager.GetSingleton<World>().enemyGroups[i].awakableEnemies[i2].GetComponent<ObjectInWorld>().duplicateGo.GetComponent<AwakableEnemy>();
+				// 	if (!World.Instance.enemyGroups[i].awakableEnemies[i2].GetComponent<ObjectInWorld>().IsInPieces)
+				// 		World.Instance.enemyGroups[i].awakableEnemies[i2] = World.Instance.enemyGroups[i].awakableEnemies[i2].GetComponent<ObjectInWorld>().duplicateGo.GetComponent<AwakableEnemy>();
 				// }
 			}
 		}
@@ -153,8 +153,8 @@ namespace BMH
 		[MenuItem("World/Update enemy battles")]
 		public static void UpdateEnemyGroups ()
 		{
-			GameManager.GetSingleton<World>().enemyGroups = FindObjectsOfType<EnemyGroup>();
-			// foreach (EnemyGroup enemyGroup in GameManager.GetSingleton<World>().enemyGroups)
+			World.Instance.enemyGroups = FindObjectsOfType<EnemyGroup>();
+			// foreach (EnemyGroup enemyGroup in World.Instance.enemyGroups)
 			// {
 				// foreach (Enemy enemy in enemyGroup.enemies)
 					// enemy.battleIAmPartOf = enemyBattle;
@@ -174,32 +174,32 @@ namespace BMH
 			Vector2 worldBoundsMin;
 			Vector2 worldBoundsMax;
 			List<ObjectInWorld> worldObjects = new List<ObjectInWorld>();
-			worldObjects.AddRange(GameManager.GetSingleton<World>().worldObjects);
-			for (int x = GameManager.GetSingleton<World>().cellBoundsRect.xMin; x < GameManager.GetSingleton<World>().cellBoundsRect.xMax; x += GameManager.GetSingleton<World>().sizeOfPieces.x)
+			worldObjects.AddRange(World.Instance.worldObjects);
+			for (int x = World.Instance.cellBoundsRect.xMin; x < World.Instance.cellBoundsRect.xMax; x += World.Instance.sizeOfPieces.x)
 			{
 				pieceLocation.y = 0;
-				for (int y = GameManager.GetSingleton<World>().cellBoundsRect.yMin; y < GameManager.GetSingleton<World>().cellBoundsRect.yMax; y += GameManager.GetSingleton<World>().sizeOfPieces.y)
+				for (int y = World.Instance.cellBoundsRect.yMin; y < World.Instance.cellBoundsRect.yMax; y += World.Instance.sizeOfPieces.y)
 				{
-					piece = (WorldPiece) PrefabUtility.InstantiatePrefab(GameManager.GetSingleton<World>().piecePrefab);
-					piece.trs.SetParent(GameManager.GetSingleton<World>().piecesParent);
+					piece = (WorldPiece) PrefabUtility.InstantiatePrefab(World.Instance.piecePrefab);
+					piece.trs.SetParent(World.Instance.piecesParent);
 					piece.location = pieceLocation;
 					piece.name += "[" + pieceLocation + "]";
 					cellBoundsMin = new Vector2Int(x, y);
-					cellBoundsMax = new Vector2Int(Mathf.Clamp(x + GameManager.GetSingleton<World>().sizeOfPieces.x, GameManager.GetSingleton<World>().cellBoundsRect.xMin, GameManager.GetSingleton<World>().cellBoundsRect.xMax), Mathf.Clamp(y + GameManager.GetSingleton<World>().sizeOfPieces.y, GameManager.GetSingleton<World>().cellBoundsRect.yMin, GameManager.GetSingleton<World>().cellBoundsRect.yMax));
+					cellBoundsMax = new Vector2Int(Mathf.Clamp(x + World.Instance.sizeOfPieces.x, World.Instance.cellBoundsRect.xMin, World.Instance.cellBoundsRect.xMax), Mathf.Clamp(y + World.Instance.sizeOfPieces.y, World.Instance.cellBoundsRect.yMin, World.Instance.cellBoundsRect.yMax));
 					worldBoundsMin = cellBoundsMin;
 					worldBoundsMax = cellBoundsMax;
 					piece.cellBoundsRect = new RectInt();
 					piece.cellBoundsRect.SetMinMax(cellBoundsMin, cellBoundsMax);
-					// worldBoundsMin = GameManager.GetSingleton<World>().tilemapsIncludedInPieces[0].GetCellCenterWorld(cellBoundsMin.ToVec3Int()) - (GameManager.GetSingleton<World>().tilemapsIncludedInPieces[0].cellSize / 2);
-					// worldBoundsMax = GameManager.GetSingleton<World>().tilemapsIncludedInPieces[0].GetCellCenterWorld(cellBoundsMax.ToVec3Int()) + (GameManager.GetSingleton<World>().tilemapsIncludedInPieces[0].cellSize / 2);
+					// worldBoundsMin = World.Instance.tilemapsIncludedInPieces[0].GetCellCenterWorld(cellBoundsMin.ToVec3Int()) - (World.Instance.tilemapsIncludedInPieces[0].cellSize / 2);
+					// worldBoundsMax = World.Instance.tilemapsIncludedInPieces[0].GetCellCenterWorld(cellBoundsMax.ToVec3Int()) + (World.Instance.tilemapsIncludedInPieces[0].cellSize / 2);
 					piece.worldBoundsRect = Rect.MinMaxRect(worldBoundsMin.x, worldBoundsMin.y, worldBoundsMax.x, worldBoundsMax.y);
 					// if (makeTilemaps)
 					// {
-					// 	piece.tilemaps = new Tilemap[GameManager.GetSingleton<World>().tilemapsIncludedInPieces.Length];
+					// 	piece.tilemaps = new Tilemap[World.Instance.tilemapsIncludedInPieces.Length];
 					// 	for (int i = 0; i < piece.tilemaps.Length; i ++)
 					// 	{
-					// 		GameObject newTilemapGo = (GameObject) PrefabUtility.InstantiatePrefab(GameManager.GetSingleton<GameManager>().emptyGoPrefab);
-					// 		Tilemap worldTilemap = GameManager.GetSingleton<World>().tilemapsIncludedInPieces[i];
+					// 		GameObject newTilemapGo = (GameObject) PrefabUtility.InstantiatePrefab(GameManager.Instance.emptyGoPrefab);
+					// 		Tilemap worldTilemap = World.Instance.tilemapsIncludedInPieces[i];
 					// 		GameObject worldTilemapGo = worldTilemap.gameObject;
 					// 		List<AddedGameObject> addedGos = PrefabUtility.GetAddedGameObjects(worldTilemapGo);
 					// 		List<AddedComponent> addedComponents = PrefabUtility.GetAddedComponents(worldTilemapGo);
@@ -247,7 +247,7 @@ namespace BMH
 					// 		}
 					// 		if (propertyModifications.Length > 0)
 					// 			PrefabUtility.SetPropertyModifications(newTilemapGo, propertyModifications);
-					// 		// foreach (MonoBehaviour dontPreserveScript in GameManager.GetSingleton<World>().dontPreserveScripts)
+					// 		// foreach (MonoBehaviour dontPreserveScript in World.Instance.dontPreserveScripts)
 					// 		// {
 					// 		//     if (piece.tilemaps[i].GetComponent(dontPreserveScript.name) != null)
 					// 		//         DestroyImmediate(piece.tilemaps[i].GetComponent(dontPreserveScript.name));
@@ -280,7 +280,7 @@ namespace BMH
 								originalWorldObject.duplicateTrs = newWorldObject.trs;
 								originalWorldObject.duplicateGo = newWorldObject.go;
 								originalWorldObject.duplicateWorldObject = newWorldObject;
-								// foreach (MonoBehaviour dontPreserveScript in GameManager.GetSingleton<World>().dontPreserveScripts)
+								// foreach (MonoBehaviour dontPreserveScript in World.Instance.dontPreserveScripts)
 								// {
 								//     if (newWorldObject.GetComponent(dontPreserveScript.name) != null)
 								//         DestroyImmediate(newWorldObject.GetComponent(dontPreserveScript.name));
@@ -306,7 +306,7 @@ namespace BMH
 			}
 			ObjectInWorld firstEnemyWorldObject;
 			ObjectInWorld otherEnemyWorldObject;
-			foreach (EnemyGroup enemyBattle in GameManager.GetSingleton<World>().enemyGroups)
+			foreach (EnemyGroup enemyBattle in World.Instance.enemyGroups)
 			{
 				firstEnemyWorldObject = enemyBattle.enemies[0].worldObject;
 				if (!firstEnemyWorldObject.IsInPieces && firstEnemyWorldObject.duplicateWorldObject != null)
@@ -323,7 +323,7 @@ namespace BMH
 				}
 			}
 			ObjectInWorld worldObject;
-			// foreach (MoveTile moveTile in GameManager.GetSingleton<World>().moveTiles)
+			// foreach (MoveTile moveTile in World.Instance.moveTiles)
 			// {
 			// 	worldObject = moveTile.worldObject;
 			// 	if (!moveTile.worldObject.IsInPieces)
@@ -331,7 +331,7 @@ namespace BMH
 			// 	foreach (Transform wayPoint in moveTile.wayPoints)
 			// 		worldObject.pieceIAmIn.worldBoundsRect = worldObject.pieceIAmIn.worldBoundsRect.GrowToPoint(wayPoint.position);
 			// }
-			// foreach (Quest quest in GameManager.GetSingleton<QuestManager>().quests)
+			// foreach (Quest quest in QuestManager.Instance.quests)
 			// {
 			// 	KillingQuest killingQuest = quest as KillingQuest;
 			// 	if (killingQuest != null)
@@ -345,7 +345,7 @@ namespace BMH
 			// 		}
 			// 	}
 			// }
-			GameManager.GetSingleton<World>().maxPieceLocation = pieceLocation - Vector2Int.one;
+			World.Instance.maxPieceLocation = pieceLocation - Vector2Int.one;
 		}
 
 		[MenuItem("World/Remove pieces")]
@@ -353,7 +353,7 @@ namespace BMH
 		{
 			UseEnemyGroupsOfWorld ();
 			ObjectInWorld enemyWorldObject;
-			// foreach (Quest quest in GameManager.GetSingleton<QuestManager>().quests)
+			// foreach (Quest quest in QuestManager.Instance.quests)
 			// {
 			// 	KillingQuest killingQuest = quest as KillingQuest;
 			// 	if (killingQuest != null)
@@ -367,9 +367,9 @@ namespace BMH
 			// 	}
 			// }
 			WorldPiece piece;
-			for (int i = 0; i < GameManager.GetSingleton<World>().piecesParent.childCount; i ++)
+			for (int i = 0; i < World.Instance.piecesParent.childCount; i ++)
 			{
-				piece = GameManager.GetSingleton<World>().piecesParent.GetChild(i).GetComponent<WorldPiece>();
+				piece = World.Instance.piecesParent.GetChild(i).GetComponent<WorldPiece>();
 				DestroyImmediate(piece.gameObject);
 				i --;
 			}

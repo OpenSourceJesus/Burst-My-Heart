@@ -66,11 +66,11 @@ namespace BMH
 				if (!options[currentSelection].enabled)
 					return;
 				if (options[currentSelection].connectionMeshRenderer.enabled)
-					GameManager.GetSingleton<Menus>().SetCurrentMenu (options[currentSelection].trs.GetChild(0).GetComponentInChildren<Menu>());
+					Menus.Instance.SetCurrentMenu (options[currentSelection].trs.GetChild(0).GetComponentInChildren<Menu>());
 				options[currentSelection].PickOption ();
 			}
 			else if (direction == -1)
-			   GameManager.GetSingleton<Menus>().SetCurrentMenu (trs.parent.parent.parent.parent.parent.GetComponentInParent<Menu>());
+			   Menus.Instance.SetCurrentMenu (trs.parent.parent.parent.parent.parent.GetComponentInParent<Menu>());
 		}
 
 		public virtual void SetCurrentSelection (int selection)

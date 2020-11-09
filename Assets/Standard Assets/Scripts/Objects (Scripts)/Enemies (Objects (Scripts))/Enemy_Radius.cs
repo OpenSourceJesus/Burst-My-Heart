@@ -37,7 +37,7 @@ namespace BMH
 			for (int i = 1; i < trs.childCount; i ++)
 			{
 				child = trs.GetChild(i);
-				mine = GameManager.GetSingleton<ObjectPool>().SpawnComponent<Mine>(minePrefab.prefabIndex, child.position, child.rotation, trs.parent);
+				mine = ObjectPool.Instance.SpawnComponent<Mine>(minePrefab.prefabIndex, child.position, child.rotation, trs.parent);
 				mine.player = this;
 				mine.StartCoroutine(mine.ActivateRoutine (triggerDelay, triggerDuration));
 				mine.onDeath += delegate { isTriggered = false; };

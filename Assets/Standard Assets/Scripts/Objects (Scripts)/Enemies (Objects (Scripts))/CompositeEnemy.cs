@@ -56,7 +56,7 @@ namespace BMH
 
 		public virtual void OnTriggerEnter2D (Collider2D collider)
 		{
-			if (collider.gameObject != GameManager.GetSingleton<HumanPlayer>().body.gameObject)
+			if (collider.gameObject != HumanPlayer.Instance.body.gameObject)
 				return;
 			foreach (Enemy enemy in enemies)
 				enemy.enabled = true;
@@ -64,7 +64,7 @@ namespace BMH
 
 		public virtual void OnTriggerExit2D (Collider2D collider)
 		{
-			if (collider.gameObject != GameManager.GetSingleton<HumanPlayer>().body.gameObject)
+			if (collider.gameObject != HumanPlayer.Instance.body.gameObject)
 				return;
 			foreach (Enemy enemy in enemies)
 			{

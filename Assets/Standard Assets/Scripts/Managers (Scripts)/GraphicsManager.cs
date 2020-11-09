@@ -16,7 +16,7 @@ namespace BMH
 		{
 			if (filters == null || filters.Length == 0)
 				return;
-			GraphicsManager graphicsManager = GameManager.GetSingleton<CameraScript>().camera.gameObject.AddComponent<GraphicsManager>();
+			GraphicsManager graphicsManager = CameraScript.Instance.camera.gameObject.AddComponent<GraphicsManager>();
 			graphicsManager.filters = filters;
 			graphicsManager.spriteMaskTrsPrefab = spriteMaskTrsPrefab;
 			GameManager.singletons.Remove(typeof(GraphicsManager));
@@ -46,7 +46,7 @@ namespace BMH
 			{
 				this.blockable1 = blockable1;
 				this.blockable2 = blockable2;
-				maskTrs = Instantiate(GameManager.GetSingleton<GraphicsManager>().spriteMaskTrsPrefab);
+				maskTrs = Instantiate(GraphicsManager.Instance.spriteMaskTrsPrefab);
 			}
 			
 			public Rect GetOverlap ()

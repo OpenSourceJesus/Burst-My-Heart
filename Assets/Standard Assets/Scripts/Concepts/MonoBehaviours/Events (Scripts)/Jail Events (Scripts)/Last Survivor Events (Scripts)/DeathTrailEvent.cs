@@ -21,8 +21,8 @@ namespace BMH
 		{
 			foreach (Player participator in participators)
 			{
-				GameManager.GetSingleton<ObjectPool>().SpawnComponent<Mine>(starPrefab.prefabIndex, participator.body.trs.position, participator.body.trs.rotation);
-				GameManager.GetSingleton<ObjectPool>().SpawnComponent<Mine>(starPrefab.prefabIndex, participator.weapon.trs.position, participator.weapon.trs.rotation);
+				ObjectPool.Instance.SpawnComponent<Mine>(starPrefab.prefabIndex, participator.body.trs.position, participator.body.trs.rotation);
+				ObjectPool.Instance.SpawnComponent<Mine>(starPrefab.prefabIndex, participator.weapon.trs.position, participator.weapon.trs.rotation);
 			}
 		}
 

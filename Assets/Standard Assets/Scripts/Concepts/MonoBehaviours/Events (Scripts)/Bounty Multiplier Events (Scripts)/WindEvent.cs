@@ -11,7 +11,7 @@ namespace BMH
 		public override void ApplyEffect (Player player)
 		{
 			base.ApplyEffect (player);
-            if (GameManager.GetSingleton<OnlineBattle>() == null || OnlineBattle.localPlayer == player)
+            if (OnlineBattle.Instance == null || OnlineBattle.localPlayer == player)
             {
 				player.body.extraVelocity = trs.up * windSpeed;
 				player.weapon.extraVelocity = trs.up * windSpeed;
@@ -21,7 +21,7 @@ namespace BMH
 		public override void UnapplyEffect (Player player)
 		{
 			base.UnapplyEffect (player);
-            if (GameManager.GetSingleton<OnlineBattle>() == null || OnlineBattle.localPlayer == player)
+            if (OnlineBattle.Instance == null || OnlineBattle.localPlayer == player)
             {
 				player.body.extraVelocity = Vector2.zero;
 				player.weapon.extraVelocity = Vector2.zero;

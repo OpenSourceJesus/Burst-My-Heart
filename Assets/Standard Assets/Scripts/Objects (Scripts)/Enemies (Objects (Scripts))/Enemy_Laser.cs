@@ -34,7 +34,7 @@ namespace BMH
 		public override void DoUpdate ()
 		{
 			base.DoUpdate ();
-			body.trs.up = GameManager.GetSingleton<HumanPlayer>().body.trs.position - body.trs.position;
+			body.trs.up = HumanPlayer.Instance.body.trs.position - body.trs.position;
 		}
 
 		public override void OnDisable ()
@@ -51,8 +51,8 @@ namespace BMH
 
 		public override void HandleMovement ()
 		{
-			if (Vector2.Distance(GameManager.GetSingleton<HumanPlayer>().body.trs.position, body.trs.position) < stopDist)
-				Move (body.trs.position - GameManager.GetSingleton<HumanPlayer>().body.trs.position);
+			if (Vector2.Distance(HumanPlayer.Instance.body.trs.position, body.trs.position) < stopDist)
+				Move (body.trs.position - HumanPlayer.Instance.body.trs.position);
 			else
 				base.HandleMovement ();
 		}
@@ -63,7 +63,7 @@ namespace BMH
 			{
 				if (Physics2D.OverlapCircle(spawnPoint.position + body.trs.up * distance, laserPartPrefab.radius, whatICantSpawnIn) == null)
 				{
-					Mine laserPart = GameManager.GetSingleton<ObjectPool>().SpawnComponent<Mine>(laserPartPrefab.prefabIndex, spawnPoint.position + body.trs.up * distance, spawnPoint.rotation, mineParent);
+					Mine laserPart = ObjectPool.Instance.SpawnComponent<Mine>(laserPartPrefab.prefabIndex, spawnPoint.position + body.trs.up * distance, spawnPoint.rotation, mineParent);
 					laserPart.player = this;
 					laserPart.StartCoroutine(laserPart.ActivateRoutine (laserDelay, laserDuration));
 					laserPart.onCollide += OnLaserPartCollide;
@@ -75,8 +75,8 @@ namespace BMH
 		{
 			weapon.onCollide -= OnLaserPartCollide;
 			if (laserDuration != 0)
-				GameManager.GetSingleton<ObjectPool>().CancelDelayedDespawn (weapon.delayedDespawn);
-			GameManager.GetSingleton<ObjectPool>().Despawn (weapon.prefabIndex, weapon.gameObject, weapon.trs);
+				ObjectPool.Instance.CancelDelayedDespawn (weapon.delayedDespawn);
+			ObjectPool.Instance.Despawn (weapon.prefabIndex, weapon.gameObject, weapon.trs);
 		}
 
 		public override void UpdateGraphics ()

@@ -45,7 +45,7 @@ namespace BMH
 			}
 #endif
 			maxBodyToWeaponDist *= trs.localScale.x;
-			if (GameManager.GetSingleton<Survival>() != null)
+			if (Survival.Instance != null)
 			{
 				enabled = false;
 				collider.enabled = false;
@@ -100,7 +100,7 @@ namespace BMH
 			if (!Application.isPlaying)
 				return;
 #endif
-			if (trs.parent == GameManager.GetSingleton<ObjectPool>().trs)
+			if (trs.parent == ObjectPool.Instance.trs)
 				OnDisable ();
 		}
 
@@ -121,12 +121,12 @@ namespace BMH
 
 		public virtual void Awaken (params object[] args)
 		{
-			GameManager.GetSingleton<GameManager>().StartCoroutine (AwakenRoutine ());
+			GameManager.Instance.StartCoroutine (AwakenRoutine ());
 		}
 
 		public virtual IEnumerator AwakenRoutine ()
 		{
-			yield return new WaitUntil(() => (Physics2D.OverlapCircle(trs.position, radius, GameManager.GetSingleton<Survival>().whatEnemiesCantSpawnIn) == null));
+			yield return new WaitUntil(() => (Physics2D.OverlapCircle(trs.position, radius, Survival.Instance.whatEnemiesCantSpawnIn) == null));
 			OnAwaken ();
 		}
 
@@ -158,7 +158,7 @@ namespace BMH
 				return;
 #endif
 			base.OnDestroy ();
-			if (GameManager.GetSingleton<Survival>() != null)
+			if (Survival.Instance != null)
 				awakenTimer.onFinished -= Awaken;
 		}
 

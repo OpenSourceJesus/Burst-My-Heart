@@ -28,13 +28,13 @@ namespace BMH
 
 		public virtual void OnCollisionEnter2D (Collision2D coll)
 		{
-			if (coll.transform.root == GameManager.GetSingleton<HumanPlayer>().trs && GameManager.GetSingleton<RPG>().score >= scoreToOpen)
+			if (coll.transform.root == HumanPlayer.Instance.trs && RPG.Instance.score >= scoreToOpen)
 				Open ();
 		}
 
 		public virtual void OnTriggerEnter2D (Collider2D other)
 		{
-			if (other.GetComponent<Transform>().root == GameManager.GetSingleton<HumanPlayer>().trs && GameManager.GetSingleton<RPG>().score >= scoreToOpen)
+			if (other.GetComponent<Transform>().root == HumanPlayer.Instance.trs && RPG.Instance.score >= scoreToOpen)
 			{
 				playerRigidbodyControllersInMe ++;
 				print(playerRigidbodyControllersInMe);
@@ -43,7 +43,7 @@ namespace BMH
 
 		public virtual void OnTriggerExit2D (Collider2D other)
 		{
-			if (other.GetComponent<Transform>().root == GameManager.GetSingleton<HumanPlayer>().trs && GameManager.GetSingleton<RPG>().score >= scoreToOpen)
+			if (other.GetComponent<Transform>().root == HumanPlayer.Instance.trs && RPG.Instance.score >= scoreToOpen)
 			{
 				playerRigidbodyControllersInMe --;
 				print(playerRigidbodyControllersInMe);
