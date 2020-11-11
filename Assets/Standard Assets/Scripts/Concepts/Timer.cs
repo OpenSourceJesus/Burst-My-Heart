@@ -40,7 +40,7 @@ public class Timer
 	{
 		if (timerRoutine != null)
 		{
-			// if (GameManager.Instance != null)
+			if (GameManager.Instance != null)
 				GameManager.Instance.StopCoroutine(timerRoutine);
 			timerRoutine = null;
 			runningInstances = runningInstances.Remove(this);

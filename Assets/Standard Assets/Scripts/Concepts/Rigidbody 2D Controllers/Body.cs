@@ -61,7 +61,7 @@ namespace BMH
 			isDead = true;
 			if (onDeath != null)
 				onDeath (killer, this);
-			if (Hunt.Instance == null && OnlineArena.Instance == null && (RPG.Instance == null || player.owner == GameManager.Instance.teams[0]) && !(War.Instance != null && player.owner != GameManager.Instance.teams[0]))
+			if (OnlineArena.Instance == null && player.owner == GameManager.Instance.teams[0])
 			{
 				Destroy(player.gameObject);
 				if (controllerToSwitchTo == null)
