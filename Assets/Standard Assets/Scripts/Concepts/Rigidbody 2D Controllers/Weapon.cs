@@ -41,8 +41,8 @@ namespace BMH
 			if (!Application.isPlaying)
 				return;
 #endif
-			if (delayedDespawn != null)
-				ObjectPool.Instance.CancelDelayedDespawn (delayedDespawn);
+			if (delayedDespawn != null && ObjectPool.Instance != null)
+				ObjectPool.instance.CancelDelayedDespawn (delayedDespawn);
 		}
 
 		public virtual void OnCollisionEnter2D (Collision2D coll)
