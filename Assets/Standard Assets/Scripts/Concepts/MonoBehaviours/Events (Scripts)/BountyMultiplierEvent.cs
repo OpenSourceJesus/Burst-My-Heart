@@ -72,7 +72,8 @@ namespace BMH
 				else
 				{
 					OnlinePlayer onlinePlayer = player as OnlinePlayer;
-					onlinePlayer.scoreText.text = "Bounty: " + Mathf.Clamp(onlinePlayer.Score, 1, int.MaxValue);
+					if (onlinePlayer != null)
+						onlinePlayer.scoreText.text = "Bounty: " + Mathf.Clamp(onlinePlayer.Score, 1, int.MaxValue);
 				}
 			}
 			else if (Battle.player1 == player)
