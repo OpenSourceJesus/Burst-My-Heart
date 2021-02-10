@@ -51,6 +51,7 @@ namespace BMH
 		public static IUpdatable[] updatables = new IUpdatable[0];
 		public static IUpdatable[] pausedUpdatables = new IUpdatable[0];
 		public static Dictionary<Type, object> singletons = new Dictionary<Type, object>();
+		public static bool doEditorUpdates = false;
 		public const char UNIQUE_ID_SEPERATOR = ',';
 #if UNITY_EDITOR
 		public static int[] UniqueIds

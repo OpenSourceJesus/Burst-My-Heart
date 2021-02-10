@@ -45,6 +45,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -56,6 +58,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -130,7 +133,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handleMultipleInstances: 0
-  setInstance: 1
   persistant: 0
   autoBalanceMoveSpeedMultiplier: 0
   defaultMoveSpeedMultiplier: 0
@@ -139,15 +141,15 @@ MonoBehaviour:
   weapon: {fileID: 0}
   lineRenderer: {fileID: 0}
   owner: {fileID: 4621568933809990509, guid: b138fe723ad44844b9b31e87fa86c46d, type: 3}
-  maxBodyToWeaponDist: 0
+  maxBodyToWeaponDistance: 15
+  maxBodyToWeaponDistanceSqr: 0
   teamIndicators: []
   playerName: 
   lengthVisualizerTrs: {fileID: 0}
   kills: 0
-  minAcceptableNormalizedLength: 0
-  minAcceptableFaceForwardDifference: 0
-  minImprecision: 0
-  maxImprecision: 0
+  imprecisionRange:
+    min: 0
+    max: 0
   changeImprecisionTimer:
     duration: 0
     timeRemaining: 0
@@ -156,8 +158,12 @@ MonoBehaviour:
     realtime: 0
     canBePaused: 1
     autoStopIfNotLooping: 0
-  minChangeImprecisionTimeInterval: 0
-  maxChangeImprecisionTimeInterval: 0
+  changeImprecisionTimeIntervalRange:
+    min: 0
+    max: 0
+  minAcceptableLoseDistance: 0
+  minLoseDistToConsiderFacingForward: 0
+  minAcceptableFaceForwardDifference: 0
   prefabIndex: 8
   moveSpeed: 15
   collider: {fileID: 0}
@@ -183,7 +189,8 @@ MonoBehaviour:
   visionVisualizerTrs: {fileID: 6749369033369215600}
   visionVisualizer: {fileID: 3203932091726440631}
   visionCollider: {fileID: 1425089168293305822}
-  stopDist: 30
+  worldObject: {fileID: 0}
+  stopDistanceSqr: 900
   shootIntervalsMultiplier: 1
   shootEntries:
   - bulletPattern: {fileID: 11400000, guid: 6592cc4c143dfd07db2e45c009569aef, type: 2}
@@ -323,6 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 945144e30015cf5daa6fe783dca03282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hotkeys: []
   trs: {fileID: 3307287000961470685}
   snap: {x: 1, y: 1, z: 0}
 --- !u!114 &1881874882518924977
@@ -385,6 +393,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -396,6 +406,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -464,6 +475,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -475,6 +488,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -544,6 +558,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -555,6 +571,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -623,6 +640,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -634,6 +653,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -664,16 +684,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3307287000961470685}
     m_Modifications:
-    - target: {fileID: 67895614548677146, guid: 10407d4ac9688cc41a0fde45cdf04b68,
+    - target: {fileID: 67895614537944396, guid: 10407d4ac9688cc41a0fde45cdf04b68,
         type: 3}
-      propertyPath: m_Name
-      value: Heart
-      objectReference: {fileID: 0}
-    - target: {fileID: 67895614548677146, guid: 10407d4ac9688cc41a0fde45cdf04b68,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 8069303970074216326}
     - target: {fileID: 67895614537944396, guid: 10407d4ac9688cc41a0fde45cdf04b68,
         type: 3}
       propertyPath: m_Enabled
@@ -686,11 +701,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 67895614537944396, guid: 10407d4ac9688cc41a0fde45cdf04b68,
         type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 8069303970074216326}
-    - target: {fileID: 67895614537944396, guid: 10407d4ac9688cc41a0fde45cdf04b68,
-        type: 3}
       propertyPath: distanceJoint
       value: 
       objectReference: {fileID: 0}
@@ -699,29 +709,39 @@ PrefabInstance:
       propertyPath: spriteRenderer
       value: 
       objectReference: {fileID: 8223879705782075542}
-    - target: {fileID: 67895614561448580, guid: 10407d4ac9688cc41a0fde45cdf04b68,
+    - target: {fileID: 67895614543039846, guid: 10407d4ac9688cc41a0fde45cdf04b68,
         type: 3}
-      propertyPath: m_Color.r
-      value: 0
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 3.57
       objectReference: {fileID: 0}
-    - target: {fileID: 67895614561448580, guid: 10407d4ac9688cc41a0fde45cdf04b68,
+    - target: {fileID: 67895614543039846, guid: 10407d4ac9688cc41a0fde45cdf04b68,
         type: 3}
-      propertyPath: m_Color.g
-      value: 0
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 3.02
       objectReference: {fileID: 0}
-    - target: {fileID: 67895614561448580, guid: 10407d4ac9688cc41a0fde45cdf04b68,
+    - target: {fileID: 67895614544079242, guid: 10407d4ac9688cc41a0fde45cdf04b68,
         type: 3}
-      propertyPath: m_Color.a
-      value: 0.2509804
+      propertyPath: m_SleepingMode
+      value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 67895614561448580, guid: 10407d4ac9688cc41a0fde45cdf04b68,
+    - target: {fileID: 67895614548677146, guid: 10407d4ac9688cc41a0fde45cdf04b68,
         type: 3}
-      propertyPath: m_Color.b
-      value: 1
+      propertyPath: m_Name
+      value: Heart
+      objectReference: {fileID: 0}
+    - target: {fileID: 67895614548677146, guid: 10407d4ac9688cc41a0fde45cdf04b68,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 67895614548707260, guid: 10407d4ac9688cc41a0fde45cdf04b68,
         type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 67895614548880258, guid: 10407d4ac9688cc41a0fde45cdf04b68,
+        type: 3}
+      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 67895614548880258, guid: 10407d4ac9688cc41a0fde45cdf04b68,
@@ -741,6 +761,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 67895614548880258, guid: 10407d4ac9688cc41a0fde45cdf04b68,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 67895614548880258, guid: 10407d4ac9688cc41a0fde45cdf04b68,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -752,16 +777,6 @@ PrefabInstance:
     - target: {fileID: 67895614548880258, guid: 10407d4ac9688cc41a0fde45cdf04b68,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 67895614548880258, guid: 10407d4ac9688cc41a0fde45cdf04b68,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 67895614548880258, guid: 10407d4ac9688cc41a0fde45cdf04b68,
-        type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 67895614548880258, guid: 10407d4ac9688cc41a0fde45cdf04b68,
@@ -779,21 +794,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 67895614544079242, guid: 10407d4ac9688cc41a0fde45cdf04b68,
-        type: 3}
-      propertyPath: m_SleepingMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 67895614543039846, guid: 10407d4ac9688cc41a0fde45cdf04b68,
-        type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 3.57
-      objectReference: {fileID: 0}
-    - target: {fileID: 67895614543039846, guid: 10407d4ac9688cc41a0fde45cdf04b68,
-        type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 3.02
-      objectReference: {fileID: 0}
     - target: {fileID: 67895614561248784, guid: 10407d4ac9688cc41a0fde45cdf04b68,
         type: 3}
       propertyPath: m_Color.a
@@ -802,6 +802,26 @@ PrefabInstance:
     - target: {fileID: 67895614561248784, guid: 10407d4ac9688cc41a0fde45cdf04b68,
         type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 67895614561448580, guid: 10407d4ac9688cc41a0fde45cdf04b68,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.2509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 67895614561448580, guid: 10407d4ac9688cc41a0fde45cdf04b68,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 67895614561448580, guid: 10407d4ac9688cc41a0fde45cdf04b68,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 67895614561448580, guid: 10407d4ac9688cc41a0fde45cdf04b68,
+        type: 3}
+      propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:

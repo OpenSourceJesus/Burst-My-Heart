@@ -49,7 +49,7 @@ namespace BMH
 		{
 			if (isTrap)
 				return;
-			if (Vector2.Distance(HumanPlayer.Instance.body.trs.position, trs.position) < maxBodyToWeaponDist)
+			if ((HumanPlayer.Instance.body.trs.position - trs.position).sqrMagnitude < maxBodyToWeaponDistanceSqr)
 				Move (trs.position - HumanPlayer.Instance.body.trs.position);
 			else
 				base.HandleMovement ();

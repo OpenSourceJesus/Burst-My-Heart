@@ -44,7 +44,7 @@ namespace BMH
 				return;
 			}
 #endif
-			maxBodyToWeaponDist *= trs.localScale.x;
+			maxBodyToWeaponDistance *= trs.localScale.x;
 			if (Survival.Instance != null)
 			{
 				enabled = false;

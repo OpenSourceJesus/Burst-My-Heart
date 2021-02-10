@@ -1,22 +1,27 @@
 #if UNITY_EDITOR
 using UnityEngine;
-using BMH;
 
-public class SetRandomUniqueIds : EditorScript
+namespace BMH
 {
-	public SaveAndLoadObject[] saveAndLoadObjects = new SaveAndLoadObject[0];
-
-	public override void DoEditorUpdate ()
+	public class SetRandomUniqueIds : EditorScript
 	{
-		foreach (SaveAndLoadObject saveAndLoadObject in saveAndLoadObjects)
-			saveAndLoadObject.uniqueId = Random.Range(int.MinValue, int.MaxValue);
-		saveAndLoadObjects = new SaveAndLoadObject[0];
+		public SaveAndLoadObject[] saveAndLoadObjects = new SaveAndLoadObject[0];
+
+		public override void Do ()
+		{
+			foreach (SaveAndLoadObject saveAndLoadObject in saveAndLoadObjects)
+				saveAndLoadObject.uniqueId = Random.Range(int.MinValue, int.MaxValue);
+			saveAndLoadObjects = new SaveAndLoadObject[0];
+		}
 	}
 }
 #else
 using UnityEngine;
 
-public class SetRandomUniqueIds : MonoBehaviour
+namespace BMH
 {
+	public class SetRandomUniqueIds : MonoBehaviour
+	{
+	}
 }
 #endif

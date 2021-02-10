@@ -217,7 +217,7 @@ namespace BMH
 				}
 			}
 			output.terrain.Build ();
-			output.randomTerrainColor.update = true;
+			output.randomTerrainColor.Do ();
 		}
 
 		public virtual Vector2 GetPointAlongCenterPath (AreaPathNode endAreaPathNode, float normalizedDistance)

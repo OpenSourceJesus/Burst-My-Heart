@@ -9,6 +9,7 @@ namespace BMH
 	[DisallowMultipleComponent]
 	public class Player : SingletonMonoBehaviour<Player>, IUpdatable
 	{
+		[Header("Player")]
 		public float autoBalanceMoveSpeedMultiplier;
 		public float defaultMoveSpeedMultiplier;
 		public Transform trs;
@@ -16,7 +17,9 @@ namespace BMH
 		public Weapon weapon;
 		public LineRenderer lineRenderer;
 		public Team owner;
-		public float maxBodyToWeaponDist;
+		public float maxBodyToWeaponDistance = 15;
+		[HideInInspector]
+		public float maxBodyToWeaponDistanceSqr;
 		public SpriteRenderer[] teamIndicators = new SpriteRenderer[0];
 		public string playerName;
 		public static Player[] players = new Player[0];
@@ -116,13 +119,14 @@ namespace BMH
 			owner.representative = this;
 			owner.representatives = owner.representatives.Add(this);
 			SetColor (owner.color);
-			maxBodyToWeaponDist *= trs.localScale.x;
+			maxBodyToWeaponDistance *= trs.localScale.x;
+			maxBodyToWeaponDistanceSqr = maxBodyToWeaponDistance * maxBodyToWeaponDistance;
 			body.moveSpeed *= MoveSpeedMultiplier * trs.localScale.x;
-			body.distanceJoint.distance = maxBodyToWeaponDist;
+			body.distanceJoint.distance = maxBodyToWeaponDistance;
 			weapon.moveSpeed *= MoveSpeedMultiplier * trs.localScale.x;
-			weapon.distanceJoint.distance = maxBodyToWeaponDist;
+			weapon.distanceJoint.distance = maxBodyToWeaponDistance;
 			if (lengthVisualizerTrs != null)
-				lengthVisualizerTrs.SetWorldScale(Vector3.one * maxBodyToWeaponDist / trs.localScale.x);
+				lengthVisualizerTrs.SetWorldScale(Vector3.one * maxBodyToWeaponDistance / trs.localScale.x);
 		}
 
 		public virtual void SetColor (Color color)

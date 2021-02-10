@@ -8,7 +8,7 @@ namespace BMH
 {
 	public class Enemy_Shoot : Enemy_Follow
 	{
-		public float stopDist;
+		public float stopDistanceSqr;
 		public float shootIntervalsMultiplier;
 		public ShootEntry[] shootEntries;
 		Transform bulletParent;
@@ -87,10 +87,10 @@ namespace BMH
 
 		public override void HandleMovement ()
 		{
-			if (Vector2.Distance(HumanPlayer.Instance.body.trs.position, body.trs.position) < stopDist)
+			if ((HumanPlayer.Instance.body.trs.position - body.trs.position).sqrMagnitude < stopDistanceSqr)
 				Move (body.trs.position - HumanPlayer.Instance.body.trs.position);
 			else
-				Move (HumanPlayer.Instance.body.trs.position - body.trs.position);
+				base.HandleMovement ();
 		}
 
 		public override void UpdateGraphics ()

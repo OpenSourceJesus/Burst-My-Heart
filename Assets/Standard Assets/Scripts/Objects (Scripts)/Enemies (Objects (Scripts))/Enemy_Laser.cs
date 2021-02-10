@@ -9,7 +9,7 @@ namespace BMH
 	{
 		public float laserPartSpacing;
 		public float laserRange;
-		public float stopDist;
+		public float stopDistanceSqr;
 		public Timer shootTimer;
 		public float laserDelay;
 		public float laserDuration;
@@ -51,7 +51,7 @@ namespace BMH
 
 		public override void HandleMovement ()
 		{
-			if (Vector2.Distance(HumanPlayer.Instance.body.trs.position, body.trs.position) < stopDist)
+			if ((HumanPlayer.Instance.body.trs.position - body.trs.position).sqrMagnitude < stopDistanceSqr)
 				Move (body.trs.position - HumanPlayer.Instance.body.trs.position);
 			else
 				base.HandleMovement ();

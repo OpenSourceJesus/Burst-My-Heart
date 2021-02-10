@@ -76,7 +76,7 @@ namespace BMH
 			set
 			{
 				while (Physics2D.OverlapCircle(value, weapon.radius, Physics2D.GetLayerCollisionMask(weapon.gameObject.layer)) != null)
-					value = (Vector2) body.trs.position + Random.insideUnitCircle.normalized * HumanPlayer.Instance.maxBodyToWeaponDist;
+					value = (Vector2) body.trs.position + Random.insideUnitCircle.normalized * HumanPlayer.Instance.maxBodyToWeaponDistance;
 				weapon.trs.position = value;
 			}
 		}

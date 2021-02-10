@@ -1,34 +1,33 @@
 ﻿#if UNITY_EDITOR
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using Extensions;
 using Ferr;
 
-//[ExecuteAlways]
-public class RandomTerrainColor : EditorScript
+namespace BMH
 {
-	public Ferr2DT_PathTerrain terrain;
-    public bool update;
-    public Color[] colors;
+	//[ExecuteAlways]
+	public class RandomTerrainColor : EditorScript
+	{
+		public Ferr2DT_PathTerrain terrain;
+		public List<Color> pastColors = new List<Color>();
 
-	public virtual void OnEnable ()
-    {
-    	if (!Application.isPlaying)
-    	{
-            if (terrain == null)
-                terrain = GetComponent<Ferr2DT_PathTerrain>();
-    		return;
-    	}
-    }
+		public virtual void OnEnable ()
+		{
+			if (!Application.isPlaying)
+			{
+				if (terrain == null)
+					terrain = GetComponent<Ferr2DT_PathTerrain>();
+				return;
+			}
+		}
 
-    public virtual void Update ()
-    {
-        if (!update)
-            return;
-        update = false;
-        colors = colors.Add(terrain.vertexColor);
-        terrain.vertexColor = ColorExtensions.RandomColor();
-        terrain.Build (true);
-    }
+		public override void Do ()
+		{
+			pastColors.Add(terrain.vertexColor);
+			terrain.vertexColor = ColorExtensions.RandomColor();
+			terrain.Build (true);
+		}
+	}
 }
 #endif

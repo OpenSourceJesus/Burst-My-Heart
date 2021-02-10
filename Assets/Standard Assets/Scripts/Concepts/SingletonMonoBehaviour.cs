@@ -5,6 +5,7 @@ using BMH;
 
 public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
 {
+	[Header("SingletonMonoBehaviour<T>")]
 	public static T instance;
 	public static T Instance
 	{
