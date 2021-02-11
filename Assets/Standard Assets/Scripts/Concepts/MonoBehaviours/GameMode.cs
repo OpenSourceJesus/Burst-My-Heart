@@ -26,7 +26,7 @@ namespace BMH
 		{
 			get
 			{
-				return OnlineBattle.Instance == null;
+				return OnlineBattle.localPlayer == null;
 			}
 		}
 

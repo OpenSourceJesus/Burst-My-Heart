@@ -9,14 +9,14 @@ namespace BMH
 	public class MakeNotes : SingletonMonoBehaviour<MakeNotes>, IUpdatable
 	{
 		public static NoteMaker[] noteMakers = new NoteMaker[0];
-		public float worldDistanceBetweenNotes;
+		public float worldDistanceBetweenNotesSqr;
 		float noteFrequency;
 		Vector2 midPoint;
 		public bool PauseWhileUnfocused
 		{
 			get
 			{
-				return OnlineBattle.Instance == null;
+				return OnlineBattle.localPlayer == null;
 			}
 		}
 		public NoteGroup[] noteGroups = new NoteGroup[0];
@@ -33,7 +33,7 @@ namespace BMH
 		public int sampleRate;
 		public float frequencyLerpRate;
 
-		public virtual void OnAudioRead (float[] data)
+		void OnAudioRead (float[] data)
 		{
 			int count = 0;
 			while (count < data.Length)
@@ -44,7 +44,7 @@ namespace BMH
 			}
 		}
 
-		public virtual void OnAudioSetPosition (int newPosition)
+		void OnAudioSetPosition (int newPosition)
 		{
 			position = newPosition;
 		}
@@ -63,7 +63,7 @@ namespace BMH
 			GameManager.updatables = GameManager.updatables.Add(this);
 		}
 
-		public virtual void DoUpdate ()
+		public void DoUpdate ()
 		{
 			foreach (NoteMaker noteMaker in noteMakers)
 			{
@@ -71,13 +71,14 @@ namespace BMH
 				foreach (Transform trs in noteMaker.transforms)
 					midPoint += (Vector2) trs.position;
 				midPoint /= noteMaker.transforms.Length;
-				if (Vector2.Distance(noteMaker.positionOfPreviousNote, midPoint) > worldDistanceBetweenNotes)
+				if ((noteMaker.positionOfPreviousNote - midPoint).sqrMagnitude > worldDistanceBetweenNotesSqr)
 				{
 					noteFrequency = GetNoteFromPosition(midPoint);
 					noteFrequency = Mathf.Lerp(noteGroup.noteFrequencies[0], noteGroup.noteFrequencies[noteGroup.noteFrequencies.Length - 1], noteFrequency);
 					noteFrequency = MathfExtensions.GetClosestNumber(noteFrequency, noteGroup.noteFrequencies) * multiplyNoteFrequency;
 					noteMaker.positionOfPreviousNote = midPoint;
 					audioSource.volume = 0;
+					position = 0;
 					if (!stream)
 					{
 						AudioClip audioClip = AudioClip.Create("Note", (int) (sampleRate * noteNormalizedFrequencyOverTime.keys[noteNormalizedFrequencyOverTime.keys.Length - 1].time), 1, sampleRate, false, OnAudioRead, OnAudioSetPosition);
@@ -92,26 +93,26 @@ namespace BMH
 			frequency = Mathf.Lerp(frequency, targetFrequency, frequencyLerpRate * Time.deltaTime);
 		}
 
-		public virtual float GetNoteFromPosition (Vector2 position)
+		float GetNoteFromPosition (Vector2 position)
 		{
 			float output;
-			Vector2 normalizedPosition = (Vector2) Area.Instance.colorGradient2DRenderer.bounds.ToRect().ToNormalizedPosition(position);
-			Color color = Area.Instance.colorGradient2D.Evaluate(normalizedPosition);
+			Vector2 normalizedPosition = Area.Instance.colorGradient2DRenderer.bounds.ToRect().ToNormalizedPosition(position);
+			Color color = Area.instance.colorGradient2D.Evaluate(normalizedPosition);
 			output = color.r + color.g + color.b;
 			output /= 3;
 			return output;
 		}
 
-		public virtual void OnDestroy ()
+		void OnDestroy ()
 		{
 			GameManager.updatables = GameManager.updatables.Remove(this);
 		}
 
 		[Serializable]
-		public class NoteGroup
+		public struct NoteGroup
 		{
 			public string name;
-			public float[] noteFrequencies = new float[0];
+			public float[] noteFrequencies;
 		}
 	}
 }

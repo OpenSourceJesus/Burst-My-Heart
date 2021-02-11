@@ -5,7 +5,8 @@ using System.Reflection;
 using UnityEngine.UI;
 using System.IO;
 using System;
-using Utf8Json;
+// using Utf8Json;
+using FullSerializer;
 
 namespace BMH
 {
@@ -23,6 +24,7 @@ namespace BMH
 		public const string saveFileName = "Saved Data.txt";
 		public const string DATA_SEPARATOR = "☒";
 		public bool usePlayerPrefs;
+		static readonly fsSerializer serializer = new fsSerializer();
 		
 		public virtual void Awake ()
 		{
@@ -62,12 +64,19 @@ namespace BMH
 
 		public static string Serialize (object value, Type type)
 		{
-			return JsonSerializer.NonGeneric.ToJsonString(type, value);
+			// return JsonSerializer.NonGeneric.ToJsonString(type, value);
+			fsData data;
+			serializer.TrySerialize(type, value, out data).AssertSuccessWithoutWarnings();
+			return fsJsonPrinter.CompressedJson(data);
 		}
 
 		public static object Deserialize (string serializedState, Type type)
 		{
-			return JsonSerializer.NonGeneric.Deserialize(type, serializedState);
+			// return JsonSerializer.NonGeneric.Deserialize(type, serializedState);
+			fsData data = fsJsonParser.Parse(serializedState);
+			object deserialized = null;
+			serializer.TryDeserialize(data, type, ref deserialized).AssertSuccessWithoutWarnings();
+			return deserialized;
 		}
 
 		public virtual void _SetValue (string key, object value)

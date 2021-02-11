@@ -89,7 +89,7 @@ public class ColorGradient2D
 			for (int i = 0; i < remainderKeyCount; i ++)
 			{
 				colorKey = new GradientColorKey();
-				if (i == 0 && output.yGradients.Length > 0)
+				if (i == 0 && output.xGradients.Length > 0)
 				{
 					colorKey.time = 0;
 					previousGradient = output.xGradients[output.xGradients.Length - 1];
@@ -239,7 +239,7 @@ public class ColorGradient2D
 				if (i2 == 0 && gradientIndex > 0)
 				{
 					alphaKey.time = 0;
-					previousGradient = output.xGradients[gradientIndex - 1];
+					previousGradient = output.yGradients[gradientIndex - 1];
 					alphaKey.alpha = previousGradient.alphaKeys[previousGradient.alphaKeys.Length - 1].alpha;
 				}
 				else
@@ -266,7 +266,7 @@ public class ColorGradient2D
 				if (i == 0 && gradientIndex > 0)
 				{
 					alphaKey.time = 0;
-					previousGradient = output.xGradients[gradientIndex - 1];
+					previousGradient = output.yGradients[gradientIndex - 1];
 					alphaKey.alpha = previousGradient.alphaKeys[previousGradient.alphaKeys.Length - 1].alpha;
 				}
 				else

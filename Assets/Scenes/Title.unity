@@ -28682,6 +28682,34 @@ MonoBehaviour:
   xMultiplier: 1
   yMultiplier: 1
   zMultiplier: 1
+--- !u!1 &695835931 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4423652141385143988, guid: cae4007e4c2005eb7a05b9bcbdebfe26,
+    type: 3}
+  m_PrefabInstance: {fileID: 1993255063439004052}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &695835932 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7285128975337606886, guid: cae4007e4c2005eb7a05b9bcbdebfe26,
+    type: 3}
+  m_PrefabInstance: {fileID: 1993255063439004052}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &695835933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695835931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75b6ba4dddc24ab21ad1c76d43b8ac17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trs: {fileID: 695835932}
+  xMultiplier: -1
+  yMultiplier: 1
+  zMultiplier: 1
 --- !u!1 &698911161
 GameObject:
   m_ObjectHideFlags: 0
@@ -79177,7 +79205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   handleMultipleInstances: 0
   persistant: 0
-  worldDistanceBetweenNotes: 5
+  worldDistanceBetweenNotesSqr: 25
   noteGroups:
   - name: Minor pentatonic (C2-Bb4)
     noteFrequencies:
@@ -79218,7 +79246,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.2
+      time: 0
       value: 1
       inSlope: 5
       outSlope: 0
@@ -79227,19 +79255,10 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.7
+      time: 0.8
       value: 1
       inSlope: -0
       outSlope: -9.999998
-      tangentMode: 69
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.8
-      value: 0
-      inSlope: -9.999998
-      outSlope: Infinity
       tangentMode: 69
       weightedMode: 0
       inWeight: 0.33333334
@@ -79252,45 +79271,18 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      value: 1
+      inSlope: 5
+      outSlope: -1.25
       tangentMode: 69
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.19
-      value: 0
-      inSlope: -0
-      outSlope: 99.99995
-      tangentMode: 69
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.2
-      value: 1
-      inSlope: 99.99995
-      outSlope: 0
-      tangentMode: 69
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.79
-      value: 1
-      inSlope: -0
-      outSlope: -100.0001
-      tangentMode: 69
-      weightedMode: 0
-      inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 0.8
       value: 0
-      inSlope: -100.0001
-      outSlope: Infinity
+      inSlope: -1.25
+      outSlope: -100.0001
       tangentMode: 69
       weightedMode: 0
       inWeight: 0.33333334
@@ -79301,7 +79293,7 @@ MonoBehaviour:
   audioSource: {fileID: 1974911114}
   stream: 0
   sampleRate: 44100
-  frequencyLerpRate: 1
+  frequencyLerpRate: 10
 --- !u!1 &1981961364
 GameObject:
   m_ObjectHideFlags: 0
@@ -93544,6 +93536,7 @@ PrefabInstance:
     - {fileID: 8552664965322598213, guid: cae4007e4c2005eb7a05b9bcbdebfe26, type: 3}
     - {fileID: 965924233882524314, guid: cae4007e4c2005eb7a05b9bcbdebfe26, type: 3}
     - {fileID: 1093722885063050396, guid: cae4007e4c2005eb7a05b9bcbdebfe26, type: 3}
+    - {fileID: 2963694708607794360, guid: cae4007e4c2005eb7a05b9bcbdebfe26, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cae4007e4c2005eb7a05b9bcbdebfe26, type: 3}
 --- !u!114 &6673844594377893600 stripped
 MonoBehaviour:
