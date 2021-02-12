@@ -61,7 +61,7 @@ namespace BMH
 			ReInput.ControllerConnectedEvent += OnControllerConnected;
 			ReInput.ControllerPreDisconnectEvent += OnControllerPreDisconnect;
 			SceneManager.sceneLoaded += OnSceneLoaded;
-			cursorUnhideTimer.onFinished += delegate{Cursor.visible = false;};
+			cursorUnhideTimer.onFinished += delegate{ Cursor.visible = false; };
 			GameManager.updatables = GameManager.updatables.Add(this);
 		}
 

@@ -95,6 +95,8 @@ namespace BMH
 		public static CursorEntry activeCursorEntry;
 		public static float cursorMoveSpeed = 0.05f;
 		public static Vector2Int windowSize;
+		public Color firstDimensionColor;
+		public Color secondDimensionColor;
 
 		public static T GetSingleton<T> ()
 		{

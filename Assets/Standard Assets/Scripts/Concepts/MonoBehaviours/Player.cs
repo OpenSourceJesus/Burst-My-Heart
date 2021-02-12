@@ -23,6 +23,17 @@ namespace BMH
 		public SpriteRenderer[] teamIndicators = new SpriteRenderer[0];
 		public string playerName;
 		public static Player[] players = new Player[0];
+		public static bool CanSwitchDimensions
+		{
+			get
+			{
+				return SaveAndLoadManager.GetValue<bool>("Can switch dimensions", false);
+			}
+			set
+			{
+				SaveAndLoadManager.SetValue("Can switch dimensions", value);
+			}
+		}
 		public static bool CanSwitchPositions
 		{
 			get

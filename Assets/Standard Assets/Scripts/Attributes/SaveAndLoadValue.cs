@@ -6,10 +6,10 @@ using System;
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
 public class SaveAndLoadValue : Attribute
 {
-    public bool appliesOnlyToAccountThatSaved;
+    // public bool appliesToAllAccounts;
 
-    public SaveAndLoadValue (bool appliesOnlyToAccountThatSaved = true)
-    {
-        this.appliesOnlyToAccountThatSaved = appliesOnlyToAccountThatSaved;
-    }
+    // public SaveAndLoadValue (bool appliesToAllAccounts = false)
+    // {
+    //     this.appliesToAllAccounts = appliesToAllAccounts;
+    // }
 }

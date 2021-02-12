@@ -25,9 +25,11 @@ namespace BMH
 		public int inputterId;
 		public SpriteRenderer controllingIndicator;
 		public string switchControlButtonName;
+		public string switchDimensionsButtonName;
 		public float radius;
 		[HideInInspector]
 		public Vector2 extraVelocity;
+		public bool inFirstDimension = true;
 		public bool PauseWhileUnfocused
 		{
 			get
@@ -55,6 +57,13 @@ namespace BMH
 			base.Awake ();
 			if (canControl)
 				controllingIndicator.color = controllingIndicator.color.MultiplyAlpha(4);
+			if (Player.CanSwitchDimensions)
+			{
+				if (inFirstDimension)
+					spriteRenderer.color = GameManager.instance.firstDimensionColor.SetAlpha(spriteRenderer.color.a);
+				else
+					spriteRenderer.color = GameManager.instance.secondDimensionColor.SetAlpha(spriteRenderer.color.a);
+			}
 		}
 
 		public virtual void DoUpdate ()
@@ -63,6 +72,8 @@ namespace BMH
 				return;
 			if (Player.CanSwitchControl && controllerToSwitchTo != null)
 				HandleControlSwitching ();
+			if (Player.CanSwitchDimensions)
+				HandleDimensionSwitching ();
 			HandleMovement ();
 		}
 
@@ -75,6 +86,28 @@ namespace BMH
 			}
 			else if (InputManager.inputters[inputterId].GetButtonUp(switchControlButtonName) && isSwitching)
 				SwitchControl ();
+		}
+
+		public virtual void HandleDimensionSwitching ()
+		{
+			if (InputManager.inputters[inputterId].GetButtonDown(switchDimensionsButtonName) && canControl)
+			{
+				canControl = false;
+				isSwitching = true;
+			}
+			else if (InputManager.inputters[inputterId].GetButtonUp(switchDimensionsButtonName) && isSwitching)
+				SwitchControl ();
+		}
+
+		public virtual void SwitchDimensions ()
+		{
+			isSwitching = false;
+			trs.position = trs.position.SetZ(1 - trs.position.z);
+			inFirstDimension = !inFirstDimension;
+			if (inFirstDimension)
+				spriteRenderer.color = GameManager.instance.firstDimensionColor.SetAlpha(spriteRenderer.color.a);
+			else
+				spriteRenderer.color = GameManager.instance.secondDimensionColor.SetAlpha(spriteRenderer.color.a);
 		}
 
 		public virtual void SwitchControl ()

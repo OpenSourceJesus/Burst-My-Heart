@@ -35,13 +35,13 @@ namespace BMH
 				uniqueId = value;
 			}
 		}
-		[SaveAndLoadValue(false)]
+		[SaveAndLoadValue]
 		public string username;
-		[SaveAndLoadValue(false)]
+		[SaveAndLoadValue]
 		public string password;
-		[SaveAndLoadValue(false)]
+		[SaveAndLoadValue]
 		public OfflineData offlineData = new OfflineData();
-		[SaveAndLoadValue(false)]
+		[SaveAndLoadValue]
 		public OnlineData onlineData = new OnlineData();
 
 		public virtual void Awake ()

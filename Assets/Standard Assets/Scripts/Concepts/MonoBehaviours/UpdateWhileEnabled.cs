@@ -26,10 +26,5 @@ namespace BMH
 		{
 			GameManager.updatables = GameManager.updatables.Remove(this);
 		}
-
-		public virtual void OnDestroy ()
-		{
-			GameManager.updatables = GameManager.updatables.Remove(this);
-		}
 	}
 }
