@@ -97,6 +97,7 @@ namespace BMH
 		public static Vector2Int windowSize;
 		public Color firstDimensionColor;
 		public Color secondDimensionColor;
+		public Vector2 dimensionOffset;
 
 		public static T GetSingleton<T> ()
 		{

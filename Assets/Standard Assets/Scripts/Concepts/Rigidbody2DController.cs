@@ -10,7 +10,7 @@ namespace BMH
     {
 		public Transform trs;
 		public Rigidbody2D rigid;
-		public new Collider2D collider;
+		public Collider2D collider;
 		public SpriteRenderer spriteRenderer;
 		public float moveSpeed;
 		public DistanceJoint2D distanceJoint;
@@ -60,9 +60,9 @@ namespace BMH
 			if (Player.CanSwitchDimensions)
 			{
 				if (inFirstDimension)
-					spriteRenderer.color = GameManager.instance.firstDimensionColor.SetAlpha(spriteRenderer.color.a);
+					SwitchToFirstDimension ();
 				else
-					spriteRenderer.color = GameManager.instance.secondDimensionColor.SetAlpha(spriteRenderer.color.a);
+					SwitchToSecondDimension ();
 			}
 		}
 
@@ -105,9 +105,21 @@ namespace BMH
 			trs.position = trs.position.SetZ(1 - trs.position.z);
 			inFirstDimension = !inFirstDimension;
 			if (inFirstDimension)
-				spriteRenderer.color = GameManager.instance.firstDimensionColor.SetAlpha(spriteRenderer.color.a);
+				SwitchToFirstDimension ();
 			else
-				spriteRenderer.color = GameManager.instance.secondDimensionColor.SetAlpha(spriteRenderer.color.a);
+				SwitchToSecondDimension ();
+		}
+
+		void SwitchToFirstDimension ()
+		{
+			spriteRenderer.color = GameManager.instance.firstDimensionColor.SetAlpha(spriteRenderer.color.a);
+			trs.position -= (Vector3) GameManager.instance.dimensionOffset;
+		}
+
+		void SwitchToSecondDimension ()
+		{
+			spriteRenderer.color = GameManager.instance.secondDimensionColor.SetAlpha(spriteRenderer.color.a);
+			trs.position += (Vector3) GameManager.instance.dimensionOffset;
 		}
 
 		public virtual void SwitchControl ()

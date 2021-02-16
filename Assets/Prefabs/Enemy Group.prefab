@@ -119,7 +119,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 227791377874668333}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2a1c995e2dcd25b587c633f83dae16e, type: 3}
+  m_Script: {fileID: 11500000, guid: 8afb3c3b2bd3d161999d9e3b745ab3a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   trs: {fileID: 227791377874668321}
@@ -128,9 +128,9 @@ MonoBehaviour:
   compositeCollider2D: {fileID: 227791377874668322}
   difficulty: 0
   defeated: 0
-  defeatedColor: {r: 0, g: 1, b: 0, a: 1}
+  defeatedColor: {r: 0, g: 0, b: 0, a: 0}
   visionVisualizers: []
-  uniqueId: 840934563
+  uniqueId: 0
 --- !u!50 &227791377874668323
 Rigidbody2D:
   serializedVersion: 4
