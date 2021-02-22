@@ -50,7 +50,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handleMultipleInstances: 0
-  setInstance: 1
   persistant: 0
   trs: {fileID: 67895614548880258}
   rigid: {fileID: 67895614544079242}
@@ -66,8 +65,10 @@ MonoBehaviour:
   inputterId: 0
   controllingIndicator: {fileID: 67895614561448580}
   switchControlButtonName: Switch Body Control
+  switchDimensionsButtonName: Switch Body Dimension
   radius: 2
   extraVelocity: {x: 0, y: 0}
+  inFirstDimension: 1
   maxHp: 0
   isDead: 0
 --- !u!212 &67895614561248784
@@ -84,6 +85,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -95,6 +98,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -286,6 +290,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -297,6 +303,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

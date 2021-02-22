@@ -27,7 +27,7 @@ namespace BMH
 		{
 			get
 			{
-				return SaveAndLoadManager.GetValue<bool>("Can switch dimensions", false);
+				return SaveAndLoadManager.GetValue<bool>("Can switch dimensions", true);
 			}
 			set
 			{

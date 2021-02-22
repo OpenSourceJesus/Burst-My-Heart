@@ -98,62 +98,8 @@ namespace BMH
 		public Color firstDimensionColor;
 		public Color secondDimensionColor;
 		public Vector2 dimensionOffset;
-
-		public static T GetSingleton<T> ()
-		{
-			object obj = null;
-			if (!singletons.TryGetValue(typeof(T), out obj))
-				obj = GetSingleton<T>(FindObjectsOfType<Object>());
-			return (T) obj;
-		}
-
-		public static T GetSingleton<T> (Object[] objects)
-		{
-			if (typeof(T).IsSubclassOf(typeof(Object)))
-			{
-				for (int i = 0; i < objects.Length; i ++)
-				{
-					Object obj = objects[i];
-					if (obj is T)
-					{
-						if (singletons.ContainsKey(typeof(T)))
-							singletons[typeof(T)] = obj;
-						else
-							singletons.Add(typeof(T), obj);
-						return (T) (object) obj;
-					}
-				}
-			}
-			return (T) (object) null;
-		}
-
-		public static T GetSingletonIncludingAssets<T> ()
-		{
-			object obj = null;
-			if (!singletons.TryGetValue(typeof(T), out obj))
-				obj = GetSingletonIncludingAssets<T>(Object.FindObjectsOfTypeIncludingAssets(typeof(T)));
-			return (T) obj;
-		}
-
-		public static T GetSingletonIncludingAssets<T> (Object[] objects)
-		{
-			if (typeof(T).IsSubclassOf(typeof(Object)))
-			{
-				for (int i = 0; i < objects.Length; i ++)
-				{
-					Object obj = objects[i];
-					if (obj is T)
-					{
-						if (singletons.ContainsKey(typeof(T)))
-							singletons[typeof(T)] = obj;
-						else
-							singletons.Add(typeof(T), obj);
-						return (T) (object) obj;
-					}
-				}
-			}
-			return (T) (object) null;
-		}
+		public float dimensionDistance;
+		public float dimensionDistanceSqr;
 
 		public override void Awake ()
 		{
@@ -415,6 +361,62 @@ namespace BMH
 		public static Object Clone (Object obj, Vector3 position, Quaternion rotation)
 		{
 			return Instantiate(obj, position, rotation);
+		}
+
+		public static T GetSingleton<T> ()
+		{
+			object obj = null;
+			if (!singletons.TryGetValue(typeof(T), out obj))
+				obj = GetSingleton<T>(FindObjectsOfType<Object>());
+			return (T) obj;
+		}
+
+		public static T GetSingleton<T> (Object[] objects)
+		{
+			if (typeof(T).IsSubclassOf(typeof(Object)))
+			{
+				for (int i = 0; i < objects.Length; i ++)
+				{
+					Object obj = objects[i];
+					if (obj is T)
+					{
+						if (singletons.ContainsKey(typeof(T)))
+							singletons[typeof(T)] = obj;
+						else
+							singletons.Add(typeof(T), obj);
+						return (T) (object) obj;
+					}
+				}
+			}
+			return (T) (object) null;
+		}
+
+		public static T GetSingletonIncludingAssets<T> ()
+		{
+			object obj = null;
+			if (!singletons.TryGetValue(typeof(T), out obj))
+				obj = GetSingletonIncludingAssets<T>(Object.FindObjectsOfTypeIncludingAssets(typeof(T)));
+			return (T) obj;
+		}
+
+		public static T GetSingletonIncludingAssets<T> (Object[] objects)
+		{
+			if (typeof(T).IsSubclassOf(typeof(Object)))
+			{
+				for (int i = 0; i < objects.Length; i ++)
+				{
+					Object obj = objects[i];
+					if (obj is T)
+					{
+						if (singletons.ContainsKey(typeof(T)))
+							singletons[typeof(T)] = obj;
+						else
+							singletons.Add(typeof(T), obj);
+						return (T) (object) obj;
+					}
+				}
+			}
+			return (T) (object) null;
 		}
 
 		[Serializable]

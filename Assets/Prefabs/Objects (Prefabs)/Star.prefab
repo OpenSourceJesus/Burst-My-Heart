@@ -50,7 +50,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handleMultipleInstances: 0
-  setInstance: 1
   persistant: 0
   trs: {fileID: 2580144132550770781}
   rigid: {fileID: 2580144132545938481}
@@ -66,8 +65,10 @@ MonoBehaviour:
   inputterId: 0
   controllingIndicator: {fileID: 2580144132529714345}
   switchControlButtonName: Switch Weapon Control
+  switchDimensionsButtonName: Switch Weapon Dimension
   radius: 1.8
   extraVelocity: {x: 0, y: 0}
+  inFirstDimension: 1
   prefabIndex: -1
   useDespawnDelay: 0
   despawnDelay: 0
@@ -85,6 +86,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -96,6 +99,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -256,6 +260,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -267,6 +273,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

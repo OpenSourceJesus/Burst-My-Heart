@@ -62,6 +62,9 @@ MonoBehaviour:
   cursorEntries: []
   firstDimensionColor: {r: 0, g: 0.5019608, b: 0, a: 1}
   secondDimensionColor: {r: 0.5019608, g: 0, b: 0, a: 1}
+  dimensionOffset: {x: 999, y: 999}
+  dimensionDistance: 1412.7993
+  dimensionDistanceSqr: 1996001.9
 --- !u!1001 &11203658333010479
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -398,6 +401,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Input Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7917698436954825040, guid: 5bdbcc3943238c44bba25b8fcbc05dd3,
+        type: 3}
+      propertyPath: m_CancelButton
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7917698436954825040, guid: 5bdbcc3943238c44bba25b8fcbc05dd3,
+        type: 3}
+      propertyPath: m_SubmitButton
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7917698436954825040, guid: 5bdbcc3943238c44bba25b8fcbc05dd3,
+        type: 3}
+      propertyPath: m_VerticalAxis
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7917698436954825040, guid: 5bdbcc3943238c44bba25b8fcbc05dd3,
+        type: 3}
+      propertyPath: m_HorizontalAxis
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7917698436954825040, guid: 5bdbcc3943238c44bba25b8fcbc05dd3,
         type: 3}

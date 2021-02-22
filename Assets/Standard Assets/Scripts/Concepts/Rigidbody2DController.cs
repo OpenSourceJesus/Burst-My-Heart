@@ -57,13 +57,8 @@ namespace BMH
 			base.Awake ();
 			if (canControl)
 				controllingIndicator.color = controllingIndicator.color.MultiplyAlpha(4);
-			if (Player.CanSwitchDimensions)
-			{
-				if (inFirstDimension)
-					SwitchToFirstDimension ();
-				else
-					SwitchToSecondDimension ();
-			}
+			if (!inFirstDimension)
+				SwitchToSecondDimension ();
 		}
 
 		public virtual void DoUpdate ()
@@ -91,12 +86,7 @@ namespace BMH
 		public virtual void HandleDimensionSwitching ()
 		{
 			if (InputManager.inputters[inputterId].GetButtonDown(switchDimensionsButtonName) && canControl)
-			{
-				canControl = false;
-				isSwitching = true;
-			}
-			else if (InputManager.inputters[inputterId].GetButtonUp(switchDimensionsButtonName) && isSwitching)
-				SwitchControl ();
+				SwitchDimensions ();
 		}
 
 		public virtual void SwitchDimensions ()
@@ -112,14 +102,24 @@ namespace BMH
 
 		void SwitchToFirstDimension ()
 		{
+			OnSwitchDimensions ();
 			spriteRenderer.color = GameManager.instance.firstDimensionColor.SetAlpha(spriteRenderer.color.a);
 			trs.position -= (Vector3) GameManager.instance.dimensionOffset;
 		}
 
 		void SwitchToSecondDimension ()
 		{
+			OnSwitchDimensions ();
 			spriteRenderer.color = GameManager.instance.secondDimensionColor.SetAlpha(spriteRenderer.color.a);
 			trs.position += (Vector3) GameManager.instance.dimensionOffset;
+		}
+
+		void OnSwitchDimensions ()
+		{
+			if (player.body.inFirstDimension != player.weapon.inFirstDimension)
+				distanceJoint.distance += GameManager.instance.dimensionDistance;
+			else
+				distanceJoint.distance -= GameManager.instance.dimensionDistance;
 		}
 
 		public virtual void SwitchControl ()
