@@ -71,7 +71,7 @@ namespace BMH
 			}
 		}
 
-		public virtual void OnLaserPartCollide (Collision2D coll, Weapon weapon)
+		public virtual void OnLaserPartCollide (Collision coll, Weapon weapon)
 		{
 			weapon.onCollide -= OnLaserPartCollide;
 			if (laserDuration != 0)

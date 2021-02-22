@@ -8,9 +8,9 @@ namespace BMH
 {
 	public class Star : Weapon
 	{
-		public override void OnCollisionEnter2D (Collision2D coll)
+		public override void OnCollisionEnter (Collision coll)
 		{
-			base.OnCollisionEnter2D (coll);
+			base.OnCollisionEnter (coll);
 			Body collidedBody = coll.gameObject.GetComponent<Body>();
 			if (collidedBody == null || collidedBody.Hp == MathfExtensions.NULL_FLOAT || collidedBody.player == null || collidedBody.player.owner == player.owner)
 			{

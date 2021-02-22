@@ -6,9 +6,9 @@ namespace BMH
 {
 	public class DespawnOnImpactStar : Star
 	{
-		public override void OnCollisionEnter2D (Collision2D coll)
+		public override void OnCollisionEnter (Collision coll)
 		{
-			base.OnCollisionEnter2D (coll);
+			base.OnCollisionEnter (coll);
 			ObjectPool.Instance.Despawn (prefabIndex, gameObject, trs);
 		}
 	}

@@ -44,7 +44,7 @@ namespace BMH
 			timerVisualizer.localScale = timerVisualizer.localScale.SetX(deathTimer.timeRemaining / deathTimer.duration);
 		}
 
-		public virtual void OnWeaponCollide (Collision2D coll, Weapon weapon)
+		public virtual void OnWeaponCollide (Collision coll, Weapon weapon)
 		{
 			if (coll.collider == heartEnemy.collider)
 				OnHeartKilled (HumanPlayer.Instance, heartEnemy);

@@ -7,7 +7,7 @@ namespace BMH
 	public class Mine : Star
 	{
 		[HideInInspector]
-		public float initSpriteRendererAlpha;
+		public float initMeshRendererAlpha;
 		public LayerMask whatICantActivateIn;
 		public delegate void OnDeath();
 		public event OnDeath onDeath;
@@ -20,12 +20,12 @@ namespace BMH
 				if (trs == null)
 					trs = GetComponent<Transform>();
 				if (rigid == null)
-					rigid = GetComponent<Rigidbody2D>();
-				if (distanceJoint == null)
-					distanceJoint = GetComponent<DistanceJoint2D>();
-				if (spriteRenderer == null)
-					spriteRenderer = GetComponent<SpriteRenderer>();
-				initSpriteRendererAlpha = spriteRenderer.color.a;
+					rigid = GetComponent<Rigidbody>();
+				// if (distanceJoint == null)
+				// 	distanceJoint = GetComponent<DistanceJoint2D>();
+				if (meshRenderer == null)
+					meshRenderer = GetComponent<MeshRenderer>();
+				initMeshRendererAlpha = meshRenderer.material.color.a;
 				return;
 			}
 #endif
@@ -38,8 +38,8 @@ namespace BMH
 				return;
 #endif
 			collider.enabled = false;
-			if (spriteRenderer.color.a != initSpriteRendererAlpha)
-				spriteRenderer.color = spriteRenderer.color.SetAlpha(initSpriteRendererAlpha);
+			if (meshRenderer.material.color.a != initMeshRendererAlpha)
+				meshRenderer.material.color = meshRenderer.material.color.SetAlpha(initMeshRendererAlpha);
 			if (onDeath != null)
 			{
 				onDeath ();
@@ -58,7 +58,7 @@ namespace BMH
 
 		public virtual void Activate ()
 		{
-			spriteRenderer.color = spriteRenderer.color.SetAlpha(1);
+			meshRenderer.material.color = meshRenderer.material.color.SetAlpha(1);
 			collider.enabled = true;
 		}
 	}

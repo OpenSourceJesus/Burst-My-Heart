@@ -79,7 +79,7 @@ namespace BMH
 		public virtual void OnEndOfPart (params object[] args)
 		{
 			partTimerVisualizer.enabled = false;
-			body.spriteRenderer.color = Color.white;
+			body.meshRenderer.material.color = Color.white;
 			body.Hp = 0;
 		}
 
@@ -93,14 +93,14 @@ namespace BMH
 				enemyGroup.OnDefeat ();
 		}
 
-		public virtual void OnTriggerEnter2D (Collider2D other)
+		public virtual void OnTriggerEnter (Collider other)
 		{
 			if (other.gameObject != HumanPlayer.Instance.body.gameObject)
 				return;
 			enabled = true;
 		}
 
-		public virtual void OnTriggerExit2D (Collider2D other)
+		public virtual void OnTriggerExit (Collider other)
 		{
 			if (other.gameObject != HumanPlayer.Instance.body.gameObject)
 				return;

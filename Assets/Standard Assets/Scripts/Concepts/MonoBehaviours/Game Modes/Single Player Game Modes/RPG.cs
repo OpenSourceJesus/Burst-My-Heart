@@ -22,7 +22,7 @@ namespace BMH
 			// SaveAndLoadManager.Instance.Load ();
 			Boss[] bosses = FindObjectsOfType<Boss>();
 			foreach (Boss boss in bosses)
-				boss.OnTriggerExit2D (HumanPlayer.Instance.body.collider);
+				boss.OnTriggerExit (HumanPlayer.Instance.body.collider);
 		}
 
 // #if UNITY_EDITOR

@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace BMH
 {
-	public class Weapon : Rigidbody2DController, ISpawnable
+	public class Weapon : RigidbodyController, ISpawnable
 	{
-		public delegate void OnCollide(Collision2D coll, Weapon weapon);
+		public delegate void OnCollide(Collision coll, Weapon weapon);
 		public event OnCollide onCollide;
 		public int prefabIndex;
 		public virtual int PrefabIndex
@@ -45,7 +45,7 @@ namespace BMH
 				ObjectPool.instance.CancelDelayedDespawn (delayedDespawn);
 		}
 
-		public virtual void OnCollisionEnter2D (Collision2D coll)
+		public virtual void OnCollisionEnter (Collision coll)
 		{
 			if (onCollide != null)
 				onCollide (coll, this);

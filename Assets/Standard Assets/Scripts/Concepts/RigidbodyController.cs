@@ -4,23 +4,23 @@ using Extensions;
 namespace BMH
 {
 	//[ExecuteAlways]
-	[RequireComponent(typeof(Rigidbody2D))]
+	// [RequireComponent(typeof(Rigidbody2D))]
 	[DisallowMultipleComponent]
-    public class Rigidbody2DController : SingletonMonoBehaviour<Rigidbody2DController>, IUpdatable
+    public class RigidbodyController : SingletonMonoBehaviour<RigidbodyController>, IUpdatable
     {
 		public Transform trs;
-		public Rigidbody2D rigid;
-		public Collider2D collider;
-		public SpriteRenderer spriteRenderer;
+		public Rigidbody rigid;
+		public Collider collider;
+		public MeshRenderer meshRenderer;
 		public float moveSpeed;
-		public DistanceJoint2D distanceJoint;
+		// public DistanceJoint distanceJoint;
 		public Player player;
 		Vector2 moveInput;
 		Vector2 previousMoveInput;
 		public string moveXAxisName;
 		public string moveYAxisName;
 		public bool canControl;
-		public Rigidbody2DController controllerToSwitchTo;
+		public RigidbodyController controllerToSwitchTo;
 		bool isSwitching;
 		public int inputterId;
 		public SpriteRenderer controllingIndicator;
@@ -46,11 +46,11 @@ namespace BMH
 				if (trs == null)
 					trs = GetComponent<Transform>();
 				if (rigid == null)
-					rigid = GetComponent<Rigidbody2D>();
-				if (distanceJoint == null)
-					distanceJoint = GetComponent<DistanceJoint2D>();
-				if (spriteRenderer == null)
-					spriteRenderer = GetComponent<SpriteRenderer>();
+					rigid = GetComponent<Rigidbody>();
+				// if (distanceJoint == null)
+				// 	distanceJoint = GetComponent<DistanceJoint2D>();
+				if (meshRenderer == null)
+					meshRenderer = GetComponent<MeshRenderer>();
 				return;
 			}
 #endif
@@ -103,23 +103,23 @@ namespace BMH
 		void SwitchToFirstDimension ()
 		{
 			OnSwitchDimensions ();
-			spriteRenderer.color = GameManager.instance.firstDimensionColor.SetAlpha(spriteRenderer.color.a);
-			trs.position -= (Vector3) GameManager.instance.dimensionOffset;
+			meshRenderer.material.color = GameManager.instance.firstDimensionColor.SetAlpha(meshRenderer.material.color.a);
+			// trs.position -= (Vector3) GameManager.instance.dimensionOffset;
 		}
 
 		void SwitchToSecondDimension ()
 		{
 			OnSwitchDimensions ();
-			spriteRenderer.color = GameManager.instance.secondDimensionColor.SetAlpha(spriteRenderer.color.a);
-			trs.position += (Vector3) GameManager.instance.dimensionOffset;
+			meshRenderer.material.color = GameManager.instance.secondDimensionColor.SetAlpha(meshRenderer.material.color.a);
+			// trs.position += (Vector3) GameManager.instance.dimensionOffset;
 		}
 
 		void OnSwitchDimensions ()
 		{
-			if (player.body.inFirstDimension != player.weapon.inFirstDimension)
-				distanceJoint.distance += GameManager.instance.dimensionDistance;
-			else
-				distanceJoint.distance -= GameManager.instance.dimensionDistance;
+			// if (player.body.inFirstDimension != player.weapon.inFirstDimension)
+			// 	distanceJoint.distance += GameManager.instance.dimensionDistance;
+			// else
+			// 	distanceJoint.distance -= GameManager.instance.dimensionDistance;
 		}
 
 		public virtual void SwitchControl ()

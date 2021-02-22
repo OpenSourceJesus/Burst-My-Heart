@@ -5,7 +5,7 @@ using Extensions;
 
 namespace BMH
 {
-	public class Body : Rigidbody2DController, IDestructable
+	public class Body : RigidbodyController, IDestructable
 	{
 		public uint maxHp;
 		public uint MaxHp

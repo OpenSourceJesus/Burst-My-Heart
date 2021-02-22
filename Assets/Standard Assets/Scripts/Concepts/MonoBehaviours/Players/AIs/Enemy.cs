@@ -17,10 +17,10 @@ namespace BMH
 			}
 		}
 		public float moveSpeed;
-		public new Collider2D collider;
-		public SpriteRenderer spriteRenderer;
+		public new Collider collider;
+		public MeshRenderer meshRenderer;
 		public Timer awakenTimer;
-		public Rigidbody2D rigid;
+		public Rigidbody rigid;
 		public float radius;
 		[HideInInspector]
 		public Vector2 initPosition;
@@ -38,9 +38,9 @@ namespace BMH
 				if (trs == null)
 					trs = GetComponent<Transform>();
 				if (rigid == null)
-					rigid = GetComponent<Rigidbody2D>();
-				if (spriteRenderer == null)
-					spriteRenderer = GetComponent<SpriteRenderer>();
+					rigid = GetComponent<Rigidbody>();
+				if (meshRenderer == null)
+					meshRenderer = GetComponent<MeshRenderer>();
 				return;
 			}
 #endif
@@ -68,14 +68,14 @@ namespace BMH
 				return;
 #endif
 			if (rigid != null)
-				rigid.simulated = true;
+				rigid.isKinematic = false;
 			if (body != null)
 			{
 				body.Hp = body.maxHp;
-				body.rigid.simulated = true;
+				body.rigid.isKinematic = false;
 			}
 			if (weapon != null)
-				weapon.rigid.simulated = true;
+				weapon.rigid.isKinematic = false;
 			GameManager.updatables = GameManager.updatables.Add(this);
 		}
 
@@ -86,11 +86,11 @@ namespace BMH
 				return;
 #endif
 			if (rigid != null)
-				rigid.simulated = false;
+				rigid.isKinematic = true;
 			if (body != null)
-				body.rigid.simulated = false;
+				body.rigid.isKinematic = true;
 			if (weapon != null)
-				weapon.rigid.simulated = false;
+				weapon.rigid.isKinematic = true;
 			GameManager.updatables = GameManager.updatables.Remove(this);
 		}
 
@@ -134,16 +134,16 @@ namespace BMH
 		{
 			if (body != null)
 			{
-				body.spriteRenderer.color = body.spriteRenderer.color.MultiplyAlpha(4);
+				body.meshRenderer.material.color = body.meshRenderer.material.color.MultiplyAlpha(4);
 				body.collider.enabled = true;
 			}
 			if (weapon != null)
 			{
-				weapon.spriteRenderer.color = weapon.spriteRenderer.color.MultiplyAlpha(4);
+				weapon.meshRenderer.material.color = weapon.meshRenderer.material.color.MultiplyAlpha(4);
 				weapon.collider.enabled = true;
 			}
-			if (spriteRenderer != null)
-				spriteRenderer.color = spriteRenderer.color.SetAlpha(1);
+			if (meshRenderer != null)
+				meshRenderer.material.color = meshRenderer.material.color.SetAlpha(1);
 			if (collider != null)
 				collider.enabled = true;
 			foreach (SpriteRenderer extraSpriteRenderer in extraSpriteRenderers)

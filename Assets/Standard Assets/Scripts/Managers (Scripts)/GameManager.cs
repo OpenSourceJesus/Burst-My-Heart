@@ -97,9 +97,6 @@ namespace BMH
 		public static Vector2Int windowSize;
 		public Color firstDimensionColor;
 		public Color secondDimensionColor;
-		public Vector2 dimensionOffset;
-		public float dimensionDistance;
-		public float dimensionDistanceSqr;
 
 		public override void Awake ()
 		{

@@ -133,9 +133,9 @@ namespace BMH
 			maxBodyToWeaponDistance *= trs.localScale.x;
 			maxBodyToWeaponDistanceSqr = maxBodyToWeaponDistance * maxBodyToWeaponDistance;
 			body.moveSpeed *= MoveSpeedMultiplier * trs.localScale.x;
-			body.distanceJoint.distance = maxBodyToWeaponDistance;
+			// body.distanceJoint.distance = maxBodyToWeaponDistance;
 			weapon.moveSpeed *= MoveSpeedMultiplier * trs.localScale.x;
-			weapon.distanceJoint.distance = maxBodyToWeaponDistance;
+			// weapon.distanceJoint.distance = maxBodyToWeaponDistance;
 			if (lengthVisualizerTrs != null)
 				lengthVisualizerTrs.SetWorldScale(Vector3.one * maxBodyToWeaponDistance / trs.localScale.x);
 		}

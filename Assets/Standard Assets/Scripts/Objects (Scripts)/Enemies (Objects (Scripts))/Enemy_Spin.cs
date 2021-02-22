@@ -33,7 +33,7 @@ namespace BMH
 				spinRate *= -1;
 		}
 
-		public virtual void SwitchSpinDirection (Collision2D coll, Weapon weapon)
+		public virtual void SwitchSpinDirection (Collision coll, Weapon weapon)
 		{
 			spinRate *= -1;
 		}
