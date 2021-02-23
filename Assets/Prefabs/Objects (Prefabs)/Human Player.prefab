@@ -306,6 +306,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 2120963187458893531}
+    - target: {fileID: 67895614537944396, guid: 10407d4ac9688cc41a0fde45cdf04b68,
+        type: 3}
+      propertyPath: controllerToSwitchTo
+      value: 
+      objectReference: {fileID: 11452976}
     - target: {fileID: 67895614548677146, guid: 10407d4ac9688cc41a0fde45cdf04b68,
         type: 3}
       propertyPath: m_Name
@@ -344,7 +349,7 @@ PrefabInstance:
     - target: {fileID: 67895614548880258, guid: 10407d4ac9688cc41a0fde45cdf04b68,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.05
       objectReference: {fileID: 0}
     - target: {fileID: 67895614548880258, guid: 10407d4ac9688cc41a0fde45cdf04b68,
         type: 3}
@@ -390,18 +395,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
-      objectReference: {fileID: 5009558}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10407d4ac9688cc41a0fde45cdf04b68, type: 3}
 --- !u!212 &21267618 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 67895614561448580, guid: 10407d4ac9688cc41a0fde45cdf04b68,
-    type: 3}
-  m_PrefabInstance: {fileID: 67895614548571686}
-  m_PrefabAsset: {fileID: 0}
---- !u!50 &5087148 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 67895614544079242, guid: 10407d4ac9688cc41a0fde45cdf04b68,
     type: 3}
   m_PrefabInstance: {fileID: 67895614548571686}
   m_PrefabAsset: {fileID: 0}
@@ -440,6 +439,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 2120963187458893531}
+    - target: {fileID: 2580144132539758231, guid: 9f3fdb304e060f449a8a9a55746fb369,
+        type: 3}
+      propertyPath: controllerToSwitchTo
+      value: 
+      objectReference: {fileID: 11418474}
     - target: {fileID: 2580144132550495527, guid: 9f3fdb304e060f449a8a9a55746fb369,
         type: 3}
       propertyPath: m_Name
@@ -473,7 +477,7 @@ PrefabInstance:
     - target: {fileID: 2580144132550770781, guid: 9f3fdb304e060f449a8a9a55746fb369,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.05
       objectReference: {fileID: 0}
     - target: {fileID: 2580144132550770781, guid: 9f3fdb304e060f449a8a9a55746fb369,
         type: 3}
@@ -514,9 +518,15 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
-      objectReference: {fileID: 5087148}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f3fdb304e060f449a8a9a55746fb369, type: 3}
+--- !u!212 &21233678 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 2580144132529714345, guid: 9f3fdb304e060f449a8a9a55746fb369,
+    type: 3}
+  m_PrefabInstance: {fileID: 2580144132550423719}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &11452976 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2580144132539758231, guid: 9f3fdb304e060f449a8a9a55746fb369,
@@ -529,18 +539,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87116ee11a202cd409dacf7dd5519b8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!50 &5009558 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 2580144132545938481, guid: 9f3fdb304e060f449a8a9a55746fb369,
-    type: 3}
-  m_PrefabInstance: {fileID: 2580144132550423719}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &21233678 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 2580144132529714345, guid: 9f3fdb304e060f449a8a9a55746fb369,
-    type: 3}
-  m_PrefabInstance: {fileID: 2580144132550423719}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &439546 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2580144132550770781, guid: 9f3fdb304e060f449a8a9a55746fb369,

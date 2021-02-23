@@ -92,7 +92,6 @@ namespace BMH
 		public virtual void SwitchDimensions ()
 		{
 			isSwitching = false;
-			trs.position = trs.position.SetZ(1 - trs.position.z);
 			inFirstDimension = !inFirstDimension;
 			if (inFirstDimension)
 				SwitchToFirstDimension ();
@@ -103,6 +102,7 @@ namespace BMH
 		void SwitchToFirstDimension ()
 		{
 			OnSwitchDimensions ();
+			trs.position = trs.position.SetZ(GameManager.instance.firstDimensionZPosition);
 			meshRenderer.material.color = GameManager.instance.firstDimensionColor.SetAlpha(meshRenderer.material.color.a);
 			// trs.position -= (Vector3) GameManager.instance.dimensionOffset;
 		}
@@ -110,6 +110,7 @@ namespace BMH
 		void SwitchToSecondDimension ()
 		{
 			OnSwitchDimensions ();
+			trs.position = trs.position.SetZ(GameManager.instance.secondDimensionZPosition);
 			meshRenderer.material.color = GameManager.instance.secondDimensionColor.SetAlpha(meshRenderer.material.color.a);
 			// trs.position += (Vector3) GameManager.instance.dimensionOffset;
 		}

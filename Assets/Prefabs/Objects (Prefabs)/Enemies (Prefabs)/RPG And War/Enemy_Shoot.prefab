@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3275853747286227354}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4, z: -2}
+  m_LocalPosition: {x: 0, y: 4, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 6011488364874961447}
@@ -167,7 +167,7 @@ MonoBehaviour:
   prefabIndex: 8
   moveSpeed: 15
   collider: {fileID: 0}
-  spriteRenderer: {fileID: 0}
+  meshRenderer: {fileID: 0}
   awakenTimer:
     duration: 3
     timeRemaining: 0
@@ -176,7 +176,7 @@ MonoBehaviour:
     realtime: 0
     canBePaused: 1
     autoStopIfNotLooping: 1
-  rigid: {fileID: 6011488364871471151}
+  rigid: {fileID: 0}
   radius: 0
   initPosition: {x: 0, y: 0}
   initRotation: 0
@@ -331,6 +331,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hotkeys: []
+  doOnce: 0
+  doRepeatedly: 0
   trs: {fileID: 3307287000961470685}
   snap: {x: 1, y: 1, z: 0}
 --- !u!114 &1881874882518924977
@@ -829,12 +831,6 @@ PrefabInstance:
     - {fileID: 0}
     - {fileID: 3082750811124334189, guid: 10407d4ac9688cc41a0fde45cdf04b68, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 10407d4ac9688cc41a0fde45cdf04b68, type: 3}
---- !u!50 &6011488364871471151 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 67895614544079242, guid: 10407d4ac9688cc41a0fde45cdf04b68,
-    type: 3}
-  m_PrefabInstance: {fileID: 6024741403936569765}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6011488364869285097 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 67895614537944396, guid: 10407d4ac9688cc41a0fde45cdf04b68,

@@ -8,7 +8,7 @@ using BMH;
 public class VectorGridForce : MonoBehaviour, IUpdatable
 {
 	public Transform trs;
-	public Rigidbody2D rigid;
+	public Rigidbody rigid;
 	public float forceScale;
 	public bool isDirectional;
 	public float radius;
@@ -30,7 +30,7 @@ public class VectorGridForce : MonoBehaviour, IUpdatable
 			if (trs == null)
 				trs = GetComponent<Transform>();
 			if (rigid == null)
-				rigid = GetComponent<Rigidbody2D>();
+				rigid = GetComponent<Rigidbody>();
 			return;
 		}
 #endif

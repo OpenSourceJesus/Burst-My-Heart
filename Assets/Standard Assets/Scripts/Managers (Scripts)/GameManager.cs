@@ -97,6 +97,8 @@ namespace BMH
 		public static Vector2Int windowSize;
 		public Color firstDimensionColor;
 		public Color secondDimensionColor;
+		public float firstDimensionZPosition;
+		public float secondDimensionZPosition;
 
 		public override void Awake ()
 		{

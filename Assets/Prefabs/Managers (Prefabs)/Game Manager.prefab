@@ -62,9 +62,8 @@ MonoBehaviour:
   cursorEntries: []
   firstDimensionColor: {r: 0, g: 0.5019608, b: 0, a: 1}
   secondDimensionColor: {r: 0.5019608, g: 0, b: 0, a: 1}
-  dimensionOffset: {x: 9999, y: 9999}
-  dimensionDistance: 14140.722
-  dimensionDistanceSqr: 199960020
+  firstDimensionZPosition: -0.05
+  secondDimensionZPosition: 0.95
 --- !u!1001 &11203658333010479
 PrefabInstance:
   m_ObjectHideFlags: 0

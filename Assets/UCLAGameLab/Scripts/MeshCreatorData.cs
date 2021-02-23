@@ -74,11 +74,13 @@ public class MeshCreatorData : MonoBehaviour {
 
 	void OnEnable ()
 	{
+#if UNITY_EDITOR
 		SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
 		if (spriteRenderer != null)
 		{
 			meshWidth = spriteRenderer.bounds.size.x;
 			meshHeight = spriteRenderer.bounds.size.y;
 		}
+#endif
 	}
 }

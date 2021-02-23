@@ -25350,6 +25350,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3537926040494839854, guid: 897d72d5268c18b4eb8f2f86f8589558,
+        type: 3}
+      propertyPath: idNumber
+      value: e45a2eb66104ae6a
+      objectReference: {fileID: 0}
+    - target: {fileID: 3537926040494839854, guid: 897d72d5268c18b4eb8f2f86f8589558,
+        type: 3}
+      propertyPath: pixelTransparencyThreshold
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 3541835107359544987, guid: 897d72d5268c18b4eb8f2f86f8589558,
         type: 3}
       propertyPath: m_Layer
@@ -25380,6 +25390,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: AI Player 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777169937104794296, guid: 897d72d5268c18b4eb8f2f86f8589558,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777169937104794296, guid: 897d72d5268c18b4eb8f2f86f8589558,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8777169937104794296, guid: 897d72d5268c18b4eb8f2f86f8589558,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 8777169937104811916, guid: 897d72d5268c18b4eb8f2f86f8589558,
         type: 3}
@@ -87138,6 +87163,56 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 1.805
       objectReference: {fileID: 0}
+    - target: {fileID: 7975876056674863558, guid: cae4007e4c2005eb7a05b9bcbdebfe26,
+        type: 3}
+      propertyPath: invokeEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1974911118}
+    - target: {fileID: 7975876056674863558, guid: cae4007e4c2005eb7a05b9bcbdebfe26,
+        type: 3}
+      propertyPath: invokeEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1311191053}
+    - target: {fileID: 7975876056674863558, guid: cae4007e4c2005eb7a05b9bcbdebfe26,
+        type: 3}
+      propertyPath: invokeEvent.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 1838075362}
+    - target: {fileID: 7975876056674863558, guid: cae4007e4c2005eb7a05b9bcbdebfe26,
+        type: 3}
+      propertyPath: invokeEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: FollowPath
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975876056674863558, guid: cae4007e4c2005eb7a05b9bcbdebfe26,
+        type: 3}
+      propertyPath: invokeEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975876056674863558, guid: cae4007e4c2005eb7a05b9bcbdebfe26,
+        type: 3}
+      propertyPath: invokeEvent.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: set_text
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975876056674863558, guid: cae4007e4c2005eb7a05b9bcbdebfe26,
+        type: 3}
+      propertyPath: invokeEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BMH.CameraScript, Assembly-CSharp-firstpass
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975876056674863558, guid: cae4007e4c2005eb7a05b9bcbdebfe26,
+        type: 3}
+      propertyPath: invokeEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975876056674863558, guid: cae4007e4c2005eb7a05b9bcbdebfe26,
+        type: 3}
+      propertyPath: invokeEvent.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: UnityEngine.TextMesh, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975876056674863558, guid: cae4007e4c2005eb7a05b9bcbdebfe26,
+        type: 3}
+      propertyPath: invokeEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1306149538}
     - target: {fileID: 7981977984850291299, guid: cae4007e4c2005eb7a05b9bcbdebfe26,
         type: 3}
       propertyPath: m_SortingOrder
