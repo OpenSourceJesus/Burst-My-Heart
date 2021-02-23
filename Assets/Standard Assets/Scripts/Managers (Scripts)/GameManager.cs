@@ -146,13 +146,13 @@ namespace BMH
 			// try
 			// {
 				// if (!paused && framesSinceLoadedScene > LAG_FRAMES_AFTER_LOAD_SCENE)
-					Physics2D.Simulate(Time.deltaTime);
+					Physics.Simulate(Time.deltaTime);
 				foreach (IUpdatable updatable in updatables)
 					updatable.DoUpdate ();
-				if (GetSingleton<ObjectPool>() != null && GetSingleton<ObjectPool>().enabled)
-					GetSingleton<ObjectPool>().DoUpdate ();
-				if (GetSingleton<GameCamera>() != null)
-					GetSingleton<GameCamera>().DoUpdate ();
+				if (ObjectPool.Instance != null && ObjectPool.instance.enabled)
+					ObjectPool.instance.DoUpdate ();
+				if (GameCamera.Instance != null)
+					GameCamera.instance.DoUpdate ();
 				framesSinceLoadedScene ++;
 			// }
 			// catch (Exception e)
@@ -163,9 +163,9 @@ namespace BMH
 
 		public virtual void LoadScene (string name)
 		{
-			if (GetSingleton<GameManager>() != this)
+			if (GameManager.Instance != this)
 			{
-				GetSingleton<GameManager>().LoadScene (name);
+				GameManager.instance.LoadScene (name);
 				return;
 			}
 			if (name == "Title")

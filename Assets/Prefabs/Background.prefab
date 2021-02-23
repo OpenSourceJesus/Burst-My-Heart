@@ -113,7 +113,7 @@ MonoBehaviour:
   m_ThinLineWidth: 0
   m_ThickLineSpacingX: 1
   m_ThickLineSpacingY: 1
-  m_SpringStiffness: 0.5
+  m_SpringStiffness: 0.1
   m_SpringDamping: 0.4
   m_EdgeSpringStiffness: 0.5
   m_EdgeSpringDamping: 0.4

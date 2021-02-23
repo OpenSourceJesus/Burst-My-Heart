@@ -5,6 +5,16 @@ namespace BMH
 {
 	public class GameCamera  : CameraScript
 	{
+		public new static GameCamera instance;
+		public new static GameCamera Instance
+		{
+			get
+			{
+				if (instance == null)
+					instance = FindObjectOfType<GameCamera>();
+				return instance;
+			}
+		}
 		public bool inFirstDimension;
 
 		public virtual void DoUpdate ()
