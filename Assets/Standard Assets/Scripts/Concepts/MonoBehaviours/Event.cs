@@ -17,7 +17,7 @@ namespace BMH
 		public SpriteRenderer spriteRenderer;
 		public Color startedColor;
 		public Transform timerVisualizerTrs;
-		public Collider2D collider;
+		public Collider collider;
 		[HideInInspector]
 		public bool isDestroyed;
 		public bool Enabled
@@ -105,14 +105,14 @@ namespace BMH
 		{
 		}
 
-		public virtual void OnTriggerEnter2D (Collider2D other)
+		public virtual void OnTriggerEnter (Collider other)
 		{
 			Body body = other.GetComponent<Body>();
 			if (body != null)
 				AddPlayer (body.player);
 		}
 
-		public virtual void OnTriggerExit2D (Collider2D other)
+		public virtual void OnTriggerExit (Collider other)
 		{
 			Body body = other.GetComponent<Body>();
 			if (body != null)
